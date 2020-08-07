@@ -26,10 +26,6 @@
 
 const carriage = '\r\n'
 const dashes = '-'.repeat(2)
-<<<<<<< HEAD
-const carriageLength = Buffer.byteLength(carriage)
-=======
->>>>>>> master
 
 const NAME = Symbol.toStringTag
 
