@@ -7,7 +7,7 @@ const settings = {
     "content-type": "text/plain"
   },
   "data": "Hello World"
-}
+};
 
 $.ajax(settings).done(function (response) {
   console.log(response);

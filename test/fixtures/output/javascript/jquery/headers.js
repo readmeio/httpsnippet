@@ -7,7 +7,7 @@ const settings = {
     "accept": "application/json",
     "x-foo": "Bar"
   }
-}
+};
 
 $.ajax(settings).done(function (response) {
   console.log(response);

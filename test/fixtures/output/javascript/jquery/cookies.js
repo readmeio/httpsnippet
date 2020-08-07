@@ -6,7 +6,7 @@ const settings = {
   "headers": {
     "cookie": "foo=bar; bar=baz"
   }
-}
+};
 
 $.ajax(settings).done(function (response) {
   console.log(response);
