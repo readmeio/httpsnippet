@@ -11,7 +11,7 @@ const settings = {
   "data": {
     "foo": "bar"
   }
-}
+};
 
 $.ajax(settings).done(function (response) {
   console.log(response);

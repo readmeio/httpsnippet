@@ -10,7 +10,7 @@ const settings = {
     "foo": "bar",
     "hello": "world"
   }
-}
+};
 
 $.ajax(settings).done(function (response) {
   console.log(response);

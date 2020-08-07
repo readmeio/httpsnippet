@@ -8,7 +8,7 @@ const settings = {
   },
   "processData": false,
   "data": "{\"foo\":null}"
-}
+};
 
 $.ajax(settings).done(function (response) {
   console.log(response);

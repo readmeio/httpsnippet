@@ -62,7 +62,7 @@ module.exports = function (source, options) {
       }
   }
 
-  code.push('const settings = ' + JSON.stringify(settings, null, opts.indent).replace('"[form]"', 'form'))
+  code.push('const settings = ' + JSON.stringify(settings, null, opts.indent).replace('"[form]"', 'form') + ';')
       .blank()
       .push('$.ajax(settings).done(function (response) {')
       .push(1, 'console.log(response);')
