@@ -1,4 +1,4 @@
-var settings = {
+const settings = {
   "async": true,
   "crossDomain": true,
   "url": "https://mockbin.com/har",

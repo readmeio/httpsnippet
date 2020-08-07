@@ -1,7 +1,7 @@
-var form = new FormData();
+const form = new FormData();
 form.append("foo", "Hello World");
 
-var settings = {
+const settings = {
   "async": true,
   "crossDomain": true,
   "url": "http://mockbin.com/har",
