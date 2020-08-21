@@ -47,7 +47,7 @@ module.exports = function (source, options) {
 
   if (headerCount === 1) {
     for (header in headers) {
-      code.push('headers = {\'%s\': \'%s\'}', header, headers[header])
+      code.push('headers = {"%s": "%s"}', header, headers[header])
           .blank()
     }
   } else if (headerCount > 1) {
@@ -57,13 +57,13 @@ module.exports = function (source, options) {
 
     for (header in headers) {
       if (count++ !== headerCount) {
-        code.push(1, '\'%s\': "%s",', header, headers[header])
+        code.push(1, '"%s": "%s",', header, headers[header])
       } else {
-        code.push(1, '\'%s\': "%s"', header, headers[header])
+        code.push(1, '"%s": "%s"', header, headers[header])
       }
     }
 
-    code.push(1, '}')
+    code.push('}')
         .blank()
   }
 
