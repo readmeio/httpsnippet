@@ -94,19 +94,19 @@ module.exports = function (source, options) {
   code.blank()
   code.push('let url = \'' + url + '\';')
     .blank()
-  code.push('let options = %s;', stringifyObject(reqOpts, { 
-    indent: '  ', 
+  code.push('let options = %s;', stringifyObject(reqOpts, {
+    indent: '  ',
     inlineCharacterLimit: 80,
     // The Fetch API body only accepts string parameters, but stringified JSON
     // can be difficult to read, so if you pass the useObjectBody param
-    // we keep the object as a literal and use this transform function 
+    // we keep the object as a literal and use this transform function
     // to wrap the literal in a JSON.stringify call
     transform: (object, property, originalResult) => {
       if (property === 'body' && options.useObjectBody) {
-        return 'JSON.stringify(' + originalResult + ')';
+        return 'JSON.stringify(' + originalResult + ')'
       }
 
-      return originalResult;
+      return originalResult
     }}))
     .blank()
 
