@@ -49,9 +49,6 @@ Type: `object`
 
 Target options, *see [wiki](https://github.com/kong/httpsnippet/wiki/Targets) for details*
 
-*Note: This fork has added "useObjectBody" to the node target, a boolean flag that includes an object literal wrapped in JSON.stringify, as opposed to a string object body.*
-
-
 ```js
 const HTTPSnippet = require('httpsnippet');
 
@@ -152,6 +149,7 @@ The main difference between this library and the upstream [httpsnippet](https://
 
 * This targets Node 10+
 * Does not ship with a CLI component
+* Adds a `useObjectBody` option to the node target. This option is a boolean flag that causes the request body to be rendered as an object literal wrapped in `JSON.stringify`. If disabled, it falls back to the original behavior of a stringified object body. This flag defaults to disabled.
 
 ## License
 
