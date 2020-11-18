@@ -49,6 +49,9 @@ Type: `object`
 
 Target options, *see [wiki](https://github.com/kong/httpsnippet/wiki/Targets) for details*
 
+*Note: This fork has added "useObjectBody" to the node target, a boolean flag that includes an object literal wrapped in JSON.stringify, as opposed to a string object body.*
+
+
 ```js
 const HTTPSnippet = require('httpsnippet');
 
