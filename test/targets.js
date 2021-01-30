@@ -78,7 +78,7 @@ var itShouldGenerateOutput = function (request, path, target, client) {
     }
 
     var options = {}
-    if (request === 'query-serialized') {
+    if (request === 'query-encoded') {
       // Query strings in this HAR are already escaped.
       options.escapeQueryStrings = false
     }
