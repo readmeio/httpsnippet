@@ -25,8 +25,11 @@ module.exports = function (source, options) {
   var code = new CodeBuilder(opts.indent)
 
   options = {
-    method: source.method,
-    headers: source.allHeaders
+    method: source.method
+  }
+
+  if (Object.keys(source.allHeaders).length) {
+    options.headers = source.allHeaders
   }
 
   if (opts.credentials !== null) {
