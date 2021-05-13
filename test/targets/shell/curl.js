@@ -43,4 +43,11 @@ module.exports = function (HTTPSnippet, fixtures) {
     result.should.be.a.String()
     result.replace(/\\\n/g, '').should.eql("curl --request POST @--url 'http://mockbin.com/har?foo=bar&foo=baz&baz=abc&key=value' @--header 'accept: application/json' @--header 'content-type: application/x-www-form-urlencoded' @--cookie 'foo=bar; bar=baz' @--data foo=bar")
   })
+
+  it('should send JSON-encoded data with single quotes within a HEREDOC', function () {
+    var result = new HTTPSnippet(fixtures.curl['json-with-singlequotes']).convert('shell', 'curl')
+
+    result.should.be.a.String()
+    result.replace(/\\\n/g, '').replace(/\n/g, '').should.eql("curl --request POST   --url http://mockbin.com/har   --header 'content-type: application/json'   --data @- <<EOF{  \"number\": 1,  \"string\": \"f'oo\"}EOF")
+  })
 }
