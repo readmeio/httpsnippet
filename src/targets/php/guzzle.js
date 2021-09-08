@@ -1,6 +1,6 @@
 /**
  * @description
- * HTTP code snippet generator for PHP using curl-ext.
+ * HTTP code snippet generator for PHP using Guzzle.
  *
  * @author
  * @RobertoArruda
