@@ -97,7 +97,7 @@ module.exports = function (source, options) {
     // Cookies are already encoded within `source.allHeaders` so we can pull them out of that instead of doing our
     // own encoding work.
     source.allHeaders.cookie.split('; ').forEach(function (cookie) {
-      const [name, value] = cookie.split('=');
+      const [name, value] = cookie.split('=')
       code.push("jar.setCookie(request.cookie('%s=%s'), '%s');", name, value, url)
     })
     code.blank()
