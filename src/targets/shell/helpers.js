@@ -1,6 +1,4 @@
-'use strict'
-
-const util = require('util')
+const { format } = require('util');
 
 module.exports = {
   /**
@@ -13,13 +11,13 @@ module.exports = {
 
     // Unless `value` is a simple shell-safe string, quote it.
     if (!safe.test(value)) {
-      return util.format('\'%s\'', value.replace(/'/g, "'\\''"))
+      return format("'%s'", value.replace(/'/g, "'\\''"));
     }
 
-    return value
+    return value;
   },
 
   escape: function (value) {
-    return value.replace(/\r/g, '\\r').replace(/\n/g, '\\n')
-  }
-}
+    return value.replace(/\r/g, '\\r').replace(/\n/g, '\\n');
+  },
+};

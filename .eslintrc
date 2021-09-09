@@ -1,0 +1,8 @@
+{
+  "extends": "@readme/eslint-config",
+  "root": true,
+  "rules": {
+    "global-require": "off",
+    "object-shorthand": "off"
+  }
+}
