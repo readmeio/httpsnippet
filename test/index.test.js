@@ -108,13 +108,13 @@ describe('HTTPSnippet', () => {
     const req = new HTTPSnippet(fixtures.requests.headers).requests[0];
 
     expect(req.headersObj).toStrictEqual({
-      accept: 'application/json',
+      accept: 'text/json',
       'x-foo': 'Bar',
     });
   });
 
   it('should add "headersObj" to source object case insensitive when HTTP/1.0', () => {
-    const fixture = { ...fixtures.requests.headers };
+    const fixture = { ...fixtures.requests.headers.log.entries[0].request };
     fixture.httpVersion = 'HTTP/1.1';
     fixture.headers = fixture.headers.concat({
       name: 'Kong-Admin-Token',
@@ -124,14 +124,14 @@ describe('HTTPSnippet', () => {
     const req = new HTTPSnippet(fixture).requests[0];
     expect(req.headersObj).toStrictEqual({
       'Kong-Admin-Token': 'Hunter1',
-      accept: 'application/json',
+      accept: 'text/json',
       'x-foo': 'Bar',
     });
   });
 
   it('should add "headersObj" to source object in lowercase when HTTP/2.x', () => {
     const fixture = {
-      ...fixtures.requests.headers,
+      ...fixtures.requests.headers.log.entries[0].request,
       httpVersion: 'HTTP/2',
     };
 
@@ -143,7 +143,7 @@ describe('HTTPSnippet', () => {
     const req = new HTTPSnippet(fixture).requests[0];
     expect(req.headersObj).toStrictEqual({
       'kong-admin-token': 'Hunter1',
-      accept: 'application/json',
+      accept: 'text/json',
       'x-foo': 'Bar',
     });
   });
