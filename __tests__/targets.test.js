@@ -15,7 +15,7 @@ const output = glob.sync('**/*', { cwd: base, nodir: true }).reduce(function (ob
 }, {});
 
 const clearInfo = function (key) {
-  return !['info', 'index'].includes(key)
+  return !['info', 'index'].includes(key);
 };
 
 function itShouldHaveTests(target, client) {

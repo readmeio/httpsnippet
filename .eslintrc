@@ -3,6 +3,10 @@
   "root": true,
   "rules": {
     "global-require": "off",
+    "no-underscore-dangle": "off",
     "object-shorthand": "off"
+  },
+  "env": {
+    "browser": true
   }
 }

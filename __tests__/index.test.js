@@ -130,8 +130,11 @@ describe('HTTPSnippet', () => {
   });
 
   it('should add "headersObj" to source object in lowercase when HTTP/2.x', () => {
-    const fixture = Object.assign({}, fixtures.requests.headers);
-    fixture.httpVersion = 'HTTP/2';
+    const fixture = {
+      ...fixtures.requests.headers,
+      httpVersion: 'HTTP/2',
+    };
+
     fixture.headers = fixture.headers.concat({
       name: 'Kong-Admin-Token',
       value: 'Hunter1',

@@ -1,1 +1,1 @@
-module.exports = function (HTTPSnippet, fixtures) {}
+module.exports = function () {};
