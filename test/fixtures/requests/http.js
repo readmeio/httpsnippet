@@ -8,23 +8,8 @@ module.exports = {
     entries: [
       {
         request: {
-          method: 'POST',
-          url: 'https://httpbin.org/anything',
-          headers: [
-            {
-              name: 'Content-Type',
-              value: 'multipart/form-data',
-            },
-          ],
-          postData: {
-            mimeType: 'multipart/form-data',
-            params: [
-              {
-                name: 'foo',
-                value: 'bar',
-              },
-            ],
-          },
+          method: 'GET',
+          url: 'http://httpbin.org/anything',
         },
         response: {
           status: 200,
@@ -43,15 +28,11 @@ module.exports = {
               args: {},
               data: '',
               files: {},
-              form: {
-                foo: 'bar',
-              },
-              headers: {
-                'Content-Type': 'multipart/form-data; boundary=------------------------8dd0f6c44b5bc105',
-              },
+              form: {},
+              headers: {},
               json: null,
-              method: 'POST',
-              url: 'https://httpbin.org/anything',
+              method: 'GET',
+              url: 'http://httpbin.org/anything',
             }),
           },
           headersSize: -1,
