@@ -1,11 +1,10 @@
 /* eslint-disable jest/no-conditional-expect */
-const fixtures = require('./fixtures');
+const fixtures = require('./__fixtures__');
 const HTTPSnippet = require('../src');
 const shell = require('child_process');
 const { format } = require('util');
 
-const environment = process.env.NODE_ENV;
-const snippetDir = './test/fixtures/output/';
+const snippetDir = './__tests__/__fixtures__/output/';
 
 const snippets = Object.keys(fixtures.requests)
   .filter(req => !['info', 'index'].includes(req))
