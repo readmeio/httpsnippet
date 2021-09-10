@@ -76,13 +76,13 @@ describe('HTTPSnippet', () => {
       expect.objectContaining({
         auth: null,
         hash: null,
-        host: 'mockbin.com',
-        hostname: 'mockbin.com',
-        href: 'http://mockbin.com/har?key=value',
-        path: '/har?foo=bar&foo=baz&baz=abc&key=value',
-        pathname: '/har',
+        host: 'httpbin.org',
+        hostname: 'httpbin.org',
+        href: 'https://httpbin.org/anything?key=value',
+        path: '/anything?foo=bar&foo=baz&baz=abc&key=value',
+        pathname: '/anything',
         port: null,
-        protocol: 'http:',
+        protocol: 'https:',
         query: {
           baz: 'abc',
           key: 'value',
@@ -151,18 +151,18 @@ describe('HTTPSnippet', () => {
   it('should modify orignal url to strip query string', () => {
     const req = new HTTPSnippet(fixtures.requests.query).requests[0];
 
-    expect(req.url).toBe('http://mockbin.com/har');
+    expect(req.url).toBe('https://httpbin.org/anything');
   });
 
   it('should add "fullUrl" to source object', () => {
     const req = new HTTPSnippet(fixtures.requests.query).requests[0];
 
-    expect(req.fullUrl).toBe('http://mockbin.com/har?foo=bar&foo=baz&baz=abc&key=value');
+    expect(req.fullUrl).toBe('https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value');
   });
 
   it('should fix "path" property of "uriObj" to match queryString', () => {
     const req = new HTTPSnippet(fixtures.requests.query).requests[0];
 
-    expect(req.uriObj.path).toBe('/har?foo=bar&foo=baz&baz=abc&key=value');
+    expect(req.uriObj.path).toBe('/anything?foo=bar&foo=baz&baz=abc&key=value');
   });
 });
