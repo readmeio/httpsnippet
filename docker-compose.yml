@@ -4,7 +4,7 @@ services:
     image: kennethreitz/httpbin
   httpsnippet:
     build: .
-    command: "npx mocha test/requests.js"
+    command: "npx jest test/integration.test.js"
     environment:
       - HTTPBIN
     depends_on:

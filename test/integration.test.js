@@ -24,7 +24,9 @@ const clients = HTTPSnippet.availableTargets()
   .map(client => {
     // When running tests manually and not in docker we should limit our integration tests to a smaller subset so we can
     // constrain every targets clients full dependency requirements to the container.
-    if (environment === 'test') {
+    if (process.env.HTTPBIN) {
+      // @todo only run tests for what the docker is configured to run.
+    } else if (process.env.NODE_ENV === 'test') {
       switch (client.key) {
         case 'node':
           return { ...client, clients: client.clients.filter(target => target.key === 'native') };
@@ -35,8 +37,6 @@ const clients = HTTPSnippet.availableTargets()
         default:
           return false;
       }
-    } else if (environment === 'integration-docker') {
-      // @todo only run tests for what the docker is configured to run.
     }
 
     // If we don't have any special cases set up for the client then just ignore it.
