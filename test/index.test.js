@@ -1,4 +1,4 @@
-const fixtures = require('./__fixtures__');
+const fixtures = require('./fixtures');
 const HTTPSnippet = require('../src');
 
 describe('HTTPSnippet', () => {

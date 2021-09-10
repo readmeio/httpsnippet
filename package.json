@@ -71,11 +71,11 @@
   "jest": {
     "coveragePathIgnorePatterns": [
       "<rootDir>/node_modules",
-      "<rootDir>/__tests__/(.*)/__fixtures__/"
+      "<rootDir>/test/(.*)/fixtures/"
     ],
     "testPathIgnorePatterns": [
-      "<rootDir>/__tests__/__fixtures__/",
-      "<rootDir>/__tests__/targets/"
+      "<rootDir>/test/fixtures/",
+      "<rootDir>/test/targets/"
     ]
   }
 }
