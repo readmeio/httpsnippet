@@ -2,10 +2,13 @@ version: '3'
 services:
   httpbin:
     image: kennethreitz/httpbin
-  httpsnippet:
-    build: .
+  integration_node:
+    build:
+      context: .
+      dockerfile: node.Dockerfile
     command: "npx jest __tests__/integration.test.js"
     environment:
-      - HTTPBIN
+      - HTTPBIN=true
+      - INTEGRATION_CLIENT=node
     depends_on:
       - httpbin

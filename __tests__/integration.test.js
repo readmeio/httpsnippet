@@ -21,11 +21,14 @@ const snippets = Object.keys(fixtures.requests)
 const clients = HTTPSnippet.availableTargets()
   .filter(client => client.cli)
   .map(client => {
-    // When running tests manually and not in docker we should limit our integration tests to a smaller subset so we can
-    // constrain every targets clients full dependency requirements to the container.
     if (process.env.HTTPBIN) {
-      // @todo only run tests for what the docker is configured to run.
+      if (process.env.INTEGRATION_CLIENT === client.key) {
+        return client;
+      }
     } else if (process.env.NODE_ENV === 'test') {
+      // When running tests manually and not within the client-specific containers we should limit our integration
+      // tests to a smaller subset so we  can constrain every targets clients full dependency requirements to the
+      // container.
       switch (client.key) {
         case 'node':
           return { ...client, clients: client.clients.filter(target => target.key === 'native') };
@@ -44,6 +47,10 @@ const clients = HTTPSnippet.availableTargets()
   .filter(Boolean)
   .map(client => ({ ...client, clients: client.clients.map(target => [target.key, target]) }))
   .map(client => [client.title, client]);
+
+if (!clients.length) {
+  throw new Error('No available clients for this environment.');
+}
 
 describe.each(clients)('%s', (_, client) => {
   describe.each(client.clients)('%s', (__, target) => {
