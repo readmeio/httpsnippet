@@ -3,7 +3,7 @@ services:
   integration_node:
     build:
       context: .
-      dockerfile: node.Dockerfile
+      dockerfile: integrations/node.Dockerfile
     command: "npx jest __tests__/integration.test.js"
     environment:
       - HTTPBIN=true
