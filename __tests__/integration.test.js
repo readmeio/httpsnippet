@@ -24,7 +24,7 @@ const snippets = Object.keys(fixtures.requests)
       'custom-method',
       'full',
       'headers',
-      'http',
+      'http-insecure',
       'jsonObj-multiline',
       'jsonObj-null-value',
       // 'multipart-data', // Disabling because there's some quirks with cURL.
