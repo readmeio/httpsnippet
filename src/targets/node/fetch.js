@@ -8,6 +8,7 @@
  * for any questions or issues regarding the generated code snippet, please open an issue mentioning the author.
  */
 
+const headerHelpers = require('../../helpers/headers');
 const stringifyObject = require('stringify-object');
 const CodeBuilder = require('../../helpers/code-builder');
 
@@ -25,6 +26,16 @@ module.exports = function (source, options) {
   const reqOpts = {
     method: source.method,
   };
+
+  // The `form-data` library automatically adds a `Content-Type` header for `multipart/form-data` content and if we
+  // add our own here, data won't be correctly transferred.
+  if (source.postData.mimeType === 'multipart/form-data') {
+    const contentTypeHeader = headerHelpers.getHeaderName(source.allHeaders, 'content-type');
+    if (contentTypeHeader) {
+      // eslint-disable-next-line no-param-reassign
+      delete source.allHeaders[contentTypeHeader];
+    }
+  }
 
   if (Object.keys(source.allHeaders).length) {
     reqOpts.headers = source.allHeaders;
