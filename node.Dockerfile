@@ -4,11 +4,11 @@ ADD . /src
 WORKDIR /src
 
 RUN apt-get update -qq
-#RUN apt-get install -qq php7.3 php7.3-curl php7.3-cli
-#RUN apt-get install -qq --yes python3
 
 # https://www.npmjs.com/package/axios
-# https://www.npmjs.com/package/node-fetch
 # https://www.npmjs.com/package/request
-# https://www.npmjs.com/package/unirest
-RUN npm install axios node-fetch request unirest
+RUN npm install axios request
+
+# Installing node-fetch@2 because as of 3.0 is't now an ESM-only package.
+# https://www.npmjs.com/package/node-fetch
+RUN npm install node-fetch@2

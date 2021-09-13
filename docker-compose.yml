@@ -1,7 +1,5 @@
 version: '3'
 services:
-  httpbin:
-    image: kennethreitz/httpbin
   integration_node:
     build:
       context: .
@@ -10,5 +8,3 @@ services:
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=node
-    depends_on:
-      - httpbin
