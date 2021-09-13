@@ -116,7 +116,7 @@ module.exports = function (source, options) {
 
   return code
     .join()
-    .replace('"JAR"', 'jar')
+    .replace("'JAR'", 'jar')
     .replace(/'fs\.createReadStream\("(.+)"\)'/g, "fs.createReadStream('$1')");
 };
 
