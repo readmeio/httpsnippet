@@ -24,13 +24,8 @@ module.exports = function (source, options) {
 
   const reqOpts = {
     method: source.method,
-    url: source.url,
+    url: source.fullUrl,
   };
-
-  if (Object.keys(source.queryObj).length) {
-    reqOpts.qs = source.queryObj;
-    reqOpts.useQuerystring = true;
-  }
 
   if (Object.keys(source.headersObj).length) {
     reqOpts.headers = source.headersObj;
