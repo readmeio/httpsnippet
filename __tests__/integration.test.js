@@ -1,10 +1,29 @@
 /* eslint-disable jest/no-conditional-expect */
+/* eslint-disable jest/no-try-expect */
 const fixtures = require('./__fixtures__');
 const HTTPSnippet = require('../src');
 const shell = require('child_process');
 const { format } = require('util');
 
 const snippetDir = './__tests__/__fixtures__/output/';
+
+const IGNORED_TARGETS = {
+  docker: {
+    // We don't actually expose `unirest` in `@readme/oas-to-snippet` so we don't need to test it.
+    node: ['unirest'],
+
+    // No need to test these Pear and PECL clients as they don't have much traction anymore.
+    php: ['http1', 'http2'],
+  },
+
+  // When running tests locally, or within a Jest CI environment, we shold limit the targets that we're testing so as to
+  // not require a mess of dependency requirements that would be better served within a container.
+  local: {
+    node: ['axios', 'fetch', 'request', 'unirest'], // Only testing `native` locally.
+    php: ['guzzle', 'http1', 'http2'], // Only testing `curl` locally.
+    python: ['requests'], // Only testing `python3` locally.
+  },
+};
 
 /**
  * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!
@@ -44,19 +63,21 @@ const clients = HTTPSnippet.availableTargets()
   .map(client => {
     if (process.env.HTTPBIN) {
       if (process.env.INTEGRATION_CLIENT === client.key) {
-        return client;
+        return {
+          ...client,
+          clients: client.clients.filter(target => !IGNORED_TARGETS.docker[client.key].includes(target.key)),
+        };
       }
     } else if (process.env.NODE_ENV === 'test') {
-      // When running tests manually and not within the client-specific containers we should limit our integration
-      // tests to a smaller subset so we  can constrain every targets clients full dependency requirements to the
-      // container.
       switch (client.key) {
         case 'node':
-          return { ...client, clients: client.clients.filter(target => target.key === 'native') };
         case 'php':
-          return { ...client, clients: client.clients.filter(target => target.key === 'curl') };
-        // case 'python':
-        //   return { ...client, clients: client.clients.filter(target => target.key === 'python3') };
+        case 'python':
+          return {
+            ...client,
+            clients: client.clients.filter(target => !IGNORED_TARGETS.local[client.key].includes(target.key)),
+          };
+
         default:
           return false;
       }
@@ -100,7 +121,6 @@ describe.each(clients)('%s', (_, client) => {
         // If this target throws errors when it can't access a method on the server that doesn't exist let's make sure
         // that it only did that on the `custom-method` test, otherwise something went wrong!
         if (err.message.includes('405 METHOD NOT ALLOWED')) {
-          // eslint-disable-next-line jest/no-try-expect
           expect(snippet).toBe('custom-method');
           return;
         }
@@ -118,7 +138,6 @@ describe.each(clients)('%s', (_, client) => {
         } catch (err) {
           // Some targets always assume that their response is JSON and for this case (`custom-method`) will print out
           // an empty string instead.
-          // eslint-disable-next-line jest/no-try-expect
           expect(stdoutTrimmed).toStrictEqual('');
         }
         return;
