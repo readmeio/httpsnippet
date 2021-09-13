@@ -93,7 +93,20 @@ describe.each(clients)('%s', (_, client) => {
         `${snippetDir}${client.key}/${target.key}/${snippet}${HTTPSnippet.extname(client.key)}`
       );
 
-      const stdout = shell.execSync(command);
+      let stdout;
+      try {
+        stdout = shell.execSync(command);
+      } catch (err) {
+        // If this target throws errors when it can't access a method on the server that doesn't exist let's make sure
+        // that it only did that on the `custom-method` test, otherwise something went wrong!
+        if (err.message.includes('405 METHOD NOT ALLOWED')) {
+          // eslint-disable-next-line jest/no-try-expect
+          expect(snippet).toBe('custom-method');
+          return;
+        }
+
+        throw err;
+      }
 
       // If the endpoint we're testing against returns HTML we should do a string comparison instead of parsing a
       // non-existent JSON response.
