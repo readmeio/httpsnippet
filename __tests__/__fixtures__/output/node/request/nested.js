@@ -3,7 +3,8 @@ const request = require('request');
 const options = {
   method: 'GET',
   url: 'https://httpbin.org/anything',
-  qs: {'foo[bar]': 'baz,zap', fiz: 'buz', key: 'value'}
+  qs: {'foo[bar]': 'baz,zap', fiz: 'buz', key: 'value'},
+  useQuerystring: true
 };
 
 request(options, function (error, response, body) {

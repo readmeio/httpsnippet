@@ -29,6 +29,7 @@ module.exports = function (source, options) {
 
   if (Object.keys(source.queryObj).length) {
     reqOpts.qs = source.queryObj;
+    reqOpts.useQuerystring = true;
   }
 
   if (Object.keys(source.headersObj).length) {

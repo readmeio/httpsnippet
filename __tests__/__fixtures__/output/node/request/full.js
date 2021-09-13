@@ -8,6 +8,7 @@ const options = {
   method: 'POST',
   url: 'https://httpbin.org/anything',
   qs: {foo: ['bar', 'baz'], baz: 'abc', key: 'value'},
+  useQuerystring: true,
   headers: {
     accept: 'application/json',
     'content-type': 'application/x-www-form-urlencoded'
