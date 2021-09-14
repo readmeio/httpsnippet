@@ -4,6 +4,7 @@
     "title": "Shell",
     "extname": ".sh",
     "default": "curl",
+    "cli": "%s",
     "clients": [
       {
         "key": "curl",

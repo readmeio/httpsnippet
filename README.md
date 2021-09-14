@@ -159,6 +159,16 @@ The main difference between this library and the upstream [httpsnippet](https://
 * The `fetch` target for Node and JS both treat body payloads as an object literal and wrap it within `JSON.stringify()`. We do this to keep those targets looking nicer with those kinds of payloads.
 * Contains a `harIsAlreadyEncoded` option on the core library to disable [escaping](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) of cookies and query strings in URLs. Helpful if the HAR being supplied already has them escaped.
 * PHP Guzzle snippets come with `require_once('vendor/autoload.php');` at the top of them.
+* A full integration suite for testing out snippets the library creates.
+
+### Running the integration suite
+
+```
+docker-compose run integration_node
+docker-compose run integration_php
+docker-compose run integration_python
+docker-compose run integration_shell
+```
 
 ## License
 

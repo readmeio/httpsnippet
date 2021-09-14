@@ -14,6 +14,9 @@ const IGNORED_TARGETS = {
 
     // No need to test these Pear and PECL clients as they don't have much traction anymore.
     php: ['http1', 'http2'],
+
+    // We're only testing `curl` here.
+    shell: ['httpie', 'wget'],
   },
 
   // When running tests locally, or within a Jest CI environment, we shold limit the targets that we're testing so as to
@@ -22,6 +25,7 @@ const IGNORED_TARGETS = {
     node: ['axios', 'fetch', 'request', 'unirest'], // Only testing `native` locally.
     php: ['guzzle', 'http1', 'http2'], // Only testing `curl` locally.
     python: ['requests'], // Only testing `python3` locally.
+    shell: ['httpie', 'wget'], // Only testing `curl`.
   },
 };
 
@@ -77,6 +81,7 @@ const clients = HTTPSnippet.availableTargets()
         case 'node':
         case 'php':
         case 'python':
+        case 'shell':
           return {
             ...client,
             clients: client.clients.filter(target => !IGNORED_TARGETS.local[client.key].includes(target.key)),
