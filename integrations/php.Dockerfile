@@ -1,6 +1,5 @@
 FROM composer as builder
 WORKDIR /composer/
-COPY composer.* ./
 
 # https://packagist.org/packages/guzzlehttp/guzzle
 RUN composer require guzzlehttp/guzzle
