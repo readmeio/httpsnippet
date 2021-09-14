@@ -8,3 +8,12 @@ services:
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=node
+
+  integration_php:
+    build:
+      context: .
+      dockerfile: integrations/php.Dockerfile
+    command: "npx jest __tests__/integration.test.js"
+    environment:
+      - HTTPBIN=true
+      - INTEGRATION_CLIENT=php
