@@ -63,10 +63,14 @@ const clients = HTTPSnippet.availableTargets()
   .map(client => {
     if (process.env.HTTPBIN) {
       if (process.env.INTEGRATION_CLIENT === client.key) {
-        return {
-          ...client,
-          clients: client.clients.filter(target => !IGNORED_TARGETS.docker[client.key].includes(target.key)),
-        };
+        if (client.key in IGNORED_TARGETS.docker) {
+          return {
+            ...client,
+            clients: client.clients.filter(target => !IGNORED_TARGETS.docker[client.key].includes(target.key)),
+          };
+        }
+
+        return client;
       }
     } else if (process.env.NODE_ENV === 'test') {
       switch (client.key) {

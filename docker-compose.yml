@@ -17,3 +17,12 @@ services:
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=php
+
+  integration_python:
+    build:
+      context: .
+      dockerfile: integrations/python.Dockerfile
+    command: "npx jest __tests__/integration.test.js"
+    environment:
+      - HTTPBIN=true
+      - INTEGRATION_CLIENT=python
