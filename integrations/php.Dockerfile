@@ -10,7 +10,7 @@ ADD . /src
 WORKDIR /src
 
 RUN apk update
-RUN apk add php7 php7-fpm php7-opcache php7-curl
+RUN apk add php8 php8-fpm php87-opcache php8-curl
 RUN apk add --update nodejs npm
 RUN npm install
 
