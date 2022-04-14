@@ -22,8 +22,12 @@ module.exports = {
               {
                 name: 'foo',
                 value: 'Hello World',
-                fileName: 'hello.txt',
+                fileName: '__tests__/__fixtures__/files/hello.txt',
                 contentType: 'text/plain',
+              },
+              {
+                name: 'bar',
+                value: 'Bonjour le monde',
               },
             ],
           },

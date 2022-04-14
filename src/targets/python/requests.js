@@ -11,6 +11,7 @@
 const { format } = require('util');
 const CodeBuilder = require('../../helpers/code-builder');
 const helpers = require('./helpers');
+const headerHelpers = require('../../helpers/headers');
 
 module.exports = function (source, options) {
   const opts = {
@@ -28,28 +29,64 @@ module.exports = function (source, options) {
   // Set URL
   code.push('url = "%s"', source.fullUrl).blank();
 
+  const headers = source.allHeaders;
+
   // Construct payload
+  let payload;
+  let hasFiles = false;
   let hasPayload = false;
   let jsonPayload = false;
-  if (source.postData.mimeType === 'application/json') {
-    if (source.postData.jsonObj) {
-      code.push('payload = %s', helpers.literalRepresentation(source.postData.jsonObj, opts));
-      jsonPayload = true;
-      hasPayload = true;
-    }
-  } else {
-    const payload = JSON.stringify(source.postData.text);
-    if (payload) {
-      code.push('payload = %s', payload);
-      hasPayload = true;
-    }
+  switch (source.postData.mimeType) {
+    case 'application/json':
+      if (source.postData.jsonObj) {
+        code.push('payload = %s', helpers.literalRepresentation(source.postData.jsonObj, opts));
+        jsonPayload = true;
+        hasPayload = true;
+      }
+      break;
+
+    case 'multipart/form-data':
+      if (source.postData.params) {
+        // files = {'file': open('hello.txt', 'rb')}
+        const files = source.postData.params
+          .map(p => {
+            if (p.fileName) {
+              return {
+                [p.name]: `open('${p.fileName}', 'rb')`,
+              };
+            }
+
+            return {
+              [p.name]: p.value,
+            };
+          })
+          .reduce((prev, next) => Object.assign(prev, next));
+
+        code.push('files = %s', helpers.literalRepresentation(files, opts));
+        hasFiles = true;
+
+        // requests prepares its own boundaries for multipart requests so we need to remove whatever
+        // we have here.
+        delete headers[headerHelpers.getHeaderName(headers, 'content-type')];
+      }
+      break;
+
+    default:
+      payload = JSON.stringify(source.postData.text);
+      if (payload) {
+        code.push('payload = %s', payload);
+        hasPayload = true;
+      }
   }
 
   // Construct headers
-  const headers = source.allHeaders;
   const headerCount = Object.keys(headers).length;
 
-  if (headerCount === 1) {
+  if (!headerCount && (hasPayload || hasFiles)) {
+    // If we don't have any heads but we do have a payload we should put a blank line here between
+    // that payload consturction and our execution of the requests library.
+    code.blank();
+  } else if (headerCount === 1) {
     Object.keys(headers).forEach(header => {
       code.push('headers = {"%s": "%s"}', header, headers[header]).blank();
     });
@@ -82,6 +119,10 @@ module.exports = function (source, options) {
     }
   }
 
+  if (hasFiles) {
+    request += ', files=files';
+  }
+
   if (headerCount > 0) {
     request += ', headers=headers';
   }
@@ -90,7 +131,12 @@ module.exports = function (source, options) {
 
   code.push(request).blank().push('print(response.text)');
 
-  return code.join();
+  return (
+    code
+      .join()
+      // The `open()` call must be a literal in the code snippet.
+      .replace(/"open\('(.+)', 'rb'\)"/g, 'open("$1", "rb")')
+  );
 };
 
 module.exports.info = {
