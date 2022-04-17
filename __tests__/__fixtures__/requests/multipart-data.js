@@ -49,9 +49,11 @@ module.exports = {
               args: {},
               data: '',
               files: {
-                foo: 'Hello World\n',
+                foo: 'Hello World',
               },
-              form: {},
+              form: {
+                bar: 'Bonjour le monde',
+              },
               headers: {
                 'Content-Type': 'multipart/form-data; boundary=------------------------6e4b42ed3719ed70',
               },

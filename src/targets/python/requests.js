@@ -47,26 +47,28 @@ module.exports = function (source, options) {
 
     case 'multipart/form-data':
       if (source.postData.params) {
-        // files = {'file': open('hello.txt', 'rb')}
-        const files = source.postData.params
-          .map(p => {
-            if (p.fileName) {
-              return {
-                [p.name]: `open('${p.fileName}', 'rb')`,
-              };
-            }
+        const files = {};
+        payload = {};
 
-            return {
-              [p.name]: p.value,
-            };
-          })
-          .reduce((prev, next) => Object.assign(prev, next));
+        source.postData.params.forEach(p => {
+          if (p.fileName) {
+            files[p.name] = `open('${p.fileName}', 'rb')`;
+            hasFiles = true;
+          } else {
+            payload[p.name] = p.value;
+            hasPayload = true;
+          }
+        });
 
-        code.push('files = %s', helpers.literalRepresentation(files, opts));
-        hasFiles = true;
+        if (hasFiles) {
+          code.push('files = %s', helpers.literalRepresentation(files, opts));
+        }
 
-        // requests prepares its own boundaries for multipart requests so we need to remove whatever
-        // we have here.
+        if (hasPayload) {
+          code.push('payload = %s', helpers.literalRepresentation(payload, opts));
+        }
+
+        // requests prepares its own boundaries for multipart requests.
         delete headers[headerHelpers.getHeaderName(headers, 'content-type')];
       }
       break;
