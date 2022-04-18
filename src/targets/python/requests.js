@@ -119,7 +119,12 @@ module.exports = function (source, options) {
 
   // Construct request
   const method = source.method;
-  let request = format('response = requests.request("%s", url', method);
+  let request;
+  if (['HEAD', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE'].includes(method)) {
+    request = format('response = requests.%s(url', method.toLowerCase());
+  } else {
+    request = format('response = requests.request("%s", url', method);
+  }
 
   if (hasPayload) {
     if (jsonPayload) {
