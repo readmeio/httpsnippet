@@ -62,14 +62,22 @@ module.exports = function (source, options) {
 
         if (hasFiles) {
           code.push('files = %s', helpers.literalRepresentation(files, opts));
-        }
 
-        if (hasPayload) {
-          code.push('payload = %s', helpers.literalRepresentation(payload, opts));
-        }
+          if (hasPayload) {
+            code.push('payload = %s', helpers.literalRepresentation(payload, opts));
+          }
 
-        // requests prepares its own boundaries for multipart requests.
-        delete headers[headerHelpers.getHeaderName(headers, 'content-type')];
+          // The requests library will only automatically add a `multipart/form-data` header if
+          // there are files being sent. If we're **only** sending form data we still need to send
+          // the boundary ourselves.
+          delete headers[headerHelpers.getHeaderName(headers, 'content-type')];
+        } else {
+          payload = JSON.stringify(source.postData.text);
+          if (payload) {
+            code.push('payload = %s', payload);
+            hasPayload = true;
+          }
+        }
       }
       break;
 

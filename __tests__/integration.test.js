@@ -240,7 +240,7 @@ describe.each(clients)('%s', (_, client) => {
         } else {
           // It doesn't matter that the /right/ boundary is set up because some targets may add their own, we just
           // need to make sure that **a** boundary is present.
-          const contentTypes = expected.headers['Content-Type'].split(';').map(p => p.trim());
+          const contentTypes = response.headers['Content-Type'].split(';').map(p => p.trim());
           expect(contentTypes).toHaveLength(2);
           expect(contentTypes.map(type => type.includes('boundary=')).filter(Boolean)).toHaveLength(1);
         }
