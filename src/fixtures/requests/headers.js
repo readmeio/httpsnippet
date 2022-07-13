@@ -13,7 +13,7 @@ module.exports = {
           headers: [
             {
               name: 'accept',
-              value: 'text/json',
+              value: 'application/json',
             },
             {
               name: 'x-foo',
@@ -40,7 +40,7 @@ module.exports = {
             mimeType: 'application/json',
             text: JSON.stringify({
               headers: {
-                Accept: 'text/json',
+                Accept: 'application/json',
                 'X-Bar': 'Foo',
                 'X-Foo': 'Bar',
               },

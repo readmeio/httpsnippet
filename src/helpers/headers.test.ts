@@ -8,12 +8,8 @@ const headers = {
 describe('headers', () => {
   describe('getHeader', () => {
     it('should get a header', () => {
-      expect(getHeader(headers, 'content-type')).toBe(
-        'multipart/form-data; boundary=---011000010111000001101001',
-      );
-      expect(getHeader(headers, 'content-TYPE')).toBe(
-        'multipart/form-data; boundary=---011000010111000001101001',
-      );
+      expect(getHeader(headers, 'content-type')).toBe('multipart/form-data; boundary=---011000010111000001101001');
+      expect(getHeader(headers, 'content-TYPE')).toBe('multipart/form-data; boundary=---011000010111000001101001');
       expect(getHeader(headers, 'Accept')).toBe('application/json');
       expect(getHeader(headers, 'authorization')).toBeUndefined();
     });

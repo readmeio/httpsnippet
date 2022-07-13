@@ -41,7 +41,6 @@ const filterEmpty = (m: Record<string, any>) => {
   Object.keys(m)
     .filter(x => objEmpty(m[x]))
     .forEach(x => {
-      // eslint-disable-next-line no-param-reassign
       delete m[x];
     });
   return m;
@@ -101,7 +100,6 @@ export const clj_http: Client = {
   convert: ({ queryObj, method, postData, url, allHeaders }, options) => {
     const { push, join } = new CodeBuilder({ indent: options?.indent });
     const methods = ['get', 'post', 'put', 'delete', 'patch', 'head', 'options'];
-    // eslint-disable-next-line no-param-reassign
     method = method.toLowerCase();
 
     if (!methods.includes(method)) {

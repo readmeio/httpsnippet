@@ -1,14 +1,18 @@
+import type { Param, PostDataCommon, Request as NpmHarRequest } from 'har-format';
+import type { UrlWithParsedQuery } from 'url';
+import type { ReducedHelperObject } from './helpers/reducer';
+import type { ClientId, TargetId } from './targets/targets';
 import { map as eventStreamMap } from 'event-stream';
 import FormData from 'form-data';
-import { Param, PostDataCommon, Request as NpmHarRequest } from 'har-format';
 import { stringify as queryStringify } from 'querystring';
-import { format as urlFormat, parse as urlParse, UrlWithParsedQuery } from 'url';
+// eslint-disable-next-line node/no-deprecated-api
+import { format as urlFormat, parse as urlParse } from 'url';
 
 import { formDataIterator, isBlob } from './helpers/form-data';
 import { validateHarRequest } from './helpers/har-validator';
 import { getHeaderName } from './helpers/headers';
-import { ReducedHelperObject, reducer } from './helpers/reducer';
-import { ClientId, TargetId, targets } from './targets/targets';
+import { reducer } from './helpers/reducer';
+import { targets } from './targets/targets';
 
 export { availableTargets, extname } from './helpers/utils';
 export { addTarget, addTargetClient } from './targets/targets';
@@ -143,9 +147,7 @@ export class HTTPSnippet {
     if (request.headers && request.headers.length) {
       const http2VersionRegex = /^HTTP\/2/;
       request.headersObj = request.headers.reduce((accumulator, { name, value }) => {
-        const headerName = http2VersionRegex.exec(request.httpVersion)
-          ? name.toLocaleLowerCase()
-          : name;
+        const headerName = http2VersionRegex.exec(request.httpVersion) ? name.toLocaleLowerCase() : name;
         return {
           ...accumulator,
           [headerName]: value,
@@ -160,7 +162,7 @@ export class HTTPSnippet {
           ...accumulator,
           [name]: value,
         }),
-        {},
+        {}
       );
     }
 
@@ -234,6 +236,7 @@ export class HTTPSnippet {
           });
 
           if (isNativeFormData) {
+            // eslint-disable-next-line no-restricted-syntax
             for (const data of formDataIterator(form, boundary)) {
               request.postData.text += data;
             }
@@ -242,15 +245,14 @@ export class HTTPSnippet {
               // @ts-expect-error TODO
               eventStreamMap(data => {
                 request.postData.text += data;
-              }),
+              })
             );
           }
 
           request.postData.boundary = boundary;
 
           // Since headers are case-sensitive we need to see if there's an existing `Content-Type` header that we can override.
-          const contentTypeHeader =
-            getHeaderName(request.headersObj, 'content-type') || 'content-type';
+          const contentTypeHeader = getHeaderName(request.headersObj, 'content-type') || 'content-type';
 
           request.headersObj[contentTypeHeader] = `multipart/form-data; boundary=${boundary}`;
         }

@@ -37,11 +37,7 @@ export const literalDeclaration = <T, U>(name: string, parameters: T, opts: U) =
  * @param value Any JavaScript literal
  * @param opts Target options
  */
-export const literalRepresentation = <T, U>(
-  value: T,
-  opts: U,
-  indentLevel?: number,
-): number | string => {
+export const literalRepresentation = <T, U>(value: T, opts: U, indentLevel?: number): number | string => {
   indentLevel = indentLevel === undefined ? 1 : indentLevel + 1;
 
   switch (Object.prototype.toString.call(value)) {
@@ -64,6 +60,7 @@ export const literalRepresentation = <T, U>(
 
     case '[object Object]': {
       const keyValuePairs = [];
+      // eslint-disable-next-line guard-for-in, no-restricted-syntax
       for (const key in value) {
         keyValuePairs.push(`"${key}": ${literalRepresentation(value[key], opts, indentLevel)}`);
       }
@@ -73,7 +70,7 @@ export const literalRepresentation = <T, U>(
         opts.pretty && keyValuePairs.length > 1,
         // @ts-expect-error needs better types
         opts.indent,
-        indentLevel,
+        indentLevel
       );
     }
 

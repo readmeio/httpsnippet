@@ -1,11 +1,15 @@
-import Ajv, { ErrorObject } from 'ajv';
-import { Request } from 'har-format';
+import type { ErrorObject } from 'ajv';
+import type { Request } from 'har-format';
+import Ajv from 'ajv';
 import * as schema from 'har-schema';
 
 export class HARError extends Error {
   name = 'HARError';
+
   message = 'validation failed';
+
   errors: ErrorObject[] = [];
+
   constructor(errors: ErrorObject[]) {
     super();
     this.errors = errors;

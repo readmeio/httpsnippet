@@ -1,7 +1,7 @@
-import { Merge } from 'type-fest';
+import type { Merge } from 'type-fest';
 
-import { CodeBuilderOptions } from '../helpers/code-builder';
-import { Request } from '../httpsnippet';
+import type { CodeBuilderOptions } from '../helpers/code-builder';
+import type { Request } from '..';
 import { c } from './c/target';
 import { clojure } from './clojure/target';
 import { csharp } from './csharp/target';
@@ -34,7 +34,7 @@ export interface ClientInfo {
 
 export type Converter<T extends Record<string, any>> = (
   request: Request,
-  options?: Merge<CodeBuilderOptions, T>,
+  options?: Merge<CodeBuilderOptions, T>
 ) => string;
 
 export interface Client<T extends Record<string, any> = Record<string, any>> {
@@ -118,7 +118,7 @@ export const isTarget = (target: Target): target is Target => {
     Object.keys(target.clientsById).length === 0
   ) {
     throw new Error(
-      `No clients provided in target ${target.info.key}.  You must provide the property \`clientsById\` containg your clients.`,
+      `No clients provided in target ${target.info.key}.  You must provide the property \`clientsById\` containg your clients.`
     );
   }
 
@@ -131,8 +131,8 @@ export const isTarget = (target: Target): target is Target => {
       `target ${target.info.key} is configured with a default client ${
         target.info.default
       }, but no such client was found in the property \`clientsById\` (found ${JSON.stringify(
-        Object.keys(target.clientsById),
-      )})`,
+        Object.keys(target.clientsById)
+      )})`
     );
   }
 
@@ -177,13 +177,8 @@ export const isClient = (client: Client): client is Client => {
     throw new Error('targets client must have an `info` object with property `link`');
   }
 
-  if (
-    !Object.prototype.hasOwnProperty.call(client, 'convert') ||
-    typeof client.convert !== 'function'
-  ) {
-    throw new Error(
-      'targets client must have a `convert` property containing a conversion function',
-    );
+  if (!Object.prototype.hasOwnProperty.call(client, 'convert') || typeof client.convert !== 'function') {
+    throw new Error('targets client must have a `convert` property containing a conversion function');
   }
 
   return true;
@@ -200,7 +195,7 @@ export const addTargetClient = (targetId: TargetId, client: Client) => {
 
   if (Object.prototype.hasOwnProperty.call(targets[targetId], client.info.key)) {
     throw new Error(
-      `the target ${targetId} already has a client with the key ${client.info.key}, please use a different key`,
+      `the target ${targetId} already has a client with the key ${client.info.key}, please use a different key`
     );
   }
 

@@ -1,4 +1,5 @@
-import { ClientInfo, TargetId, TargetInfo, targets } from '../targets/targets';
+import type { ClientInfo, TargetId, TargetInfo } from '../targets/targets';
+import { targets } from '../targets/targets';
 
 export interface AvailableTarget extends TargetInfo {
   clients: ClientInfo[];
@@ -8,7 +9,7 @@ export const availableTargets = () =>
   Object.keys(targets).map<AvailableTarget>(targetId => ({
     ...targets[targetId as TargetId].info,
     clients: Object.keys(targets[targetId as TargetId].clientsById).map(
-      clientId => targets[targetId as TargetId].clientsById[clientId].info,
+      clientId => targets[targetId as TargetId].clientsById[clientId].info
     ),
   }));
 

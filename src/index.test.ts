@@ -5,7 +5,7 @@ import query from './fixtures/requests/query';
 import short from './fixtures/requests/short';
 import { HTTPSnippet } from '.';
 
-describe('hTTPSnippet', () => {
+describe('HTTPSnippet', () => {
   it('should return false if no matching target', () => {
     const snippet = new HTTPSnippet(short.log.entries[0].request as Request);
     // @ts-expect-error intentionally incorrect
@@ -110,13 +110,13 @@ describe('hTTPSnippet', () => {
         expect(request.uriObj).toMatchObject({
           auth: null,
           hash: null,
-          host: 'mockbin.com',
-          hostname: 'mockbin.com',
-          href: 'http://mockbin.com/har?key=value',
-          path: '/har?foo=bar&foo=baz&baz=abc&key=value',
-          pathname: '/har',
+          host: 'httpbin.org',
+          hostname: 'httpbin.org',
+          href: 'https://httpbin.org/anything?key=value',
+          path: '/anything?foo=bar&foo=baz&baz=abc&key=value',
+          pathname: '/anything',
           port: null,
-          protocol: 'http:',
+          protocol: 'https:',
           query: {
             baz: 'abc',
             key: 'value',
@@ -127,11 +127,11 @@ describe('hTTPSnippet', () => {
         });
       });
 
-      it('should fix the `path` propety of uriObj to match queryString', () => {
+      it('should fix the `path` property of uriObj to match queryString', () => {
         const snippet = new HTTPSnippet(query.log.entries[0].request as Request);
         const request = snippet.requests[0];
 
-        expect(request.uriObj.path).toBe('/har?foo=bar&foo=baz&baz=abc&key=value');
+        expect(request.uriObj.path).toBe('/anything?foo=bar&foo=baz&baz=abc&key=value');
       });
     });
 
@@ -201,11 +201,11 @@ describe('hTTPSnippet', () => {
     });
 
     describe('url', () => {
-      it('shoudl modify the original url to strip query string', () => {
+      it('should modify the original url to strip query string', () => {
         const snippet = new HTTPSnippet(query.log.entries[0].request as Request);
         const request = snippet.requests[0];
 
-        expect(request.url).toBe('http://mockbin.com/har');
+        expect(request.url).toBe('https://httpbin.org/anything');
       });
     });
 
@@ -214,7 +214,7 @@ describe('hTTPSnippet', () => {
         const snippet = new HTTPSnippet(query.log.entries[0].request as Request);
         const request = snippet.requests[0];
 
-        expect(request.fullUrl).toBe('http://mockbin.com/har?foo=bar&foo=baz&baz=abc&key=value');
+        expect(request.fullUrl).toBe('https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value');
       });
     });
   });

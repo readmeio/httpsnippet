@@ -15,26 +15,10 @@
     "camelcase": "off",
     "class-methods-use-this": "off",
     "default-case": "off",
-
     "max-classes-per-file": "off",
     "no-param-reassign": "off",
+    "no-underscore-dangle": ["error", { "allow": ["_boundary"] }],
     "spaced-comment": "off"
-
-    // "jest/no-export": "off"
-
-    // "global-require": "off",
-    // "no-underscore-dangle": "off",
-    // "object-shorthand": "off"
-
-    // 'prefer-template': 'error',
-    // 'no-else-return': 'error',
-    // '@typescript-eslint/no-explicit-any': 'off',
-    // 'eslint-comments/require-description': 'error',
-    // 'eslint-comments/disable-enable-pair': 'off',
-    // 'simple-import-sort/imports': 'error',
-    // 'simple-import-sort/exports': 'error',
-    // 'jest/prefer-expect-assertions': 'off',
-    // 'jest/require-hook': 'off',
   },
   "env": {
     "browser": true

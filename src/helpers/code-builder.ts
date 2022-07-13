@@ -19,8 +19,11 @@ export interface CodeBuilderOptions {
 
 export class CodeBuilder {
   postProcessors: PostProcessor[] = [];
+
   code: string[] = [];
+
   indentationCharacter: string = DEFAULT_INDENTATION_CHARACTER;
+
   lineJoin = DEFAULT_LINE_JOIN;
 
   /**
@@ -68,10 +71,7 @@ export class CodeBuilder {
    */
   join = () => {
     const unreplacedCode = this.code.join(this.lineJoin);
-    const replacedOutput = this.postProcessors.reduce(
-      (accumulator, replacer) => replacer(accumulator),
-      unreplacedCode,
-    );
+    const replacedOutput = this.postProcessors.reduce((accumulator, replacer) => replacer(accumulator), unreplacedCode);
     return replacedOutput;
   };
 

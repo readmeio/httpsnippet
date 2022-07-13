@@ -1,8 +1,8 @@
-import full from '../../../fixtures/requests/full.json';
-import jsonNullValue from '../../../fixtures/requests/jsonObj-null-value.json';
-import short from '../../../fixtures/requests/short.json';
+import type { Request } from '../../..';
+import full from '../../../fixtures/requests/full';
+import jsonNullValue from '../../../fixtures/requests/jsonObj-null-value';
+import short from '../../../fixtures/requests/short';
 import { runCustomFixtures } from '../../../fixtures/runCustomFixtures';
-import { Request } from '../../../httpsnippet';
 
 runCustomFixtures({
   targetId: 'swift',
@@ -10,7 +10,7 @@ runCustomFixtures({
   tests: [
     {
       it: 'should support an indent option',
-      input: short as Request,
+      input: short.log.entries[0].request as Request,
       options: {
         indent: '    ',
       },
@@ -18,7 +18,7 @@ runCustomFixtures({
     },
     {
       it: 'should support a timeout option',
-      input: short as Request,
+      input: short.log.entries[0].request as Request,
       options: {
         timeout: 5,
       },
@@ -26,7 +26,7 @@ runCustomFixtures({
     },
     {
       it: 'should support pretty option',
-      input: full as Request,
+      input: full.log.entries[0].request as Request,
       options: {
         pretty: false,
       },
@@ -34,7 +34,7 @@ runCustomFixtures({
     },
     {
       it: 'should support json object with null value',
-      input: jsonNullValue as unknown as Request,
+      input: jsonNullValue.log.entries[0].request as unknown as Request,
       options: {
         pretty: false,
       },
