@@ -1,13 +1,40 @@
 {
-  "extends": "@readme/eslint-config",
+  "extends": [
+    "@readme/eslint-config",
+    "@readme/eslint-config/typescript",
+    "@readme/eslint-config/testing"
+  ],
   "root": true,
   "parserOptions": {
     "ecmaVersion": 2020
   },
   "rules": {
-    "global-require": "off",
-    "no-underscore-dangle": "off",
-    "object-shorthand": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+
+    "camelcase": "off",
+    "class-methods-use-this": "off",
+    "default-case": "off",
+
+    "max-classes-per-file": "off",
+    "no-param-reassign": "off",
+    "spaced-comment": "off"
+
+    // "jest/no-export": "off"
+
+    // "global-require": "off",
+    // "no-underscore-dangle": "off",
+    // "object-shorthand": "off"
+
+    // 'prefer-template': 'error',
+    // 'no-else-return': 'error',
+    // '@typescript-eslint/no-explicit-any': 'off',
+    // 'eslint-comments/require-description': 'error',
+    // 'eslint-comments/disable-enable-pair': 'off',
+    // 'simple-import-sort/imports': 'error',
+    // 'simple-import-sort/exports': 'error',
+    // 'jest/prefer-expect-assertions': 'off',
+    // 'jest/require-hook': 'off',
   },
   "env": {
     "browser": true

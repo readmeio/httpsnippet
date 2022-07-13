@@ -1,0 +1,33 @@
+<<<<<<< HEAD:__tests__/__fixtures__/output/http/1.1/multipart-data
+POST /anything HTTP/1.1
+Content-Type: multipart/form-data; boundary=---011000010111000001101001
+Host: httpbin.org
+Content-Length: 266
+
+-----011000010111000001101001
+Content-Disposition: form-data; name="foo"; filename="hello.txt"
+Content-Type: text/plain
+
+Hello World
+-----011000010111000001101001
+Content-Disposition: form-data; name="bar"
+
+Bonjour le monde
+-----011000010111000001101001--
+=======
+POST /har HTTP/1.1
+Content-Type: multipart/form-data; boundary=---011000010111000001101001
+Host: mockbin.com
+Content-Length: 266
+
+-----011000010111000001101001
+Content-Disposition: form-data; name="foo"; filename="hello.txt"
+Content-Type: text/plain
+
+Hello World
+-----011000010111000001101001
+Content-Disposition: form-data; name="bar"
+
+Bonjour le monde
+-----011000010111000001101001--
+>>>>>>> upstream/master:src/targets/http/http1.1/fixtures/multipart-data
