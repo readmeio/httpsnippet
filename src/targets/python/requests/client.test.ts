@@ -7,7 +7,7 @@ runCustomFixtures({
   tests: [
     {
       it: "should support query parameters provided in HAR's url",
-      input: { method: 'GET', url: 'http://mockbin.com/har?param=value' } as Request,
+      input: { method: 'GET', url: 'https://httpbin.org/anything?param=value' } as Request,
       options: {
         showBoilerplate: false,
       },

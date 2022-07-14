@@ -14,7 +14,7 @@ func main() {
 		Timeout: time.Duration(30 * time.Second),
 	}
 
-	url := "http://mockbin.com/har?foo=bar&foo=baz&baz=abc&key=value"
+	url := "https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value"
 
 	payload := strings.NewReader("foo=bar")
 
