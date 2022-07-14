@@ -8,7 +8,7 @@ http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'text/json'
+request["accept"] = 'application/json'
 request["x-foo"] = 'Bar'
 request["x-bar"] = 'Foo'
 

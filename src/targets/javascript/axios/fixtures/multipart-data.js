@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
 const form = new FormData();
-form.append("foo", "Hello World");
-form.append("bar", "Bonjour le monde");
+form.append('foo', 'Hello World');
+form.append('bar', 'Bonjour le monde');
 
 const options = {
   method: 'POST',
@@ -11,8 +11,11 @@ const options = {
   data: '[form]'
 };
 
-axios.request(options).then(function (response) {
-  console.log(response.data);
-}).catch(function (error) {
-  console.error(error);
-});
+axios
+  .request(options)
+  .then(function (response) {
+    console.log(response.data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });

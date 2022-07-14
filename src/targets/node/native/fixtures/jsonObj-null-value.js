@@ -1,24 +1,12 @@
-<<<<<<< HEAD:__tests__/__fixtures__/output/node/native/jsonObj-null-value.js
-const http = require("https");
-
-const options = {
-  "method": "POST",
-  "hostname": "httpbin.org",
-  "port": null,
-  "path": "/anything",
-  "headers": {
-    "content-type": "application/json"
-=======
-const http = require('http');
+const http = require('https');
 
 const options = {
   method: 'POST',
-  hostname: 'mockbin.com',
+  hostname: 'httpbin.org',
   port: null,
-  path: '/har',
+  path: '/anything',
   headers: {
     'content-type': 'application/json'
->>>>>>> upstream/master:src/targets/node/native/fixtures/jsonObj-null-value.js
   }
 };
 

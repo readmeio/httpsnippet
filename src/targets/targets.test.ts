@@ -1,4 +1,4 @@
-import type { Request } from '..';
+import type { HTTPSnippetOptions, Request } from '..';
 import type { ClientId, TargetId } from './targets';
 import { readdirSync, readFileSync } from 'fs';
 import path from 'path';
@@ -21,6 +21,7 @@ const fixtures: [string, Request][] = inputFileNames.map(inputFileName => [
 const targetFilter: TargetId[] = [
   // put your targetId:
   // 'node',
+  'php',
 ];
 
 /** useful for debuggin, only run a particular set of targets */
@@ -62,8 +63,24 @@ availableTargets()
             }
 
             it(`${clientId} request should match fixture for "${fixture}.js"`, () => {
-              const { convert } = new HTTPSnippet(request);
-              const result = convert(targetId, clientId); //?
+              const options: HTTPSnippetOptions = {};
+
+              // eslint-disable-next-line jest/no-if
+              if (fixture === 'query-encoded') {
+                // Query strings in this HAR are already escaped.
+                options.harIsAlreadyEncoded = true;
+              }
+
+              const { convert } = new HTTPSnippet(request, options);
+              let result = convert(targetId, clientId);
+
+              // `form-data` sets the line break as `\r\n`, but it's a pain in the butt to manage
+              // that when saving files (VSCode doesn't always respect `.editorconfig`) so we're
+              // converting them to a standard line break instead.
+              // eslint-disable-next-line jest/no-if
+              if (typeof result === 'string') {
+                result = result.replace(/\r\n/g, '\n');
+              }
 
               expect(result).toStrictEqual(expected);
             });

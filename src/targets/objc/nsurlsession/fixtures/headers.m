@@ -1,10 +1,6 @@
 #import <Foundation/Foundation.h>
 
-<<<<<<< HEAD:__tests__/__fixtures__/output/objc/nsurlsession/headers.m
-NSDictionary *headers = @{ @"accept": @"text/json",
-=======
 NSDictionary *headers = @{ @"accept": @"application/json",
->>>>>>> upstream/master:src/targets/objc/nsurlsession/fixtures/headers.m
                            @"x-foo": @"Bar",
                            @"x-bar": @"Foo" };
 

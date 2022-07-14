@@ -3,7 +3,7 @@ import type { Request } from '..';
 export const mimetypes = {
   'multipart/mixed': {
     method: 'POST',
-    url: 'http://mockbin.com/har',
+    url: 'https://httpbin.org/anything',
     postData: {
       mimeType: 'multipart/mixed',
       text: '',
@@ -12,7 +12,7 @@ export const mimetypes = {
 
   'multipart/related': {
     method: 'POST',
-    url: 'http://mockbin.com/har',
+    url: 'https://httpbin.org/anything',
     postData: {
       mimeType: 'multipart/related',
       text: '',
@@ -21,7 +21,7 @@ export const mimetypes = {
 
   'multipart/form-data': {
     method: 'POST',
-    url: 'http://mockbin.com/har',
+    url: 'https://httpbin.org/anything',
     postData: {
       mimeType: 'multipart/form-data',
       text: '',
@@ -30,7 +30,7 @@ export const mimetypes = {
 
   'multipart/alternative': {
     method: 'POST',
-    url: 'http://mockbin.com/har',
+    url: 'https://httpbin.org/anything',
     postData: {
       mimeType: 'multipart/alternative',
       text: '',
@@ -39,7 +39,7 @@ export const mimetypes = {
 
   'application/x-www-form-urlencoded': {
     method: 'POST',
-    url: 'http://mockbin.com/har',
+    url: 'https://httpbin.org/anything',
     postData: {
       mimeType: 'application/x-www-form-urlencoded',
       text: '',
@@ -48,7 +48,7 @@ export const mimetypes = {
 
   'text/json': {
     method: 'POST',
-    url: 'http://mockbin.com/har',
+    url: 'https://httpbin.org/anything',
     postData: {
       mimeType: 'text/json',
       text: '',
@@ -57,7 +57,7 @@ export const mimetypes = {
 
   'text/x-json': {
     method: 'POST',
-    url: 'http://mockbin.com/har',
+    url: 'https://httpbin.org/anything',
     postData: {
       mimeType: 'text/x-json',
       text: '',
@@ -66,7 +66,7 @@ export const mimetypes = {
 
   'application/x-json': {
     method: 'POST',
-    url: 'http://mockbin.com/har',
+    url: 'https://httpbin.org/anything',
     postData: {
       mimeType: 'application/x-json',
       text: '',
@@ -75,7 +75,7 @@ export const mimetypes = {
 
   'invalid-json': {
     method: 'POST',
-    url: 'http://mockbin.com/har',
+    url: 'https://httpbin.org/anything',
     postData: {
       mimeType: 'application/json',
       text: 'foo/bar',

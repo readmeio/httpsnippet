@@ -1,11 +1,7 @@
 import Foundation
 
 let headers = [
-<<<<<<< HEAD:__tests__/__fixtures__/output/swift/nsurlsession/headers.swift
-  "accept": "text/json",
-=======
   "accept": "application/json",
->>>>>>> upstream/master:src/targets/swift/nsurlsession/fixtures/headers.swift
   "x-foo": "Bar",
   "x-bar": "Foo"
 ]

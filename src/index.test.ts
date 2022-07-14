@@ -35,13 +35,13 @@ describe('HTTPSnippet', () => {
           {
             request: {
               method: 'GET',
-              url: 'http://mockbin.com/har',
+              url: 'https://httpbin.org/anything',
             },
           },
           {
             request: {
               method: 'POST',
-              url: 'http://mockbin.com/har',
+              url: 'https://httpbin.org/anything',
             },
           },
         ],

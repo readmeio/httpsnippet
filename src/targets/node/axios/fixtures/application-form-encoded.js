@@ -1,4 +1,4 @@
-const axios = require("axios").default;
+const axios = require('axios').default;
 const { URLSearchParams } = require('url');
 
 const encodedParams = new URLSearchParams();
@@ -12,8 +12,11 @@ const options = {
   data: encodedParams,
 };
 
-axios.request(options).then(function (response) {
-  console.log(response.data);
-}).catch(function (error) {
-  console.error(error);
-});
+axios
+  .request(options)
+  .then(function (response) {
+    console.log(response.data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });

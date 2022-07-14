@@ -60,6 +60,7 @@
     "@types/har-format": "^1.2.8",
     "@types/jest": "^27.4.1",
     "@types/node": "^16.11.26",
+    "@types/qs": "^6.9.7",
     "@types/stringify-object": "^4.0.1",
     "eslint": "^8.19.0",
     "glob": "^8.0.1",

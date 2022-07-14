@@ -1,8 +1,4 @@
-<<<<<<< HEAD:__tests__/__fixtures__/output/node/axios/multipart-file.js
-const axios = require("axios").default;
-=======
 const axios = require('axios').default;
->>>>>>> upstream/master:src/targets/node/axios/fixtures/multipart-file.js
 
 const options = {
   method: 'POST',

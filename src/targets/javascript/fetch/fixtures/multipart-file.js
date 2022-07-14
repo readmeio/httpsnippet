@@ -1,5 +1,5 @@
 const form = new FormData();
-form.append("foo", "__tests__/__fixtures__/files/hello.txt");
+form.append('foo', 'src/fixtures/files/hello.txt');
 
 const options = {method: 'POST'};
 

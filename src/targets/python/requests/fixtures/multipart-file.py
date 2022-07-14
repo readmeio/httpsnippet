@@ -2,7 +2,7 @@ import requests
 
 url = "https://httpbin.org/anything"
 
-files = {"foo": open("__tests__/__fixtures__/files/hello.txt", "rb")}
+files = {"foo": open("src/fixtures/files/hello.txt", "rb")}
 
 response = requests.post(url, files=files)
 

@@ -7,8 +7,8 @@ const options = {
   headers: {'content-type': 'multipart/form-data; boundary=---011000010111000001101001'},
   formData: {
     foo: {
-      value: fs.createReadStream('__tests__/__fixtures__/files/hello.txt'),
-      options: {filename: '__tests__/__fixtures__/files/hello.txt', contentType: 'text/plain'}
+      value: fs.createReadStream('src/fixtures/files/hello.txt'),
+      options: {filename: 'src/fixtures/files/hello.txt', contentType: 'text/plain'}
     }
   }
 };

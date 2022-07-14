@@ -1,19 +1,11 @@
 const http = require('https');
 
 const options = {
-<<<<<<< HEAD:__tests__/__fixtures__/output/node/native/short.js
-  "method": "GET",
-  "hostname": "httpbin.org",
-  "port": null,
-  "path": "/anything",
-  "headers": {}
-=======
   method: 'GET',
-  hostname: 'mockbin.com',
+  hostname: 'httpbin.org',
   port: null,
-  path: '/har',
+  path: '/anything',
   headers: {}
->>>>>>> upstream/master:src/targets/node/native/fixtures/https.js
 };
 
 const req = http.request(options, function (res) {

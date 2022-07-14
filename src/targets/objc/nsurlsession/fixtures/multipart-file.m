@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 NSDictionary *headers = @{ @"content-type": @"multipart/form-data; boundary=---011000010111000001101001" };
-NSArray *parameters = @[ @{ @"name": @"foo", @"fileName": @"__tests__/__fixtures__/files/hello.txt", @"contentType": @"text/plain" } ];
+NSArray *parameters = @[ @{ @"name": @"foo", @"fileName": @"src/fixtures/files/hello.txt", @"contentType": @"text/plain" } ];
 NSString *boundary = @"---011000010111000001101001";
 
 NSError *error;

@@ -1,1 +1,1 @@
-wget -v --method GET -O - http://mockbin.com/har
+wget -v --method GET -O - https://httpbin.org/anything

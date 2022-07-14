@@ -9,10 +9,6 @@ xhr.addEventListener('readystatechange', function () {
   }
 });
 
-<<<<<<< HEAD:__tests__/__fixtures__/output/javascript/xhr/http-insecure.js
-xhr.open("GET", "http://httpbin.org/anything");
-=======
-xhr.open('GET', 'https://mockbin.com/har');
->>>>>>> upstream/master:src/targets/javascript/xhr/fixtures/https.js
+xhr.open('GET', 'http://httpbin.org/anything');
 
 xhr.send(data);

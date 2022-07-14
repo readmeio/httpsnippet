@@ -1,12 +1,12 @@
 const settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "https://httpbin.org/headers",
-  "method": "GET",
-  "headers": {
-    "accept": "text/json",
-    "x-foo": "Bar",
-    "x-bar": "Foo"
+  async: true,
+  crossDomain: true,
+  url: 'https://httpbin.org/headers',
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    'x-foo': 'Bar',
+    'x-bar': 'Foo'
   }
 };
 

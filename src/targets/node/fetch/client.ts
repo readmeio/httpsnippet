@@ -56,7 +56,9 @@ export const fetch: Client = {
 
       case 'application/json':
         if (postData.jsonObj) {
-          reqOpts.body = JSON.stringify(postData.jsonObj);
+          // Though `fetch` doesn't accept JSON objects in the `body` option we're going to
+          // stringify it when we add this into the snippet further down.
+          reqOpts.body = postData.jsonObj;
         }
         break;
 
@@ -98,8 +100,8 @@ export const fetch: Client = {
     // construct cookies argument
     if (cookies.length) {
       const cookiesString = cookies
-        .map(({ name, value }: Cookie) => `${encodeURIComponent(name)}=${encodeURIComponent(value)}; `)
-        .join('');
+        .map(({ name, value }: Cookie) => `${encodeURIComponent(name)}=${encodeURIComponent(value)}`)
+        .join('; ');
       if (reqOpts.headers) {
         reqOpts.headers.cookie = cookiesString;
       } else {
@@ -108,16 +110,29 @@ export const fetch: Client = {
       }
     }
     blank();
-    push(`let url = '${url}';`);
-    blank();
+    push(`const url = '${url}';`);
 
     // If we ultimately don't have any headers to send then we shouldn't add an empty object into the request options.
     if (reqOpts.headers && !Object.keys(reqOpts.headers).length) {
       delete reqOpts.headers;
     }
 
-    const stringifiedOptions = stringifyObject(reqOpts, { indent: '  ', inlineCharacterLimit: 80 });
-    push(`let options = ${stringifiedOptions};`);
+    const stringifiedOptions = stringifyObject(reqOpts, {
+      indent: '  ',
+      inlineCharacterLimit: 80,
+
+      // The Fetch API body only accepts string parameters, but stringified JSON can be difficult to
+      // read, so we keep the object as a literal and use this transform function to wrap the literal
+      // in a `JSON.stringify` call.
+      transform: (object, property, originalResult) => {
+        if (property === 'body' && postData.mimeType === 'application/json') {
+          return `JSON.stringify(${originalResult})`;
+        }
+
+        return originalResult;
+      },
+    });
+    push(`const options = ${stringifiedOptions};`);
     blank();
 
     if (includeFS) {

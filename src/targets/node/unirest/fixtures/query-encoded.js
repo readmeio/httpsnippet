@@ -1,10 +1,10 @@
-const unirest = require("unirest");
+const unirest = require('unirest');
 
-const req = unirest("GET", "https://httpbin.org/anything");
+const req = unirest('GET', 'https://httpbin.org/anything');
 
 req.query({
-  "startTime": "2019-06-13T19%3A08%3A25.455Z",
-  "endTime": "2015-09-15T14%3A00%3A12-04%3A00"
+  startTime: '2019-06-13T19%3A08%3A25.455Z',
+  endTime: '2015-09-15T14%3A00%3A12-04%3A00'
 });
 
 req.end(function (res) {
@@ -12,4 +12,3 @@ req.end(function (res) {
 
   console.log(res.body);
 });
-

@@ -1,11 +1,11 @@
-const unirest = require("unirest");
+const unirest = require('unirest');
 
-const req = unirest("GET", "https://httpbin.org/headers");
+const req = unirest('GET', 'https://httpbin.org/headers');
 
 req.headers({
-  "accept": "text/json",
-  "x-foo": "Bar",
-  "x-bar": "Foo"
+  accept: 'application/json',
+  'x-foo': 'Bar',
+  'x-bar': 'Foo'
 });
 
 req.end(function (res) {
@@ -13,4 +13,3 @@ req.end(function (res) {
 
   console.log(res.body);
 });
-

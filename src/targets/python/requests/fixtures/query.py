@@ -1,7 +1,9 @@
 import requests
 
-url = "https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value"
+url = "https://httpbin.org/anything"
 
-response = requests.get(url)
+querystring = {"foo":["bar","baz"],"baz":"abc","key":"value"}
+
+response = requests.get(url, params=querystring)
 
 print(response.text)

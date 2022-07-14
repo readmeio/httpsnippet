@@ -11,11 +11,7 @@ curl_setopt_array($curl, [
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "GET",
   CURLOPT_HTTPHEADER => [
-<<<<<<< HEAD:__tests__/__fixtures__/output/php/curl/headers.php
-    "accept: text/json",
-=======
     "accept: application/json",
->>>>>>> upstream/master:src/targets/php/curl/fixtures/headers.php
     "x-bar: Foo",
     "x-foo: Bar"
   ],

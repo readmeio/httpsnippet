@@ -32,9 +32,9 @@ export const httr: Client = {
 
     // Construct query string
     const qs = queryObj;
-    const queryCount = Object.keys(qs).length;
     delete queryObj.key;
 
+    const queryCount = Object.keys(qs).length;
     if (queryString.length === 1) {
       push(`queryString <- list(${Object.keys(qs)} = "${Object.values(qs).toString()}")`);
       blank();

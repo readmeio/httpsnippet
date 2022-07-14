@@ -7,7 +7,7 @@ $response = $client->request('POST', 'https://httpbin.org/anything', [
   'multipart' => [
     [
         'name' => 'foo',
-        'filename' => '__tests__/__fixtures__/files/hello.txt',
+        'filename' => 'src/fixtures/files/hello.txt',
         'contents' => 'Hello World',
         'headers' => [
                 'Content-Type' => 'text/plain'

@@ -29,7 +29,7 @@ import { HTTPSnippet } from 'httpsnippet';
 
 const snippet = new HTTPSnippet({
   method: 'GET',
-  url: 'http://mockbin.com/request',
+  url: 'https://httpbin.org/anything',
 });
 ```
 
@@ -60,7 +60,7 @@ import { HTTPSnippet } from 'httpsnippet';
 
 const snippet = new HTTPSnippet({
   method: 'GET',
-  url: 'http://mockbin.com/request',
+  url: 'httsp://httpbin.org/anything',
 });
 
 // generate Node.js: Native output
@@ -99,7 +99,7 @@ import { HTTPSnippet } from 'httpsnippet';
 
 const snippet = new HTTPSnippet({
   method: 'GET',
-  url: 'http://mockbin.com/request',
+  url: 'https://httpbin.org/anything',
 });
 
 // generate Shell: cURL output

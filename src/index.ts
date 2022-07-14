@@ -4,7 +4,7 @@ import type { ReducedHelperObject } from './helpers/reducer';
 import type { ClientId, TargetId } from './targets/targets';
 import { map as eventStreamMap } from 'event-stream';
 import FormData from 'form-data';
-import { stringify as queryStringify } from 'querystring';
+import { stringify as queryStringify } from 'qs';
 // eslint-disable-next-line node/no-deprecated-api
 import { format as urlFormat, parse as urlParse } from 'url';
 
@@ -304,7 +304,17 @@ export class HTTPSnippet {
     }; //?
 
     // reset uriObj values for a clean url
-    const search = queryStringify(request.queryObj);
+    let search;
+    if (options.harIsAlreadyEncoded) {
+      search = queryStringify(request.queryObj, {
+        encode: false,
+        indices: false,
+      });
+    } else {
+      search = queryStringify(request.queryObj, {
+        indices: false,
+      });
+    }
 
     const uriObj = {
       ...urlWithParsedQuery,

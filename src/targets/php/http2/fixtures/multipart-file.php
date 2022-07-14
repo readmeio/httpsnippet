@@ -8,7 +8,7 @@ $body->addForm(null, [
   [
     'name' => 'foo',
     'type' => 'text/plain',
-    'file' => '__tests__/__fixtures__/files/hello.txt',
+    'file' => 'src/fixtures/files/hello.txt',
     'data' => null
   ]
 ]);

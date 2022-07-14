@@ -1,5 +1,5 @@
 const form = new FormData();
-form.append("foo", "bar");
+form.append('foo', 'bar');
 
 const options = {method: 'POST'};
 

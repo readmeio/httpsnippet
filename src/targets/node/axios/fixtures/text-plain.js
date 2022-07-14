@@ -1,4 +1,4 @@
-const axios = require("axios").default;
+const axios = require('axios').default;
 
 const options = {
   method: 'POST',
@@ -7,8 +7,11 @@ const options = {
   data: 'Hello World'
 };
 
-axios.request(options).then(function (response) {
-  console.log(response.data);
-}).catch(function (error) {
-  console.error(error);
-});
+axios
+  .request(options)
+  .then(function (response) {
+    console.log(response.data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });

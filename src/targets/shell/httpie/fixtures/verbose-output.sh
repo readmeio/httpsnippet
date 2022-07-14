@@ -1,1 +1,1 @@
-http --verbose GET http://mockbin.com/har
+http --verbose GET https://httpbin.org/anything

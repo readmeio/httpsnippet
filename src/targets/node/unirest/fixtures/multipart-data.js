@@ -1,18 +1,18 @@
-const unirest = require("unirest");
+const unirest = require('unirest');
 
-const req = unirest("POST", "https://httpbin.org/anything");
+const req = unirest('POST', 'https://httpbin.org/anything');
 
 req.headers({
-  "content-type": "multipart/form-data; boundary=---011000010111000001101001"
+  'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
 });
 
 req.multipart([
   {
-    "body": "Hello World",
-    "content-type": "text/plain"
+    body: 'Hello World',
+    'content-type': 'text/plain'
   },
   {
-    "body": "Bonjour le monde"
+    body: 'Bonjour le monde'
   }
 ]);
 
@@ -21,4 +21,3 @@ req.end(function (res) {
 
   console.log(res.body);
 });
-

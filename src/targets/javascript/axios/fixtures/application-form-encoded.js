@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const encodedParams = new URLSearchParams();
 encodedParams.set('foo', 'bar');
@@ -11,8 +11,11 @@ const options = {
   data: encodedParams,
 };
 
-axios.request(options).then(function (response) {
-  console.log(response.data);
-}).catch(function (error) {
-  console.error(error);
-});
+axios
+  .request(options)
+  .then(function (response) {
+    console.log(response.data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });

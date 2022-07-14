@@ -3,7 +3,7 @@ import requests
 url = "https://httpbin.org/headers"
 
 headers = {
-    "accept": "text/json",
+    "accept": "application/json",
     "x-foo": "Bar",
     "x-bar": "Foo"
 }

@@ -1,1 +1,1 @@
-wget --verbose --method GET --output-document - http://mockbin.com/har
+wget --verbose --method GET --output-document - https://httpbin.org/anything

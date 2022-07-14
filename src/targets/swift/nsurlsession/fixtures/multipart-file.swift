@@ -4,7 +4,7 @@ let headers = ["content-type": "multipart/form-data; boundary=---011000010111000
 let parameters = [
   [
     "name": "foo",
-    "fileName": "__tests__/__fixtures__/files/hello.txt",
+    "fileName": "src/fixtures/files/hello.txt",
     "contentType": "text/plain"
   ]
 ]

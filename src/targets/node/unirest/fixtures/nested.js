@@ -1,11 +1,11 @@
-const unirest = require("unirest");
+const unirest = require('unirest');
 
-const req = unirest("GET", "https://httpbin.org/anything");
+const req = unirest('GET', 'https://httpbin.org/anything');
 
 req.query({
-  "foo[bar]": "baz,zap",
-  "fiz": "buz",
-  "key": "value"
+  'foo[bar]': 'baz,zap',
+  fiz: 'buz',
+  key: 'value'
 });
 
 req.end(function (res) {
@@ -13,4 +13,3 @@ req.end(function (res) {
 
   console.log(res.body);
 });
-

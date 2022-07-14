@@ -1,22 +1,11 @@
-<<<<<<< HEAD:__tests__/__fixtures__/output/node/native/custom-method.js
-const http = require("https");
-
-const options = {
-  "method": "PROPFIND",
-  "hostname": "httpbin.org",
-  "port": null,
-  "path": "/anything",
-  "headers": {}
-=======
-const http = require('http');
+const http = require('https');
 
 const options = {
   method: 'PROPFIND',
-  hostname: 'mockbin.com',
+  hostname: 'httpbin.org',
   port: null,
-  path: '/har',
+  path: '/anything',
   headers: {}
->>>>>>> upstream/master:src/targets/node/native/fixtures/custom-method.js
 };
 
 const req = http.request(options, function (res) {

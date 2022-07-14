@@ -53,7 +53,11 @@ export const fetch: Client<FetchOptions> = {
         break;
 
       case 'application/json':
-        options.body = JSON.stringify(postData.jsonObj);
+        if (postData.jsonObj) {
+          // Though `fetch` doesn't accept JSON objects in the `body` option we're going to
+          // stringify it when we add this into the snippet further down.
+          options.body = postData.jsonObj;
+        }
         break;
 
       case 'multipart/form-data':
@@ -92,10 +96,19 @@ export const fetch: Client<FetchOptions> = {
       `const options = ${stringifyObject(options, {
         indent: opts.indent,
         inlineCharacterLimit: 80,
-        transform: (_, property, originalResult) => {
-          if (property === 'body' && postData.mimeType === 'application/x-www-form-urlencoded') {
-            return `new URLSearchParams(${originalResult})`;
+
+        // The Fetch API body only accepts string parameters, but stringified JSON can be difficult
+        // to read, so we keep the object as a literal and use this transform function to wrap the
+        // literal in a `JSON.stringify` call.
+        transform: (object, property, originalResult) => {
+          if (property === 'body') {
+            if (postData.mimeType === 'application/x-www-form-urlencoded') {
+              return `new URLSearchParams(${originalResult})`;
+            } else if (postData.mimeType === 'application/json') {
+              return `JSON.stringify(${originalResult})`;
+            }
           }
+
           return originalResult;
         },
       })};`

@@ -42,8 +42,10 @@ export const guzzle: Client<GuzzleOptions> = {
 
     if (!opts.noTags) {
       push(opts.shortTags ? '<?' : '<?php');
-      blank();
     }
+
+    push("require_once('vendor/autoload.php');");
+    blank();
 
     switch (postData.mimeType) {
       case 'application/x-www-form-urlencoded':

@@ -1,34 +1,34 @@
 const data = JSON.stringify({
-  "number": 1,
-  "string": "f\"oo",
-  "arr": [
+  number: 1,
+  string: 'f"oo',
+  arr: [
     1,
     2,
     3
   ],
-  "nested": {
-    "a": "b"
+  nested: {
+    a: 'b'
   },
-  "arr_mix": [
+  arr_mix: [
     1,
-    "a",
+    'a',
     {
-      "arr_mix_nested": {}
+      arr_mix_nested: {}
     }
   ],
-  "boolean": false
+  boolean: false
 });
 
 const xhr = new XMLHttpRequest();
 xhr.withCredentials = true;
 
-xhr.addEventListener("readystatechange", function () {
+xhr.addEventListener('readystatechange', function () {
   if (this.readyState === this.DONE) {
     console.log(this.responseText);
   }
 });
 
-xhr.open("POST", "https://httpbin.org/anything");
-xhr.setRequestHeader("content-type", "application/json");
+xhr.open('POST', 'https://httpbin.org/anything');
+xhr.setRequestHeader('content-type', 'application/json');
 
 xhr.send(data);
