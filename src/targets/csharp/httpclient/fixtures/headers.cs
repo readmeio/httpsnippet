@@ -5,7 +5,7 @@ var request = new HttpRequestMessage
     RequestUri = new Uri("https://httpbin.org/headers"),
     Headers =
     {
-        { "accept", "text/json" },
+        { "accept", "application/json" },
         { "x-foo", "Bar" },
         { "x-bar", "Foo" },
     },

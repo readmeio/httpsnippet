@@ -21,7 +21,6 @@ const fixtures: [string, Request][] = inputFileNames.map(inputFileName => [
 const targetFilter: TargetId[] = [
   // put your targetId:
   // 'node',
-  'php',
 ];
 
 /** useful for debuggin, only run a particular set of targets */
@@ -72,15 +71,7 @@ availableTargets()
               }
 
               const { convert } = new HTTPSnippet(request, options);
-              let result = convert(targetId, clientId);
-
-              // `form-data` sets the line break as `\r\n`, but it's a pain in the butt to manage
-              // that when saving files (VSCode doesn't always respect `.editorconfig`) so we're
-              // converting them to a standard line break instead.
-              // eslint-disable-next-line jest/no-if
-              if (typeof result === 'string') {
-                result = result.replace(/\r\n/g, '\n');
-              }
+              const result = convert(targetId, clientId);
 
               expect(result).toStrictEqual(expected);
             });
