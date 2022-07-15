@@ -99,7 +99,7 @@ availableTargets()
       clients.filter(testFilter('key', clientFilter(targetId), true)).forEach(({ key: clientId }) => {
         // If we're in an HTTPBin-powered Docker environment we only want to run tests for the
         // client that our Docker has been configured for.
-        if (process.env.HTTPBIN && process.env.INTEGRATON_CLIENT !== targetId) {
+        if (process.env.HTTPBIN && process.env.INTEGRATION_CLIENT !== targetId) {
           return;
         }
 
