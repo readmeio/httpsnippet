@@ -97,6 +97,12 @@ availableTargets()
   .forEach(({ key: targetId, cli: targetCLI, title, extname: fixtureExtension, clients }) => {
     describe(`${title} Request Validation`, () => {
       clients.filter(testFilter('key', clientFilter(targetId), true)).forEach(({ key: clientId }) => {
+        // If we're in an HTTPBin-powered Docker environment we only want to run tests for the
+        // client that our Docker has been configured for.
+        if (process.env.HTTPBIN && process.env.INTEGRATON_CLIENT !== targetId) {
+          return;
+        }
+
         // eslint-disable-next-line jest/valid-title
         describe(clientId, () => {
           fixtures.filter(testFilter(0, fixtureIgnoreFilter, true)).forEach(([fixture, request]) => {
