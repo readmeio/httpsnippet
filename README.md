@@ -163,6 +163,7 @@ The main difference between this library and the upstream [httpsnippet](https://
 * PHP Guzzle snippets come with `require_once('vendor/autoload.php');` at the top of them.
 * A full integration suite for testing out snippets the library creates.
 * This library does not ship a Python client for [http.client](https://docs.python.org/3/library/http.client.html) due to its limitations in supporting file uploads.
+* The Python client for [Requests](http://docs.python-requests.org/en/latest/api/#requests.request) does not provide query string parameters in a `params` argument due to complexities with query encoding.
 
 ### Running the integration suite
 

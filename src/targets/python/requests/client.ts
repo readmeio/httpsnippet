@@ -25,7 +25,7 @@ export const requests: Client<RequestsOptions> = {
     link: 'http://docs.python-requests.org/en/latest/api/#requests.request',
     description: 'Requests HTTP library',
   },
-  convert: ({ queryObj, url, postData, allHeaders, method }, options) => {
+  convert: ({ fullUrl, postData, allHeaders, method }, options) => {
     const opts = {
       indent: '    ',
       pretty: true,
@@ -39,17 +39,8 @@ export const requests: Client<RequestsOptions> = {
     blank();
 
     // Set URL
-    push(`url = "${url}"`);
+    push(`url = "${fullUrl}"`);
     blank();
-
-    // Construct query string
-    let qs;
-    if (Object.keys(queryObj).length) {
-      qs = `querystring = ${JSON.stringify(queryObj)}`;
-
-      push(qs);
-      blank();
-    }
 
     const headers = allHeaders;
 
@@ -167,10 +158,6 @@ export const requests: Client<RequestsOptions> = {
 
     if (headerCount > 0) {
       request += ', headers=headers';
-    }
-
-    if (qs) {
-      request += ', params=querystring';
     }
 
     request += ')';
