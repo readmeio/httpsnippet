@@ -1,11 +1,13 @@
 import type { HTTPSnippetOptions, Request } from '..';
-import type { ClientId, TargetId } from './targets';
+import type { Client, ClientId, Target, TargetId } from './targets';
 import { readdirSync, readFileSync } from 'fs';
 import path from 'path';
 
 import { availableTargets, extname } from '../helpers/utils';
 import { HTTPSnippet } from '..';
-import { isClient, isTarget } from './targets';
+import { isClient, isTarget, addTarget, addTargetClient, targets } from './targets';
+
+import short from '../fixtures/requests/short';
 
 const expectedBasePath = ['src', 'fixtures', 'requests'];
 
@@ -226,5 +228,63 @@ describe('isClient', () => {
         convert: () => '',
       })
     ).toBeTruthy();
+  });
+});
+
+describe('addTarget', () => {
+  afterEach(() => {
+    // @ts-expect-error intentionally incorrect
+    delete targets.deno;
+  });
+
+  it('should add a new custom target', async () => {
+    const { fetch: fetchClient } = await import('./node/fetch/client');
+
+    const deno: Target = {
+      info: {
+        // @ts-expect-error intentionally incorrect
+        key: 'deno',
+        title: 'Deno',
+        extname: '.js',
+        default: 'fetch',
+      },
+      clientsById: {
+        fetch: fetchClient,
+      },
+    };
+
+    addTarget(deno);
+
+    // @ts-expect-error intentionally incorrect
+    expect(targets.deno).toBeDefined();
+    // @ts-expect-error intentionally incorrect
+    expect(targets.deno).toStrictEqual(deno);
+  });
+});
+
+describe('addTargetClient', () => {
+  afterEach(() => {
+    delete targets.node.clientsById.custom;
+  });
+
+  it('should add a new custom target', () => {
+    const customClient: Client = {
+      info: {
+        key: 'custom',
+        title: 'Custom HTTP library',
+        link: 'https://example.com',
+        description: 'A custom HTTP library',
+      },
+      convert: () => {
+        return 'This was generated from a custom client.';
+      },
+    };
+
+    addTargetClient('node', customClient);
+
+    const { convert } = new HTTPSnippet(short.log.entries[0].request as Request, {});
+    const result = convert('node', 'custom');
+
+    expect(result).toBe('This was generated from a custom client.');
   });
 });

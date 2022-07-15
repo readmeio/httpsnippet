@@ -10,6 +10,7 @@ export const php: Target = {
     title: 'PHP',
     extname: '.php',
     default: 'curl',
+    cli: 'php %s',
   },
   clientsById: {
     curl,

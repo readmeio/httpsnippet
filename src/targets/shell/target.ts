@@ -9,6 +9,7 @@ export const shell: Target = {
     title: 'Shell',
     extname: '.sh',
     default: 'curl',
+    cli: '%s',
   },
   clientsById: {
     curl,

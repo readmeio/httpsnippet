@@ -11,6 +11,7 @@ export const node: Target = {
     title: 'Node.js',
     extname: '.js',
     default: 'native',
+    cli: 'node %s',
   },
   clientsById: {
     native,
