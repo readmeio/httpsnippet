@@ -69,7 +69,7 @@ export const curl: Client<CurlOptions> = {
         if (contentTypeHeaderName && contentTypeHeader) {
           // remove the leading semi colon and boundary
           // up to the next semi colon or the end of string
-          const noBoundary = contentTypeHeader.replace(/; boundary.+?(?=(;|$))/, '');
+          const noBoundary = String(contentTypeHeader).replace(/; boundary.+?(?=(;|$))/, '');
 
           // replace the content-type header with no boundary in both headersObj and allHeaders
           headersObj[contentTypeHeaderName] = noBoundary;

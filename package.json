@@ -48,7 +48,10 @@
     "url": "https://github.com/readmeio/httpsnippet.git"
   },
   "scripts": {
+    "build": "tsc --build tsconfig.build.json",
+    "clean": "tsc --build tsconfig.build.json --clean",
     "lint": "eslint .",
+    "prebuild": "npm run clean",
     "pretest": "npm run lint",
     "prettier": "prettier --list-different --write \"./**/**.js\"",
     "test": "jest --coverage"

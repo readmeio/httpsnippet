@@ -35,7 +35,7 @@ export const native: Client = {
       headers: allHeaders,
     };
 
-    push(`const http = require('${uriObj.protocol.replace(':', '')}');`);
+    push(`const http = require('${uriObj.protocol?.replace(':', '')}');`);
 
     blank();
     push(`const options = ${stringifyObject(reqOpts, { indent: opts.indent })};`);
