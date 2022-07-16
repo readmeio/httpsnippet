@@ -1,6 +1,6 @@
 /* eslint-disable jest/no-conditional-expect */
 import type { Request } from '.';
-import type { ClientId, TargetId } from './targets/targets';
+import type { TargetId } from './targets/targets';
 import type { Response } from 'har-format';
 
 import shell from 'child_process';
@@ -11,6 +11,25 @@ import path from 'path';
 import { availableTargets, extname } from './helpers/utils';
 
 const expectedBasePath = ['src', 'fixtures', 'requests'];
+
+const ENVIRONMENT_CONFIG = {
+  docker: {
+    // Every client + target that we test in an HTTPBin-powered Docker environment.
+    node: ['axios', 'fetch', 'native', 'request'],
+    php: ['curl', 'guzzle'],
+    python: ['requests'],
+    shell: ['curl'],
+  },
+  local: {
+    // When running tests locally, or within a Jest CI environment, we shold limit the targets that
+    // we're testing so as to not require a mess of dependency requirements that would be better
+    // served within a container.
+    node: ['native'],
+    php: ['curl'],
+    python: ['requests'],
+    shell: ['curl'],
+  },
+};
 
 const inputFileNames = readdirSync(path.join(...expectedBasePath), 'utf-8');
 
@@ -32,42 +51,23 @@ const fixtureIgnoreFilter: string[] = [
   'multipart-file',
 ];
 
-const environmentFilter = (): TargetId[] => {
+const environmentFilter = (): string[] => {
   if (process.env.HTTPBIN) {
-    // Every target that we test in an HTTPBin-powered Docker environment.
-    return ['node', 'php', 'shell'];
+    return Object.keys(ENVIRONMENT_CONFIG.docker);
   } else if (process.env.NODE_ENV === 'test') {
-    // Every target that we support testing within our standard `npm test` workflow.
-    return ['node', 'php', 'python', 'shell'];
+    return Object.keys(ENVIRONMENT_CONFIG.local);
   }
 
   throw new Error('Unsupported environment supplied to `environmentFilter`.');
 };
 
-const clientFilter = (target: TargetId): ClientId[] => {
+const clientFilter = (target: TargetId): string[] => {
   if (process.env.HTTPBIN) {
-    switch (target) {
-      case 'node': // We don't expose `unirest` in `@readme/oas-to-snippet` so no need to test it.
-        return ['unirest'];
-      case 'php': // These Pear and PECL clients as they don't have much traction anymore.
-        return ['http1', 'http2'];
-      case 'shell': // We're only testing `curl` here.
-        return ['httpie', 'wget'];
-    }
+    // @ts-expect-error fix this type
+    return ENVIRONMENT_CONFIG.docker[target];
   } else if (process.env.NODE_ENV === 'test') {
-    // When running tests locally, or within a Jest CI environment, we shold limit the targets that
-    // we're testing so as to not require a mess of dependency requirements that would be better
-    // served within a container.
-    switch (target) {
-      case 'node':
-        return ['axios', 'fetch', 'request', 'unirest']; // Only testing `native` locally.
-      case 'php':
-        return ['guzzle', 'http1', 'http2']; // Only testing `curl` locally.
-      case 'python':
-        return [];
-      case 'shell':
-        return ['httpie', 'wget']; // Only testing `curl`.
-    }
+    // @ts-expect-error fix this type
+    return ENVIRONMENT_CONFIG.local[target];
   }
 
   throw new Error('Unsupported environment supplied to `clientFilter`.');
@@ -76,7 +76,9 @@ const clientFilter = (target: TargetId): ClientId[] => {
 const testFilter =
   <T>(property: keyof T, list: T[keyof T][], ignore = false) =>
   (item: T) => {
-    if (ignore) {
+    if (!list.length) {
+      return true;
+    } else if (ignore) {
       return list.length > 0 ? !list.includes(item[property]) : true;
     }
 
@@ -95,8 +97,8 @@ availableTargets()
   .filter(target => target.cli)
   .filter(testFilter('key', environmentFilter()))
   .forEach(({ key: targetId, cli: targetCLI, title, extname: fixtureExtension, clients }) => {
-    describe(`${title} Request Validation`, () => {
-      clients.filter(testFilter('key', clientFilter(targetId), true)).forEach(({ key: clientId }) => {
+    describe(`${title} integration tests`, () => {
+      clients.filter(testFilter('key', clientFilter(targetId))).forEach(({ key: clientId }) => {
         // If we're in an HTTPBin-powered Docker environment we only want to run tests for the
         // client that our Docker has been configured for.
         if (process.env.HTTPBIN && process.env.INTEGRATION_CLIENT !== targetId) {
