@@ -4,7 +4,7 @@
 
 Relies on the popular [HAR](http://www.softwareishard.com/blog/har-12-spec/#request) format to import data and describe HTTP calls.
 
-See it in action on companion service: [APIembed](https://apiembed.com/)
+See it in action on [ReadMe](https://docs.readme.com/reference/getopenroles).
 
 [![Build](https://github.com/readmeio/httpsnippet/workflows/CI/badge.svg)](https://github.com/readmeio/httpsnippet)
 
@@ -151,8 +151,6 @@ At the heart of this module is the [HAR Format](http://www.softwareishard.com/bl
 
 For detailed information on each target, please review the [wiki](https://github.com/Kong/httpsnippet/wiki).
 
-For detailed information on each target, please review the [wiki](https://github.com/kong/httpsnippet/wiki).
-
 ## Differences from `kong/httpsnippet`
 
 The main difference between this library and the upstream [httpsnippet](https://github.com/Kong/httpsnippet) library are:
@@ -164,6 +162,7 @@ The main difference between this library and the upstream [httpsnippet](https://
 * A full integration suite for testing out snippets the library creates.
 * This library does not ship a Python client for [http.client](https://docs.python.org/3/library/http.client.html) due to its limitations in supporting file uploads.
 * The Python client for [Requests](http://docs.python-requests.org/en/latest/api/#requests.request) does not provide query string parameters in a `params` argument due to complexities with query encoding.
+* The Node `request` client does not specify query parameters in the `qs` option due to query encoding complexities.
 
 ### Running the integration suite
 

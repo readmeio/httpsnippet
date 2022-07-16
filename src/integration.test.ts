@@ -132,7 +132,7 @@ availableTargets()
                 // If this target throws errors when it can't access a method on the server that
                 // doesn't exist let's make sure that it only did that on the `custom-method` test,
                 // otherwise something went wrong!
-                if (err instanceof Error && err.message.includes('405 METHOD NOT ALLOWED')) {
+                if (err.message.includes('405 METHOD NOT ALLOWED')) {
                   expect(fixture).toBe('custom-method');
                   return;
                 }
