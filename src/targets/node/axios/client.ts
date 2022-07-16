@@ -21,7 +21,7 @@ export const axios: Client = {
     link: 'https://github.com/axios/axios',
     description: 'Promise based HTTP client for the browser and node.js',
   },
-  convert: ({ method, url, queryObj, allHeaders, postData }, options) => {
+  convert: ({ method, fullUrl, allHeaders, postData }, options) => {
     const opts = {
       indent: '  ',
       ...options,
@@ -32,12 +32,8 @@ export const axios: Client = {
 
     const reqOpts: Record<string, any> = {
       method,
-      url,
+      url: fullUrl,
     };
-
-    if (Object.keys(queryObj).length) {
-      reqOpts.params = queryObj;
-    }
 
     if (Object.keys(allHeaders).length) {
       reqOpts.headers = allHeaders;

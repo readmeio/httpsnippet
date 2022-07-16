@@ -6,8 +6,7 @@ encodedParams.set('foo', 'bar');
 
 const options = {
   method: 'POST',
-  url: 'https://httpbin.org/anything',
-  params: {foo: ['bar', 'baz'], baz: 'abc', key: 'value'},
+  url: 'https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value',
   headers: {
     cookie: 'foo=bar; bar=baz',
     accept: 'application/json',

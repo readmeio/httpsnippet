@@ -2,8 +2,7 @@ const axios = require('axios').default;
 
 const options = {
   method: 'GET',
-  url: 'https://httpbin.org/anything',
-  params: {foo: ['bar', 'baz'], baz: 'abc', key: 'value'}
+  url: 'https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value'
 };
 
 axios

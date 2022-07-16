@@ -6,8 +6,7 @@ jar.setCookie(request.cookie('bar=baz'), 'https://httpbin.org/anything');
 
 const options = {
   method: 'POST',
-  url: 'https://httpbin.org/anything',
-  qs: {foo: ['bar', 'baz'], baz: 'abc', key: 'value'},
+  url: 'https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value',
   headers: {
     accept: 'application/json',
     'content-type': 'application/x-www-form-urlencoded'
