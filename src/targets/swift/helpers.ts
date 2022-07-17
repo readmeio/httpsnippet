@@ -37,7 +37,11 @@ export const literalDeclaration = <T, U>(name: string, parameters: T, opts: U) =
  * @param value Any JavaScript literal
  * @param opts Target options
  */
-export const literalRepresentation = <T, U>(value: T, opts: U, indentLevel?: number): number | string => {
+export const literalRepresentation = <T, U>(
+  value: T,
+  opts: U,
+  indentLevel?: number,
+): number | string => {
   indentLevel = indentLevel === undefined ? 1 : indentLevel + 1;
 
   switch (Object.prototype.toString.call(value)) {

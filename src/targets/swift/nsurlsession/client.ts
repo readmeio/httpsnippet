@@ -59,15 +59,15 @@ export const nsurlsession: Client<NsurlsessionOptions> = {
           // The user can just add/remove lines adding/removing body parameters.
           blank();
           if (postData.params) {
+            const [head, ...tail] = postData.params;
             push(
-              `let postData = NSMutableData(data: "${postData.params[0].name}=${postData.params[0].value}".data(using: String.Encoding.utf8)!)`
+              `let postData = NSMutableData(data: "${head.name}=${head.value}".data(using: String.Encoding.utf8)!)`,
             );
-            // eslint-disable-next-line no-plusplus
-            for (let i = 1, len = postData.params.length; i < len; i++) {
-              push(
-                `postData.append("&${postData.params[i].name}=${postData.params[i].value}".data(using: String.Encoding.utf8)!)`
-              );
-            }
+            tail.forEach(({ name, value }) => {
+              push(`postData.append("&${name}=${value}".data(using: String.Encoding.utf8)!)`);
+            });
+          } else {
+            req.hasBody = false;
           }
           break;
 
@@ -99,9 +99,12 @@ export const nsurlsession: Client<NsurlsessionOptions> = {
           push('body += "Content-Disposition:form-data; name=\\"\\(paramName)\\""', 1);
           push('if let filename = param["fileName"] {', 1);
           push('let contentType = param["content-type"]!', 2);
-          push('let fileContent = String(contentsOfFile: filename, encoding: String.Encoding.utf8)', 2);
+          push(
+            'let fileContent = String(contentsOfFile: filename, encoding: String.Encoding.utf8)',
+            2,
+          );
           push('if (error != nil) {', 2);
-          push('print(error)', 3);
+          push('print(error as Any)', 3);
           push('}', 2);
           push('body += "; filename=\\"\\(filename)\\"\\r\\n"', 2);
           push('body += "Content-Type: \\(contentType)\\r\\n\\r\\n"', 2);
@@ -114,7 +117,9 @@ export const nsurlsession: Client<NsurlsessionOptions> = {
 
         default:
           blank();
-          push(`let postData = NSData(data: "${postData.text}".data(using: String.Encoding.utf8)!)`);
+          push(
+            `let postData = NSData(data: "${postData.text}".data(using: String.Encoding.utf8)!)`,
+          );
       }
     }
 
@@ -125,7 +130,9 @@ export const nsurlsession: Client<NsurlsessionOptions> = {
     push('                                        cachePolicy: .useProtocolCachePolicy,');
     push(
       // @ts-expect-error needs better types
-      `                                    timeoutInterval: ${parseInt(opts.timeout, 10).toFixed(1)})`
+      `                                    timeoutInterval: ${parseInt(opts.timeout, 10).toFixed(
+        1,
+      )})`,
     );
     push(`request.httpMethod = "${method}"`);
 
@@ -142,10 +149,10 @@ export const nsurlsession: Client<NsurlsessionOptions> = {
 
     push('let session = URLSession.shared');
     push(
-      'let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in'
+      'let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in',
     );
     push('if (error != nil) {', 1);
-    push('print(error)', 2);
+    push('print(error as Any)', 2);
     push('} else {', 1); // Casting the NSURLResponse to NSHTTPURLResponse so the user can see the status     .
     push('let httpResponse = response as? HTTPURLResponse', 2);
     push('print(httpResponse)', 2);

@@ -32,7 +32,7 @@ export class CodeBuilder {
    */
   constructor({ indent, join }: CodeBuilderOptions = {}) {
     this.indentationCharacter = indent || DEFAULT_INDENTATION_CHARACTER;
-    this.lineJoin = join || DEFAULT_LINE_JOIN;
+    this.lineJoin = join ?? DEFAULT_LINE_JOIN;
   }
 
   /**
@@ -71,7 +71,10 @@ export class CodeBuilder {
    */
   join = () => {
     const unreplacedCode = this.code.join(this.lineJoin);
-    const replacedOutput = this.postProcessors.reduce((accumulator, replacer) => replacer(accumulator), unreplacedCode);
+    const replacedOutput = this.postProcessors.reduce(
+      (accumulator, replacer) => replacer(accumulator),
+      unreplacedCode,
+    );
     return replacedOutput;
   };
 
