@@ -10,7 +10,6 @@
  */
 
 import type { Client } from '../../targets';
-import type { Param } from 'har-format';
 import { CodeBuilder } from '../../../helpers/code-builder';
 import { getHeaderName, isMimeTypeJSON } from '../../../helpers/headers';
 import { quote } from '../../../helpers/shell';
@@ -113,7 +112,7 @@ export const curl: Client<CurlOptions> = {
     // construct post params
     switch (postData.mimeType) {
       case 'multipart/form-data':
-        postData.params?.forEach((param: Param) => {
+        postData.params?.forEach(param => {
           let post = '';
           if (param.fileName) {
             post = `${param.name}=@${param.fileName}`;
