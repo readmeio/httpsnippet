@@ -4,7 +4,7 @@ import type { HTTPSnippetOptions, Request } from '..';
 import type { ClientId, TargetId } from '../targets/targets';
 
 import { writeFileSync } from 'fs';
-import { readFile, writeFile } from 'fs/promises';
+import { readFile } from 'fs/promises';
 import path from 'path';
 
 import { HTTPSnippet } from '..';
@@ -26,21 +26,12 @@ export const runCustomFixtures = ({ targetId, clientId, tests }: CustomFixture) 
   describe(`custom fixtures for ${targetId}:${clientId}`, () => {
     tests.forEach(({ it: title, expected: fixtureFile, options, input: request }) => {
       const opts: HTTPSnippetOptions = {};
-      // eslint-disable-next-line jest/no-if
       if (options.harIsAlreadyEncoded) {
         opts.harIsAlreadyEncoded = options.harIsAlreadyEncoded;
       }
 
       const result = new HTTPSnippet(request, opts).convert(targetId, clientId, options);
-      const filePath = path.join(
-        __dirname,
-        '..',
-        'targets',
-        targetId,
-        clientId,
-        'fixtures',
-        fixtureFile,
-      );
+      const filePath = path.join(__dirname, '..', 'targets', targetId, clientId, 'fixtures', fixtureFile);
       if (process.env.OVERWRITE_EVERYTHING) {
         writeFileSync(filePath, String(result));
       }

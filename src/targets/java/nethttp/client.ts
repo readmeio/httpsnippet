@@ -39,10 +39,8 @@ export const nethttp: Client = {
 
     if (postData.text) {
       push(
-        `.method("${method.toUpperCase()}", HttpRequest.BodyPublishers.ofString(${JSON.stringify(
-          postData.text,
-        )}))`,
-        2,
+        `.method("${method.toUpperCase()}", HttpRequest.BodyPublishers.ofString(${JSON.stringify(postData.text)}))`,
+        2
       );
     } else {
       push(`.method("${method.toUpperCase()}", HttpRequest.BodyPublishers.noBody())`, 2);
@@ -51,7 +49,7 @@ export const nethttp: Client = {
     push('.build();', 2);
 
     push(
-      'HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());',
+      'HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());'
     );
     push('System.out.println(response.body());');
 

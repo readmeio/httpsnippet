@@ -71,10 +71,7 @@ export class CodeBuilder {
    */
   join = () => {
     const unreplacedCode = this.code.join(this.lineJoin);
-    const replacedOutput = this.postProcessors.reduce(
-      (accumulator, replacer) => replacer(accumulator),
-      unreplacedCode,
-    );
+    const replacedOutput = this.postProcessors.reduce((accumulator, replacer) => replacer(accumulator), unreplacedCode);
     return replacedOutput;
   };
 
