@@ -70,7 +70,7 @@ export const requests: Client<RequestsOptions> = {
             if (p.contentType) {
               files[p.name] = `('${p.fileName}', open('${p.fileName}', 'rb'), '${p.contentType}')`;
             } else {
-              files[p.name] = `open('${p.fileName}', 'rb')`;
+              files[p.name] = `('${p.fileName}', open('${p.fileName}', 'rb'))`;
             }
 
             hasFiles = true;
@@ -103,7 +103,7 @@ export const requests: Client<RequestsOptions> = {
         // The `open()` call must be a literal in the code snippet.
         addPostProcessor(code =>
           code
-            .replace(/"open\('(.+)', 'rb'\)"/g, 'open("$1", "rb")')
+            .replace(/"\('(.+)', open\('(.+)', 'rb'\)\)"/g, '("$1", open("$2", "rb"))')
             .replace(/"\('(.+)', open\('(.+)', 'rb'\), '(.+)'\)"/g, '("$1", open("$2", "rb"), "$3")')
         );
         break;
