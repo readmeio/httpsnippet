@@ -168,18 +168,17 @@ export const curl: Client<CurlOptions> = {
               // Basically this boils down to `--data @- <<EOF...EOF` vs `--data '...'`.
               builtPayload = true;
 
+              // `JSON.stringify` by default transforms `buster\npug` into `buster\\npug` which
+              // in this case would fundamentally alter the payload we're sending so we need to not
+              // do that.
+              const stringifiedJSON = JSON.stringify(jsonPayload, null, indentJSON)
+                .replace(/\\\\n/g, '\\n')
+                .replace(/\\\\r/g, '\\r');
+
               if (postData.text.indexOf("'") > 0) {
-                push(
-                  `${binary ? '--data-binary' : arg('data')} @- <<EOF\n${JSON.stringify(
-                    jsonPayload,
-                    null,
-                    indentJSON
-                  )}\nEOF`
-                );
+                push(`${binary ? '--data-binary' : arg('data')} @- <<EOF\n${stringifiedJSON}\nEOF`);
               } else {
-                push(
-                  `${binary ? '--data-binary' : arg('data')} '\n${JSON.stringify(jsonPayload, null, indentJSON)}\n'`
-                );
+                push(`${binary ? '--data-binary' : arg('data')} '\n${stringifiedJSON}\n'`);
               }
             } catch (err) {
               // no-op
