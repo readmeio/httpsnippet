@@ -29,7 +29,7 @@ $request->setBody(json_encode([
         ]
     ]
   ],
-  'boolean' => null
+  'boolean' => false
 ]));
 
 try {

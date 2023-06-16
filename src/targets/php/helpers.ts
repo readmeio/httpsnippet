@@ -5,6 +5,9 @@ export const convertType = (obj: any[] | any, indent?: string, lastIndent?: stri
   indent = indent || '';
 
   switch (Object.prototype.toString.call(obj)) {
+    case '[object Boolean]':
+      return obj;
+
     case '[object Null]':
       return 'null';
 

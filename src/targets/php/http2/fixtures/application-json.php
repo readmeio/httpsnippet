@@ -24,7 +24,7 @@ $body->append(json_encode([
         ]
     ]
   ],
-  'boolean' => null
+  'boolean' => false
 ]));
 $request->setRequestUrl('https://httpbin.org/anything');
 $request->setRequestMethod('POST');

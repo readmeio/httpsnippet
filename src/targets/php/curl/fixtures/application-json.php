@@ -30,7 +30,7 @@ curl_setopt_array($curl, [
                 ]
         ]
     ],
-    'boolean' => null
+    'boolean' => false
   ]),
   CURLOPT_HTTPHEADER => [
     "content-type: application/json"
