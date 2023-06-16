@@ -15,6 +15,7 @@ const expectedBasePath = ['src', 'fixtures', 'requests'];
 const ENVIRONMENT_CONFIG = {
   docker: {
     // Every client + target that we test in an HTTPBin-powered Docker environment.
+    csharp: ['httpclient', 'restsharp'],
     node: ['axios', 'fetch', 'native', 'request'],
     php: ['curl', 'guzzle'],
     python: ['requests'],
@@ -28,6 +29,16 @@ const ENVIRONMENT_CONFIG = {
     php: ['curl'],
     python: ['requests'],
     shell: ['curl'],
+  },
+};
+
+// Some environments are not as simple as `interpreter <file>` Here is where we
+// put the instructions for how to run those environments in our docker
+// containers
+const EXEC_FUNCTION: Record<string, (arg: string) => Buffer> = {
+  csharp: (fixturePath: string) => {
+    shell.execSync(`cp ${fixturePath} /src/IntTestCsharp/Program.cs`);
+    return shell.execSync('cd /src/IntTestCsharp && dotnet run Program.cs');
   },
 };
 
@@ -126,10 +137,15 @@ availableTargets()
               const url = har.log.entries[0].request.url;
               const harResponse = har.log.entries[0].response as Response;
 
-              const command = format(targetCLI, basePath);
               let stdout;
               try {
-                stdout = shell.execSync(command);
+                // If there's a runner function, use that; otherwise just call
+                // <interpreter> <fixture-path>
+                if (EXEC_FUNCTION[targetId]) {
+                  stdout = EXEC_FUNCTION[targetId](basePath);
+                } else {
+                  stdout = shell.execSync(format(targetCLI, basePath));
+                }
               } catch (err) {
                 // If this target throws errors when it can't access a method on the server that
                 // doesn't exist let's make sure that it only did that on the `custom-method` test,
