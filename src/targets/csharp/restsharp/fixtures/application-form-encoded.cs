@@ -1,5 +1,6 @@
-var client = new RestClient("https://httpbin.org/anything");
-var request = new RestRequest(Method.POST);
-request.AddHeader("content-type", "application/x-www-form-urlencoded");
-request.AddParameter("application/x-www-form-urlencoded", "foo=bar&hello=world", ParameterType.RequestBody);
-IRestResponse response = client.Execute(request);
+var options = new RestClientOptions("https://httpbin.org/anything");
+var client = new RestClient(options);
+var request = new RestRequest("");
+request.AddParameter("foo", "bar");
+request.AddParameter("hello", "world");
+var response = await client.PostAsync(request); 

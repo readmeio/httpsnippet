@@ -1,3 +1,4 @@
-var client = new RestClient("http://httpbin.org/anything");
-var request = new RestRequest(Method.GET);
-IRestResponse response = client.Execute(request);
+var options = new RestClientOptions("http://httpbin.org/anything");
+var client = new RestClient(options);
+var request = new RestRequest("");
+var response = await client.GetAsync(request); 
