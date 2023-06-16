@@ -2,21 +2,7 @@ import axios from 'axios';
 
 const options = {
   method: 'GET',
-<<<<<<< HEAD
   url: 'https://httpbin.org/anything',
-  params: {'foo[bar]': 'baz,zap', fiz: 'buz', key: 'value'}
-};
-
-axios
-  .request(options)
-  .then(function (response) {
-    console.log(response.data);
-  })
-  .catch(function (error) {
-    console.error(error);
-  });
-=======
-  url: 'http://mockbin.com/har',
   params: {'foo[bar]': 'baz,zap', fiz: 'buz', key: 'value'}
 };
 
@@ -26,4 +12,3 @@ try {
 } catch (error) {
   console.error(error);
 }
->>>>>>> upstream/master

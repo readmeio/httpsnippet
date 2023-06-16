@@ -28,16 +28,6 @@ var request = new HttpRequestMessage
                 }
             }
         },
-        new StringContent("Bonjour le monde")
-        {
-            Headers =
-            {
-                ContentDisposition = new ContentDispositionHeaderValue("form-data")
-                {
-                    Name = "bar",
-                }
-            }
-        },
     },
 };
 using (var response = await client.SendAsync(request))

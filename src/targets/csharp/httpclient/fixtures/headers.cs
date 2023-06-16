@@ -8,11 +8,8 @@ var request = new HttpRequestMessage
     {
         { "accept", "application/json" },
         { "x-foo", "Bar" },
-<<<<<<< HEAD
         { "x-bar", "Foo" },
-=======
         { "quoted-value", "\"quoted\" 'string'" },
->>>>>>> upstream/master
     },
 };
 using (var response = await client.SendAsync(request))

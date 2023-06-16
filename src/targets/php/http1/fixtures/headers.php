@@ -7,11 +7,8 @@ $request->setMethod(HTTP_METH_GET);
 $request->setHeaders([
   'accept' => 'application/json',
   'x-foo' => 'Bar',
-<<<<<<< HEAD
-  'x-bar' => 'Foo'
-=======
+  'x-bar' => 'Foo',
   'quoted-value' => '"quoted" \'string\''
->>>>>>> upstream/master
 ]);
 
 try {

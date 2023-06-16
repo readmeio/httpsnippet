@@ -1,11 +1,7 @@
 <?php
 
 $request = new HttpRequest();
-<<<<<<< HEAD
 $request->setUrl('https://httpbin.org/anything');
-=======
-$request->setUrl('http://mockbin.com/har');
->>>>>>> upstream/master
 $request->setMethod(HTTP_METH_POST);
 
 $request->setHeaders([
@@ -14,9 +10,6 @@ $request->setHeaders([
 
 $request->setContentType('application/json');
 $request->setBody(json_encode([
-<<<<<<< HEAD
-  'foo' => 'bar'
-=======
   'number' => 1,
   'string' => 'f"oo',
   'arr' => [
@@ -37,7 +30,6 @@ $request->setBody(json_encode([
     ]
   ],
   'boolean' => null
->>>>>>> upstream/master
 ]));
 
 try {

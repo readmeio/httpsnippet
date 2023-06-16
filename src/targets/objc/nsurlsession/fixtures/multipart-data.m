@@ -1,11 +1,7 @@
 #import <Foundation/Foundation.h>
 
 NSDictionary *headers = @{ @"content-type": @"multipart/form-data; boundary=---011000010111000001101001" };
-<<<<<<< HEAD
 NSArray *parameters = @[ @{ @"name": @"foo", @"value": @"Hello World", @"fileName": @"src/fixtures/files/hello.txt", @"contentType": @"text/plain" },
-=======
-NSArray *parameters = @[ @{ @"name": @"foo", @"value": @"Hello World", @"fileName": @"hello.txt", @"contentType": @"text/plain" },
->>>>>>> upstream/master
                          @{ @"name": @"bar", @"value": @"Bonjour le monde" } ];
 NSString *boundary = @"---011000010111000001101001";
 

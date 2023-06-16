@@ -9,10 +9,6 @@ xhr.addEventListener('readystatechange', function () {
   }
 });
 
-<<<<<<< HEAD
 xhr.open('GET', 'https://httpbin.org/anything');
-=======
-xhr.open('GET', 'http://mockbin.com/har');
->>>>>>> upstream/master
 
 xhr.send(data);

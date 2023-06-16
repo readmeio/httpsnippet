@@ -1,17 +1,10 @@
 const http = require('http');
 
 const options = {
-<<<<<<<< HEAD:src/targets/node/native/fixtures/http-insecure.js
   method: 'GET',
   hostname: 'httpbin.org',
   port: null,
   path: '/anything',
-========
-  method: 'PROPFIND',
-  hostname: 'mockbin.com',
-  port: null,
-  path: '/har',
->>>>>>>> upstream/master:src/targets/node/native/fixtures/custom-method.js
   headers: {}
 };
 

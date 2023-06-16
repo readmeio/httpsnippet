@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 POST /anything HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 Host: httpbin.org
-=======
-POST /har HTTP/1.1
-Content-Type: application/x-www-form-urlencoded
-Host: mockbin.com
->>>>>>> upstream/master
 Content-Length: 19
 
 foo=bar&hello=world

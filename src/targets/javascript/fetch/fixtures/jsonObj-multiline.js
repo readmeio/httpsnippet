@@ -1,20 +1,8 @@
-<<<<<<< HEAD
+const url = 'https://httpbin.org/anything';
 const options = {
   method: 'POST',
   headers: {'content-type': 'application/json'},
   body: JSON.stringify({foo: 'bar'})
-};
-
-fetch('https://httpbin.org/anything', options)
-  .then(response => response.json())
-  .then(response => console.log(response))
-  .catch(err => console.error(err));
-=======
-const url = 'http://mockbin.com/har';
-const options = {
-  method: 'POST',
-  headers: {'content-type': 'application/json'},
-  body: '{"foo":"bar"}'
 };
 
 try {
@@ -24,4 +12,3 @@ try {
 } catch (error) {
   console.error(error);
 }
->>>>>>> upstream/master

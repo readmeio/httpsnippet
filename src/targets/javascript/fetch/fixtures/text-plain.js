@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-const options = {method: 'POST', headers: {'content-type': 'text/plain'}, body: 'Hello World'};
-
-fetch('https://httpbin.org/anything', options)
-  .then(response => response.json())
-  .then(response => console.log(response))
-  .catch(err => console.error(err));
-=======
-const url = 'http://mockbin.com/har';
+const url = 'https://httpbin.org/anything';
 const options = {method: 'POST', headers: {'content-type': 'text/plain'}, body: 'Hello World'};
 
 try {
@@ -16,4 +8,3 @@ try {
 } catch (error) {
   console.error(error);
 }
->>>>>>> upstream/master

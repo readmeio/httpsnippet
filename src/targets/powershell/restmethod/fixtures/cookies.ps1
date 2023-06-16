@@ -9,8 +9,4 @@ $cookie.Name = 'bar'
 $cookie.Value = 'baz'
 $cookie.Domain = 'httpbin.org'
 $session.Cookies.Add($cookie)
-<<<<<<< HEAD
 $response = Invoke-RestMethod -Uri 'https://httpbin.org/cookies' -Method GET -WebSession $session
-=======
-$response = Invoke-RestMethod -Uri 'http://mockbin.com/har' -Method POST -WebSession $session
->>>>>>> upstream/master

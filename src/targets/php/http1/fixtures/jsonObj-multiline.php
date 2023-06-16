@@ -10,11 +10,7 @@ $request->setHeaders([
 
 $request->setContentType('application/json');
 $request->setBody(json_encode([
-<<<<<<< HEAD
-  'foo' => null
-=======
   'foo' => 'bar'
->>>>>>> upstream/master
 ]));
 
 try {

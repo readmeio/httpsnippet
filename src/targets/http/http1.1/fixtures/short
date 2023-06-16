@@ -1,8 +1,3 @@
-<<<<<<< HEAD
 GET /anything HTTP/1.1
 Host: httpbin.org
-=======
-GET /har HTTP/1.1
-Host: mockbin.com
->>>>>>> upstream/master
 

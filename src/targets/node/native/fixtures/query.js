@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const http = require('https');
 
 const options = {
@@ -6,15 +5,6 @@ const options = {
   hostname: 'httpbin.org',
   port: null,
   path: '/anything?foo=bar&foo=baz&baz=abc&key=value',
-=======
-const http = require('http');
-
-const options = {
-  method: 'GET',
-  hostname: 'mockbin.com',
-  port: null,
-  path: '/har?foo=bar&foo=baz&baz=abc&key=value',
->>>>>>> upstream/master
   headers: {}
 };
 

@@ -3,11 +3,7 @@
 $curl = curl_init();
 
 curl_setopt_array($curl, [
-<<<<<<< HEAD
   CURLOPT_URL => "https://httpbin.org/anything",
-=======
-  CURLOPT_URL => "http://httpbin.org/anything",
->>>>>>> upstream/master
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,

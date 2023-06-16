@@ -1,5 +1,4 @@
 const qs = require('querystring');
-<<<<<<< HEAD
 const http = require('https');
 
 const options = {
@@ -7,15 +6,6 @@ const options = {
   hostname: 'httpbin.org',
   port: null,
   path: '/anything',
-=======
-const http = require('http');
-
-const options = {
-  method: 'POST',
-  hostname: 'mockbin.com',
-  port: null,
-  path: '/har',
->>>>>>> upstream/master
   headers: {
     'content-type': 'application/x-www-form-urlencoded'
   }

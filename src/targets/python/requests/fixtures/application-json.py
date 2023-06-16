@@ -14,8 +14,4 @@ headers = {"content-type": "application/json"}
 
 response = requests.post(url, json=payload, headers=headers)
 
-<<<<<<< HEAD
-print(response.text)
-=======
 print(response.json())
->>>>>>> upstream/master

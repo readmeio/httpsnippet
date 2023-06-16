@@ -2,24 +2,11 @@ import axios from 'axios';
 
 const options = {
   method: 'GET',
-<<<<<<< HEAD
   url: 'https://httpbin.org/headers',
-  headers: {accept: 'application/json', 'x-foo': 'Bar', 'x-bar': 'Foo'}
-};
-
-axios
-  .request(options)
-  .then(function (response) {
-    console.log(response.data);
-  })
-  .catch(function (error) {
-    console.error(error);
-  });
-=======
-  url: 'http://mockbin.com/har',
   headers: {
     accept: 'application/json',
     'x-foo': 'Bar',
+    'x-bar': 'Foo',
     'quoted-value': '"quoted" \'string\''
   }
 };
@@ -30,4 +17,3 @@ try {
 } catch (error) {
   console.error(error);
 }
->>>>>>> upstream/master

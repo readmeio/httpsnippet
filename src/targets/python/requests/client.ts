@@ -129,7 +129,7 @@ export const requests: Client<RequestsOptions> = {
 
         const stringPayload = JSON.stringify(postData.text);
         if (stringPayload) {
-          push(`payload = ${payload}`);
+          push(`payload = ${stringPayload}`);
           hasPayload = true;
         }
       }
