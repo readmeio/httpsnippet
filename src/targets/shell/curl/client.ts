@@ -18,7 +18,6 @@ export interface CurlOptions {
   binary?: boolean;
   globOff?: boolean;
   indent?: string | false;
-  insecureSkipVerify?: boolean;
   prettifyJson?: boolean;
   short?: boolean;
 }
@@ -57,7 +56,7 @@ export const curl: Client<CurlOptions> = {
     description: 'cURL is a command line tool and library for transferring data with URL syntax',
   },
   convert: ({ fullUrl, method, httpVersion, headersObj, allHeaders, postData }, options = {}) => {
-    const { indent = '  ', short = false, binary = false, globOff = false, insecureSkipVerify = false } = options;
+    const { indent = '  ', short = false, binary = false, globOff = false } = options;
 
     // In the interest of having nicer looking snippets JSON should be indented separately from the
     // main command argument indentation.
@@ -78,10 +77,6 @@ export const curl: Client<CurlOptions> = {
       push(arg('globoff'));
     }
     push(`${arg('url ')}${formattedUrl}`);
-
-    if (insecureSkipVerify) {
-      push(arg('insecure'));
-    }
 
     if (httpVersion === 'HTTP/1.0') {
       push(arg('http1.0'));

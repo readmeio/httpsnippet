@@ -3,20 +3,14 @@ import type { Client } from '../../targets';
 import { CodeBuilder } from '../../../helpers/code-builder';
 import { escapeForSingleQuotes } from '../../../helpers/escape';
 
-export interface RubyNativeOptions {
-  insecureSkipVerify?: boolean;
-}
-
-export const native: Client<RubyNativeOptions> = {
+export const native: Client = {
   info: {
     key: 'native',
     title: 'net::http',
     link: 'http://ruby-doc.org/stdlib-2.2.1/libdoc/net/http/rdoc/Net/HTTP.html',
     description: 'Ruby HTTP client',
   },
-  convert: ({ uriObj, method: rawMethod, fullUrl, postData, allHeaders }, options = {}) => {
-    const { insecureSkipVerify = false } = options;
-
+  convert: ({ uriObj, method: rawMethod, fullUrl, postData, allHeaders }) => {
     const { push, blank, join } = new CodeBuilder();
 
     push("require 'uri'");
@@ -56,9 +50,6 @@ export const native: Client<RubyNativeOptions> = {
 
     if (uriObj.protocol === 'https:') {
       push('http.use_ssl = true');
-      if (insecureSkipVerify) {
-        push('http.verify_mode = OpenSSL::SSL::VERIFY_NONE');
-      }
     }
 
     blank();

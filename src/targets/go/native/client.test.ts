@@ -39,13 +39,5 @@ runCustomFixtures({
       },
       expected: 'timeout-option.go',
     },
-    {
-      it: 'should support insecureSkipVerify option',
-      input: request.log.entries[0].request as Request,
-      options: {
-        insecureSkipVerify: true,
-      },
-      expected: 'insecure-skip-verify.go',
-    },
   ],
 });

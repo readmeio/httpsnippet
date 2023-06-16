@@ -17,7 +17,6 @@ export interface GoNativeOptions {
   checkErrors?: boolean;
   printBody?: boolean;
   timeout?: number;
-  insecureSkipVerify?: boolean;
 }
 
 export const native: Client<GoNativeOptions> = {
@@ -30,13 +29,7 @@ export const native: Client<GoNativeOptions> = {
   convert: ({ postData, method, allHeaders, fullUrl }, options = {}) => {
     const { blank, push, join } = new CodeBuilder({ indent: '\t' });
 
-    const {
-      showBoilerplate = true,
-      checkErrors = false,
-      printBody = true,
-      timeout = -1,
-      insecureSkipVerify = false,
-    } = options;
+    const { showBoilerplate = true, checkErrors = false, printBody = true, timeout = -1 } = options;
 
     const errorPlaceholder = checkErrors ? 'err' : '_';
 
@@ -61,10 +54,6 @@ export const native: Client<GoNativeOptions> = {
         push('"time"', indent);
       }
 
-      if (insecureSkipVerify) {
-        push('"crypto/tls"', indent);
-      }
-
       if (postData.text) {
         push('"strings"', indent);
       }
@@ -81,15 +70,9 @@ export const native: Client<GoNativeOptions> = {
       blank();
     }
 
-    // Create an insecure transport for the client
-    if (insecureSkipVerify) {
-      push('insecureTransport := http.DefaultTransport.(*http.Transport).Clone()', indent);
-      push('insecureTransport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}', indent);
-    }
-
     // Create client
     const hasTimeout = timeout > 0;
-    const hasClient = hasTimeout || insecureSkipVerify;
+    const hasClient = hasTimeout;
     const client = hasClient ? 'client' : 'http.DefaultClient';
 
     if (hasClient) {
@@ -97,10 +80,6 @@ export const native: Client<GoNativeOptions> = {
 
       if (hasTimeout) {
         push(`Timeout: time.Duration(${timeout} * time.Second),`, indent + 1);
-      }
-
-      if (insecureSkipVerify) {
-        push('Transport: insecureTransport,', indent + 1);
       }
 
       push('}', indent);

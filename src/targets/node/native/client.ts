@@ -13,11 +13,7 @@ import stringifyObject from 'stringify-object';
 
 import { CodeBuilder } from '../../../helpers/code-builder';
 
-export interface NodeNativeOptions {
-  insecureSkipVerify?: boolean;
-}
-
-export const native: Client<NodeNativeOptions> = {
+export const native: Client = {
   info: {
     key: 'native',
     title: 'HTTP',
@@ -25,7 +21,7 @@ export const native: Client<NodeNativeOptions> = {
     description: 'Node.js native HTTP interface',
   },
   convert: ({ uriObj, method, allHeaders, postData }, options = {}) => {
-    const { indent = '  ', insecureSkipVerify = false } = options;
+    const { indent = '  ' } = options;
     const { blank, join, push, unshift } = new CodeBuilder({ indent });
 
     const reqOpts = {
@@ -34,7 +30,6 @@ export const native: Client<NodeNativeOptions> = {
       port: uriObj.port,
       path: uriObj.path,
       headers: allHeaders,
-      ...(insecureSkipVerify ? { rejectUnauthorized: false } : {}),
     };
 
     // @ts-expect-error TODO seems like a legit error

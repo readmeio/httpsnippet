@@ -3,7 +3,6 @@ import type { Request } from '../../..';
 import applicationFormEncoded from '../../../fixtures/requests/application-form-encoded';
 import full from '../../../fixtures/requests/full';
 import nested from '../../../fixtures/requests/nested';
-import short from '../../../fixtures/requests/short';
 import { runCustomFixtures } from '../../../fixtures/runCustomFixtures';
 
 runCustomFixtures({
@@ -88,14 +87,6 @@ runCustomFixtures({
       } as Request,
       options: {},
       expected: 'urlencode.sh',
-    },
-    {
-      it: 'should support insecureSkipVerify',
-      input: short.log.entries[0].request as Request,
-      options: {
-        insecureSkipVerify: true,
-      },
-      expected: 'insecure-skip-verify.sh',
     },
     {
       it: 'should send JSON-encoded data with single quotes within a HEREDOC',
