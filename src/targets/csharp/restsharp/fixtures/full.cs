@@ -8,4 +8,6 @@ request.AddHeader("accept", "application/json");
 request.AddCookie("foo", "bar", "/anything", "httpbin.org");
 request.AddCookie("bar", "baz", "/anything", "httpbin.org");
 request.AddParameter("foo", "bar");
-var response = await client.PostAsync(request); 
+var response = await client.PostAsync(request);
+
+Console.WriteLine("{0}", response.Content);

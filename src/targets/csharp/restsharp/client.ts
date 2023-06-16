@@ -85,7 +85,10 @@ export const restsharp: Client = {
         push(`request.AddStringBody("${postData.text}", "${postData.mimeType}");`);
     }
 
-    push(`var response = await client.${title(method)}Async(request); `);
+    push(`var response = await client.${title(method)}Async(request);\n`);
+
+    push('Console.WriteLine("{0}", response.Content);');
+
     return join();
   },
 };

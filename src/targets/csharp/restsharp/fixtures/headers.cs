@@ -7,4 +7,6 @@ var request = new RestRequest("");
 request.AddHeader("accept", "application/json");
 request.AddHeader("x-foo", "Bar");
 request.AddHeader("x-bar", "Foo");
-var response = await client.GetAsync(request); 
+var response = await client.GetAsync(request);
+
+Console.WriteLine("{0}", response.Content);

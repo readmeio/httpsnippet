@@ -8,4 +8,6 @@ request.AlwaysMultipartFormData = true;
 request.FormBoundary = "---011000010111000001101001";
 request.AddFile("foo", "src/fixtures/files/hello.txt");
 request.AddParameter("bar", "Bonjour le monde");
-var response = await client.PostAsync(request); 
+var response = await client.PostAsync(request);
+
+Console.WriteLine("{0}", response.Content);

@@ -6,4 +6,6 @@ var client = new RestClient(options);
 var request = new RestRequest("");
 request.AddParameter("foo", "bar");
 request.AddParameter("hello", "world");
-var response = await client.PostAsync(request); 
+var response = await client.PostAsync(request);
+
+Console.WriteLine("{0}", response.Content);
