@@ -1,3 +1,6 @@
+using RestSharp;
+
+
 var options = new RestClientOptions("https://httpbin.org/headers");
 var client = new RestClient(options);
 var request = new RestRequest("");
