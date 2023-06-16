@@ -45,6 +45,7 @@ export function escapeString(rawValue: any, options: EscapeOptions = {}) {
         if (escapeNewlines) {
           return `${escapeChar}n`;
         }
+
         return c; // Don't just continue, or this is caught by < \u0020
       } else if (c === '\f') {
         return `${escapeChar}f`;
@@ -52,6 +53,7 @@ export function escapeString(rawValue: any, options: EscapeOptions = {}) {
         if (escapeNewlines) {
           return `${escapeChar}r`;
         }
+
         return c; // Don't just continue, or this is caught by < \u0020
       } else if (c === escapeChar) {
         return escapeChar + escapeChar;
@@ -64,6 +66,7 @@ export function escapeString(rawValue: any, options: EscapeOptions = {}) {
         // strictly?) ASCII-only, this should almost never happen.
         return JSON.stringify(c).slice(1, -1);
       }
+
       return c;
     })
     .join('');
