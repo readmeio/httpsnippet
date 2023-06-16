@@ -20,7 +20,7 @@ export const request: Client = {
     link: 'https://github.com/request/request',
     description: 'Simplified HTTP request client',
   },
-  convert: ({ method, url, queryObj, postData, headersObj, cookies }, options) => {
+  convert: ({ method, url, fullUrl, postData, headersObj, cookies }, options) => {
     const opts = {
       indent: '  ',
       ...options,
@@ -34,12 +34,8 @@ export const request: Client = {
 
     const reqOpts: Record<string, any> = {
       method,
-      url,
+      url: fullUrl,
     };
-
-    if (Object.keys(queryObj).length) {
-      reqOpts.qs = queryObj;
-    }
 
     if (Object.keys(headersObj).length) {
       reqOpts.headers = headersObj;
