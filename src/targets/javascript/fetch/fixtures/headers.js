@@ -1,4 +1,3 @@
-const url = 'https://httpbin.org/headers';
 const options = {
   method: 'GET',
   headers: {
@@ -9,10 +8,7 @@ const options = {
   }
 };
 
-try {
-  const response = await fetch(url, options);
-  const data = await response.json();
-  console.log(data);
-} catch (error) {
-  console.error(error);
-}
+fetch('https://httpbin.org/headers', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
