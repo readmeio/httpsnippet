@@ -133,25 +133,23 @@ export const requests: Client<RequestsOptions> = {
       // If we don't have any heads but we do have a payload we should put a blank line here between that payload consturction and our execution of the requests library.
       blank();
     } else if (headerCount === 1) {
-      // eslint-disable-next-line guard-for-in, no-restricted-syntax
-      for (const header in headers) {
+      Object.keys(headers).forEach(header => {
         push(`headers = {"${header}": "${escapeForDoubleQuotes(headers[header])}"}`);
         blank();
-      }
+      });
     } else if (headerCount > 1) {
       let count = 1;
 
       push('headers = {');
 
-      // eslint-disable-next-line guard-for-in, no-restricted-syntax
-      for (const header in headers) {
+      Object.keys(headers).forEach(header => {
         if (count !== headerCount) {
           push(`"${header}": "${escapeForDoubleQuotes(headers[header])}",`, 1);
         } else {
           push(`"${header}": "${escapeForDoubleQuotes(headers[header])}"`, 1);
         }
         count += 1;
-      }
+      });
 
       push('}');
       blank();
