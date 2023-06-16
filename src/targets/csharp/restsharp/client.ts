@@ -24,6 +24,7 @@ export const restsharp: Client = {
       return 'Method not supported';
     }
 
+    push('using RestSharp;\n\n');
     push(`var options = new RestClientOptions("${fullUrl}");`);
     push('var client = new RestClient(options);');
 
