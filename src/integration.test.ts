@@ -66,8 +66,8 @@ const clientFilter = (target: TargetId): string[] => {
     // @ts-expect-error fix this type
     return ENVIRONMENT_CONFIG.docker[target];
   } else if (process.env.NODE_ENV === 'test') {
-    return [];
-    // return ENVIRONMENT_CONFIG.local[target];
+    // @ts-expect-error fix this type
+    return ENVIRONMENT_CONFIG.local[target];
   }
 
   throw new Error('Unsupported environment supplied to `clientFilter`.');
@@ -97,6 +97,11 @@ availableTargets()
   .filter(target => target.cli)
   .filter(testFilter('key', environmentFilter()))
   .forEach(({ key: targetId, cli: targetCLI, title, extname: fixtureExtension, clients }) => {
+    // Temporarily disable integation tests from being run not inside of a Docker container.
+    if (process.env.NODE_ENV === 'test') {
+      return;
+    }
+
     describe(`${title} integration tests`, () => {
       clients.filter(testFilter('key', clientFilter(targetId))).forEach(({ key: clientId }) => {
         // If we're in an HTTPBin-powered Docker environment we only want to run tests for the
