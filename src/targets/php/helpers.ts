@@ -1,4 +1,4 @@
-import { escapeString } from "../../helpers/escape";
+import { escapeString } from '../../helpers/escape';
 
 export const convertType = (obj: any[] | any, indent?: string, lastIndent?: string) => {
   lastIndent = lastIndent || '';
@@ -18,9 +18,7 @@ export const convertType = (obj: any[] | any, indent?: string, lastIndent?: stri
       return obj.toString();
 
     case '[object Array]': {
-      const contents = obj
-        .map((item: any) => convertType(item, `${indent}${indent}`, indent))
-        .join(`,\n${indent}`);
+      const contents = obj.map((item: any) => convertType(item, `${indent}${indent}`, indent)).join(`,\n${indent}`);
       return `[\n${indent}${contents}\n${lastIndent}]`;
     }
 

@@ -1,6 +1,7 @@
-import https from '../../../fixtures/requests/https.json';
+import type { Request } from '../../..';
+
+import full from '../../../fixtures/requests/full';
 import { runCustomFixtures } from '../../../fixtures/runCustomFixtures';
-import { Request } from '../../../httpsnippet';
 
 runCustomFixtures({
   targetId: 'ruby',
@@ -8,7 +9,7 @@ runCustomFixtures({
   tests: [
     {
       it: 'should support the insecureSkipVerify option',
-      input: https as Request,
+      input: full.log.entries[0].request as Request,
       options: {
         insecureSkipVerify: true,
       },

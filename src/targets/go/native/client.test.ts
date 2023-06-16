@@ -41,7 +41,7 @@ runCustomFixtures({
     },
     {
       it: 'should support insecureSkipVerify option',
-      input: full as Request,
+      input: request.log.entries[0].request as Request,
       options: {
         insecureSkipVerify: true,
       },

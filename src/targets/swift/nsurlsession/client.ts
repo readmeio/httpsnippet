@@ -60,9 +60,7 @@ export const nsurlsession: Client<NsurlsessionOptions> = {
           blank();
           if (postData.params?.length) {
             const [head, ...tail] = postData.params;
-            push(
-              `let postData = NSMutableData(data: "${head.name}=${head.value}".data(using: String.Encoding.utf8)!)`,
-            );
+            push(`let postData = NSMutableData(data: "${head.name}=${head.value}".data(using: String.Encoding.utf8)!)`);
             tail.forEach(({ name, value }) => {
               push(`postData.append("&${name}=${value}".data(using: String.Encoding.utf8)!)`);
             });
