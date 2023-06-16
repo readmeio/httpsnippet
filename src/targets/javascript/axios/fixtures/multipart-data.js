@@ -6,11 +6,16 @@ form.append('bar', 'Bonjour le monde');
 
 const options = {
   method: 'POST',
+<<<<<<< HEAD
   url: 'https://httpbin.org/anything',
+=======
+  url: 'http://mockbin.com/har',
+>>>>>>> upstream/master
   headers: {'content-type': 'multipart/form-data; boundary=---011000010111000001101001'},
   data: '[form]'
 };
 
+<<<<<<< HEAD
 axios
   .request(options)
   .then(function (response) {
@@ -19,3 +24,11 @@ axios
   .catch(function (error) {
     console.error(error);
   });
+=======
+try {
+  const { data } = await axios.request(options);
+  console.log(data);
+} catch (error) {
+  console.error(error);
+}
+>>>>>>> upstream/master

@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 GET /anything?foo=bar&foo=baz&baz=abc&key=value HTTP/1.1
 Host: httpbin.org
+=======
+GET /har?foo=bar&foo=baz&baz=abc&key=value HTTP/1.1
+Host: mockbin.com
+>>>>>>> upstream/master
 

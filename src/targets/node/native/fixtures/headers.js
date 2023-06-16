@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const http = require('https');
 
 const options = {
@@ -9,6 +10,19 @@ const options = {
     accept: 'application/json',
     'x-foo': 'Bar',
     'x-bar': 'Foo'
+=======
+const http = require('http');
+
+const options = {
+  method: 'GET',
+  hostname: 'mockbin.com',
+  port: null,
+  path: '/har',
+  headers: {
+    accept: 'application/json',
+    'x-foo': 'Bar',
+    'quoted-value': '"quoted" \'string\''
+>>>>>>> upstream/master
   }
 };
 

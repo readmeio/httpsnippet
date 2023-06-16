@@ -8,7 +8,11 @@ $request->setRequestMethod('GET');
 $request->setHeaders([
   'accept' => 'application/json',
   'x-foo' => 'Bar',
+<<<<<<< HEAD
   'x-bar' => 'Foo'
+=======
+  'quoted-value' => '"quoted" \'string\''
+>>>>>>> upstream/master
 ]);
 
 $client->enqueue($request)->send();

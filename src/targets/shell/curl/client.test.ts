@@ -1,7 +1,9 @@
 import type { Request } from '../../..';
 
+import applicationFormEncoded from '../../../fixtures/requests/application-form-encoded';
 import full from '../../../fixtures/requests/full';
 import nested from '../../../fixtures/requests/nested';
+import short from '../../../fixtures/requests/short';
 import { runCustomFixtures } from '../../../fixtures/runCustomFixtures';
 
 runCustomFixtures({
@@ -72,7 +74,29 @@ runCustomFixtures({
       },
       expected: 'custom-indentation.sh',
     },
-
+    {
+      it: 'should url encode the params key',
+      input: {
+        ...applicationFormEncoded.log.entries[0].request,
+        postData: {
+          mimeType: 'application/x-www-form-urlencoded',
+          params: [
+            { name: 'user name', value: 'John Doe' },
+            { name: '$filter', value: 'by id' },
+          ],
+        },
+      } as Request,
+      options: {},
+      expected: 'urlencode.sh',
+    },
+    {
+      it: 'should support insecureSkipVerify',
+      input: short.log.entries[0].request as Request,
+      options: {
+        insecureSkipVerify: true,
+      },
+      expected: 'insecure-skip-verify.sh',
+    },
     {
       it: 'should send JSON-encoded data with single quotes within a HEREDOC',
       input: {
@@ -153,6 +177,21 @@ runCustomFixtures({
         // escapeBrackets: true, // @todo this need to be enabled?
       },
       expected: 'harIsAlreadyEncoded=option-escape-brackets.sh',
+    },
+    {
+      it: 'should use --compressed for requests that accept encodings',
+      input: {
+        method: 'GET',
+        url: 'http://mockbin.com/har',
+        headers: [
+          {
+            name: 'accept-encoding',
+            value: 'deflate, gzip, br',
+          },
+        ],
+      } as Request,
+      options: {},
+      expected: 'accept-encoding-compressed.sh',
     },
   ],
 });

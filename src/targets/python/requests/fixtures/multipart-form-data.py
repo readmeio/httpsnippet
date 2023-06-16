@@ -7,4 +7,8 @@ headers = {"Content-Type": "multipart/form-data; boundary=---0110000101110000011
 
 response = requests.post(url, data=payload, headers=headers)
 
+<<<<<<< HEAD
 print(response.text)
+=======
+print(response.json())
+>>>>>>> upstream/master

@@ -24,7 +24,6 @@ class Keyword {
 
 class File {
   path = '';
-
   constructor(path: string) {
     this.path = path;
   }

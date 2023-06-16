@@ -8,9 +8,14 @@ $request->setHeaders([
   'content-type' => 'application/json'
 ]);
 
-$request->setBody('{
-  "foo": "bar"
-}');
+$request->setContentType('application/json');
+$request->setBody(json_encode([
+<<<<<<< HEAD
+  'foo' => null
+=======
+  'foo' => 'bar'
+>>>>>>> upstream/master
+]));
 
 try {
   $response = $request->send();

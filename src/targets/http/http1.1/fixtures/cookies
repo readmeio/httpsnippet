@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 GET /cookies HTTP/1.1
 Cookie: foo=bar; bar=baz
 Host: httpbin.org
+=======
+POST /har HTTP/1.1
+Cookie: foo=bar; bar=baz
+Host: mockbin.com
+>>>>>>> upstream/master
 

@@ -1,6 +1,10 @@
 const unirest = require('unirest');
 
+<<<<<<< HEAD
 const req = unirest('GET', 'https://httpbin.org/anything');
+=======
+const req = unirest('GET', 'http://mockbin.com/har');
+>>>>>>> upstream/master
 
 req.query({
   'foo[bar]': 'baz,zap',

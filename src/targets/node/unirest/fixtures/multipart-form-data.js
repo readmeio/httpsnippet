@@ -1,6 +1,10 @@
 const unirest = require('unirest');
 
+<<<<<<< HEAD
 const req = unirest('POST', 'https://httpbin.org/anything');
+=======
+const req = unirest('POST', 'http://mockbin.com/har');
+>>>>>>> upstream/master
 
 req.headers({
   'Content-Type': 'multipart/form-data; boundary=---011000010111000001101001'

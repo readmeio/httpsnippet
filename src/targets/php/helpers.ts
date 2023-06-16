@@ -1,3 +1,5 @@
+import { escapeString } from "../../helpers/escape";
+
 export const convertType = (obj: any[] | any, indent?: string, lastIndent?: string) => {
   lastIndent = lastIndent || '';
   indent = indent || '';
@@ -10,13 +12,15 @@ export const convertType = (obj: any[] | any, indent?: string, lastIndent?: stri
       return 'null';
 
     case '[object String]':
-      return `'${obj.replace(/\\/g, '\\\\').replace(/'/g, "'")}'`;
+      return `'${escapeString(obj, { delimiter: "'", escapeNewlines: false })}'`;
 
     case '[object Number]':
       return obj.toString();
 
     case '[object Array]': {
-      const contents = obj.map((item: any) => convertType(item, `${indent}${indent}`, indent)).join(`,\n${indent}`);
+      const contents = obj
+        .map((item: any) => convertType(item, `${indent}${indent}`, indent))
+        .join(`,\n${indent}`);
       return `[\n${indent}${contents}\n${lastIndent}]`;
     }
 

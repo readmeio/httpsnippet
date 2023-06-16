@@ -10,12 +10,14 @@
 import type { Client } from '../../targets';
 
 import { CodeBuilder } from '../../../helpers/code-builder';
+import { escapeForDoubleQuotes } from '../../../helpers/escape';
 
 export interface GoNativeOptions {
   showBoilerplate?: boolean;
   checkErrors?: boolean;
   printBody?: boolean;
   timeout?: number;
+  insecureSkipVerify?: boolean;
 }
 
 export const native: Client<GoNativeOptions> = {
@@ -25,23 +27,23 @@ export const native: Client<GoNativeOptions> = {
     link: 'http://golang.org/pkg/net/http/#NewRequest',
     description: 'Golang HTTP client request',
   },
-  convert: ({ postData, method, allHeaders, fullUrl }, options) => {
+  convert: ({ postData, method, allHeaders, fullUrl }, options = {}) => {
     const { blank, push, join } = new CodeBuilder({ indent: '\t' });
 
-    const opts = {
-      showBoilerplate: true,
-      checkErrors: false,
-      printBody: true,
-      timeout: -1,
-      ...options,
-    };
+    const {
+      showBoilerplate = true,
+      checkErrors = false,
+      printBody = true,
+      timeout = -1,
+      insecureSkipVerify = false,
+    } = options;
 
-    const errorPlaceholder = opts.checkErrors ? 'err' : '_';
+    const errorPlaceholder = checkErrors ? 'err' : '_';
 
-    const indent = opts.showBoilerplate ? 1 : 0;
+    const indent = showBoilerplate ? 1 : 0;
 
     const errorCheck = () => {
-      if (opts.checkErrors) {
+      if (checkErrors) {
         push('if err != nil {', indent);
         push('panic(err)', indent + 1);
         push('}', indent);
@@ -49,14 +51,18 @@ export const native: Client<GoNativeOptions> = {
     };
 
     // Create boilerplate
-    if (opts.showBoilerplate) {
+    if (showBoilerplate) {
       push('package main');
       blank();
       push('import (');
       push('"fmt"', indent);
 
-      if (opts.timeout > 0) {
+      if (timeout > 0) {
         push('"time"', indent);
+      }
+
+      if (insecureSkipVerify) {
+        push('"crypto/tls"', indent);
       }
 
       if (postData.text) {
@@ -65,8 +71,8 @@ export const native: Client<GoNativeOptions> = {
 
       push('"net/http"', indent);
 
-      if (opts.printBody) {
-        push('"io/ioutil"', indent);
+      if (printBody) {
+        push('"io"', indent);
       }
 
       push(')');
@@ -75,16 +81,30 @@ export const native: Client<GoNativeOptions> = {
       blank();
     }
 
+    // Create an insecure transport for the client
+    if (insecureSkipVerify) {
+      push('insecureTransport := http.DefaultTransport.(*http.Transport).Clone()', indent);
+      push('insecureTransport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}', indent);
+    }
+
     // Create client
-    let client;
-    if (opts.timeout > 0) {
-      client = 'client';
+    const hasTimeout = timeout > 0;
+    const hasClient = hasTimeout || insecureSkipVerify;
+    const client = hasClient ? 'client' : 'http.DefaultClient';
+
+    if (hasClient) {
       push('client := http.Client{', indent);
-      push(`Timeout: time.Duration(${opts.timeout} * time.Second),`, indent + 1);
+
+      if (hasTimeout) {
+        push(`Timeout: time.Duration(${timeout} * time.Second),`, indent + 1);
+      }
+
+      if (insecureSkipVerify) {
+        push('Transport: insecureTransport,', indent + 1);
+      }
+
       push('}', indent);
       blank();
-    } else {
-      client = 'http.DefaultClient';
     }
 
     push(`url := "${fullUrl}"`, indent);
@@ -106,7 +126,7 @@ export const native: Client<GoNativeOptions> = {
     // Add headers
     if (Object.keys(allHeaders).length) {
       Object.keys(allHeaders).forEach(key => {
-        push(`req.Header.Add("${key}", "${allHeaders[key]}")`, indent);
+        push(`req.Header.Add("${key}", "${escapeForDoubleQuotes(allHeaders[key])}")`, indent);
       });
 
       blank();
@@ -117,10 +137,10 @@ export const native: Client<GoNativeOptions> = {
     errorCheck();
 
     // Get Body
-    if (opts.printBody) {
+    if (printBody) {
       blank();
       push('defer res.Body.Close()', indent);
-      push(`body, ${errorPlaceholder} := ioutil.ReadAll(res.Body)`, indent);
+      push(`body, ${errorPlaceholder} := io.ReadAll(res.Body)`, indent);
       errorCheck();
     }
 
@@ -128,12 +148,12 @@ export const native: Client<GoNativeOptions> = {
     blank();
     push('fmt.Println(res)', indent);
 
-    if (opts.printBody) {
+    if (printBody) {
       push('fmt.Println(string(body))', indent);
     }
 
     // End main block
-    if (opts.showBoilerplate) {
+    if (showBoilerplate) {
       blank();
       push('}');
     }

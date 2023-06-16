@@ -3,7 +3,11 @@ import Foundation
 let headers = [
   "accept": "application/json",
   "x-foo": "Bar",
+<<<<<<< HEAD
   "x-bar": "Foo"
+=======
+  "quoted-value": "\"quoted\" 'string'"
+>>>>>>> upstream/master
 ]
 
 let request = NSMutableURLRequest(url: NSURL(string: "https://httpbin.org/headers")! as URL,

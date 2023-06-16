@@ -3,7 +3,11 @@ var client = new HttpClient();
 var request = new HttpRequestMessage
 {
     Method = HttpMethod.Post,
+<<<<<<< HEAD
     RequestUri = new Uri("https://httpbin.org/anything"),
+=======
+    RequestUri = new Uri("http://mockbin.com/har"),
+>>>>>>> upstream/master
 };
 using (var response = await client.SendAsync(request))
 {

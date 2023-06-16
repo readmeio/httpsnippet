@@ -1,4 +1,4 @@
-# HTTP Snippet [![version][npm-version]][npm-url] [![License][npm-license]][license-url]
+# HTTPSnippet
 
 > HTTP Request snippet generator for _many_ languages & tools including: `cURL`, `HTTPie`, `Javascript`, `Node`, `C`, `Java`, `PHP`, `Objective-C`, `Swift`, `Python`, `Ruby`, `C#`, `Go`, `OCaml` and [more](https://github.com/Kong/httpsnippet/wiki/Targets)!
 
@@ -14,11 +14,11 @@ See it in action on [ReadMe](https://docs.readme.com/reference/getopenroles).
 npm install --save @readme/httpsnippet
 ```
 
-## Usage
+### TypeScript Library Quickstart
 
 ### HTTPSnippet(source [, options])
 
-#### source
+### Library Installation
 
 _Required_ Type: `object`
 
@@ -74,7 +74,7 @@ console.log(
 );
 ```
 
-### convert(target [, client, options])
+#### `isTarget`
 
 #### Target
 
@@ -145,9 +145,12 @@ import { customClient } from 'httpsnippet-for-my-node-http-client';
 HTTPSnippet.addTargetClient('node', customClient);
 ```
 
-## Documentation
+```ts
+import { myCustomClient } from './my-custom-client';
+import { HAR } from 'my-custom-har';
+import { HTTPSnippet, addTargetClient } from 'httpsnippet';
 
-At the heart of this module is the [HAR Format](http://www.softwareishard.com/blog/har-12-spec/#request) as the HTTP request description format, please review some of the sample JSON HAR Request objects in [test fixtures](/test/fixtures/requests), or read the [HAR Docs](http://www.softwareishard.com/blog/har-12-spec/#request) for more details.
+addTargetClient(myCustomClient);
 
 For detailed information on each target, please review the [wiki](https://github.com/Kong/httpsnippet/wiki).
 

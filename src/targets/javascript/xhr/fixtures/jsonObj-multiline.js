@@ -11,7 +11,11 @@ xhr.addEventListener('readystatechange', function () {
   }
 });
 
+<<<<<<< HEAD
 xhr.open('POST', 'https://httpbin.org/anything');
+=======
+xhr.open('POST', 'http://mockbin.com/har');
+>>>>>>> upstream/master
 xhr.setRequestHeader('content-type', 'application/json');
 
 xhr.send(data);

@@ -12,7 +12,11 @@ curl_setopt_array($curl, [
   CURLOPT_CUSTOMREQUEST => "GET",
   CURLOPT_HTTPHEADER => [
     "accept: application/json",
+<<<<<<< HEAD
     "x-bar: Foo",
+=======
+    "quoted-value: \"quoted\" 'string'",
+>>>>>>> upstream/master
     "x-foo: Bar"
   ],
 ]);

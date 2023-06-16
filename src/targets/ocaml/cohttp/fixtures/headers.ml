@@ -6,7 +6,11 @@ let uri = Uri.of_string "https://httpbin.org/headers" in
 let headers = Header.add_list (Header.init ()) [
   ("accept", "application/json");
   ("x-foo", "Bar");
+<<<<<<< HEAD
   ("x-bar", "Foo");
+=======
+  ("quoted-value", "\"quoted\" 'string'");
+>>>>>>> upstream/master
 ] in
 
 Client.call ~headers `GET uri

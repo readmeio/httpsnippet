@@ -4,7 +4,11 @@ NSDictionary *headers = @{ @"cookie": @"foo=bar; bar=baz", @"accept": @"applicat
 
 NSMutableData *postData = [[NSMutableData alloc] initWithData:[@"foo=bar" dataUsingEncoding:NSUTF8StringEncoding]];
 
+<<<<<<< HEAD
 NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value"]
+=======
+NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://mockbin.com/har?foo=bar&foo=baz&baz=abc&key=value"]
+>>>>>>> upstream/master
                                                        cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                    timeoutInterval:10.0];
 [request setHTTPMethod:@"POST"];
