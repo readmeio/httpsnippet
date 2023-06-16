@@ -55,7 +55,7 @@ export const generatePowershellConvert = (command: PowershellCommand) => {
       commandOptions.push(`-Body '${postData.text}'`);
     }
 
-    push(`$response = ${command} -Uri '${fullUrl}' -Method ${method} ${commandOptions.join(' ')}`);
+    push(`$response = ${command} -Uri '${fullUrl}' -Method ${method} ${commandOptions.join(' ')}`.trim());
     return join();
   };
   return convert;

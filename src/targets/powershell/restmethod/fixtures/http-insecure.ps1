@@ -1,1 +1,1 @@
-$response = Invoke-RestMethod -Uri 'http://httpbin.org/anything' -Method GET 
+$response = Invoke-RestMethod -Uri 'http://httpbin.org/anything' -Method GET
