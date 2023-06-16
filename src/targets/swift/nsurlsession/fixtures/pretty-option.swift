@@ -4,11 +4,7 @@ let headers = ["cookie": "foo=bar; bar=baz", "accept": "application/json", "cont
 
 let postData = NSMutableData(data: "foo=bar".data(using: String.Encoding.utf8)!)
 
-<<<<<<< HEAD
 let request = NSMutableURLRequest(url: NSURL(string: "https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value")! as URL,
-=======
-let request = NSMutableURLRequest(url: NSURL(string: "http://mockbin.com/har?foo=bar&foo=baz&baz=abc&key=value")! as URL,
->>>>>>> upstream/master
                                         cachePolicy: .useProtocolCachePolicy,
                                     timeoutInterval: 10.0)
 request.httpMethod = "POST"

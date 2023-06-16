@@ -1,3 +1,3 @@
 curl --request GET \
-  --url https://mockbin.com/har \
+  --url https://httpbin.org/anything \
   --insecure

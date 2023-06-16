@@ -5,11 +5,7 @@ import (
 	"time"
 	"strings"
 	"net/http"
-<<<<<<< HEAD
-	"io/ioutil"
-=======
 	"io"
->>>>>>> upstream/master
 )
 
 func main() {
@@ -18,11 +14,7 @@ func main() {
 		Timeout: time.Duration(30 * time.Second),
 	}
 
-<<<<<<< HEAD
 	url := "https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value"
-=======
-	url := "http://mockbin.com/har?foo=bar&foo=baz&baz=abc&key=value"
->>>>>>> upstream/master
 
 	payload := strings.NewReader("foo=bar")
 
@@ -35,11 +27,7 @@ func main() {
 	res, _ := client.Do(req)
 
 	defer res.Body.Close()
-<<<<<<< HEAD
-	body, _ := ioutil.ReadAll(res.Body)
-=======
 	body, _ := io.ReadAll(res.Body)
->>>>>>> upstream/master
 
 	fmt.Println(res)
 	fmt.Println(string(body))

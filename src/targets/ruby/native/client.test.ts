@@ -1,6 +1,6 @@
 import type { Request } from '../../..';
 
-import full from '../../../fixtures/requests/full';
+import short from '../../../fixtures/requests/short';
 import { runCustomFixtures } from '../../../fixtures/runCustomFixtures';
 
 runCustomFixtures({
@@ -9,7 +9,7 @@ runCustomFixtures({
   tests: [
     {
       it: 'should support the insecureSkipVerify option',
-      input: full.log.entries[0].request as Request,
+      input: short.log.entries[0].request as Request,
       options: {
         insecureSkipVerify: true,
       },

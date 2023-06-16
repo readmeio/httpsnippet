@@ -1,4 +1,4 @@
 curl --request GET \
-  --url http://mockbin.com/har \
+  --url https://httpbin.org/anything \
   --compressed \
   --header 'accept-encoding: deflate, gzip, br'

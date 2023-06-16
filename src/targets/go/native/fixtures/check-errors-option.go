@@ -4,20 +4,12 @@ import (
 	"fmt"
 	"strings"
 	"net/http"
-<<<<<<< HEAD
-	"io/ioutil"
-=======
 	"io"
->>>>>>> upstream/master
 )
 
 func main() {
 
-<<<<<<< HEAD
 	url := "https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value"
-=======
-	url := "http://mockbin.com/har?foo=bar&foo=baz&baz=abc&key=value"
->>>>>>> upstream/master
 
 	payload := strings.NewReader("foo=bar")
 
@@ -36,11 +28,7 @@ func main() {
 	}
 
 	defer res.Body.Close()
-<<<<<<< HEAD
-	body, err := ioutil.ReadAll(res.Body)
-=======
 	body, err := io.ReadAll(res.Body)
->>>>>>> upstream/master
 	if err != nil {
 		panic(err)
 	}

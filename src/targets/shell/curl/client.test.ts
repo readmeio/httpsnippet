@@ -58,7 +58,7 @@ runCustomFixtures({
       it: 'should use --http1.0 for HTTP/1.0',
       input: {
         method: 'GET',
-        url: 'http://mockbin.com/request',
+        url: 'https://httpbin.org/anything',
         httpVersion: 'HTTP/1.0',
       } as Request,
       options: {
@@ -182,7 +182,7 @@ runCustomFixtures({
       it: 'should use --compressed for requests that accept encodings',
       input: {
         method: 'GET',
-        url: 'http://mockbin.com/har',
+        url: 'https://httpbin.org/anything',
         headers: [
           {
             name: 'accept-encoding',

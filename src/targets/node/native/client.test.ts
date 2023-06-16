@@ -1,4 +1,4 @@
-import type { Request } from '../../../httpsnippet';
+import type { Request } from '../../..';
 
 import short from '../../../fixtures/requests/short';
 import { runCustomFixtures } from '../../../fixtures/runCustomFixtures';
