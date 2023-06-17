@@ -10,10 +10,24 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
-ADD . /src
 WORKDIR /src
 
-RUN npm install && \
-  dotnet new console -o IntTestCsharp -f net7.0 && \
+# - create a "hello world" project. We will later overwrite Program.cs in that
+#   folder with our test fixtures to run them
+# - install RestSharp into that project
+# - make a folder with the appropriate structure to hold the test fixtures
+RUN dotnet new console -o IntTestCsharp -f net7.0 && \
   cd IntTestCsharp && \
-  dotnet add package RestSharp
+  dotnet add package RestSharp && \
+  mkdir -p /src/IntTestCsharp/src/fixtures/files
+
+# copy the only test fixture into the fixtures dir
+ADD src/fixtures/files/hello.txt /src/IntTestCsharp/src/fixtures/files/
+
+# add pacakge.json first so we don't have to `npm install` unless it changes
+ADD package.json /src/
+RUN npm install
+
+# keep this last so that once this docker image is built it can be used quickly
+ADD . /src
+
