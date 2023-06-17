@@ -1,37 +1,51 @@
 version: '3'
 services:
+  httpbin:
+    image: mccutchen/go-httpbin:v2.5.0
+    command: ['/bin/go-httpbin', '-port', '8081']
+    ports:
+      - 8081:8081
+
   integration_node:
+    depends_on:
+      - httpbin
     build:
       context: .
       dockerfile: integrations/node.Dockerfile
-    command: "npx jest src/integration.test.ts"
+    command: 'npx jest src/integration.test.ts'
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=node
 
   integration_php:
+    depends_on:
+      - httpbin
     build:
       context: .
       dockerfile: integrations/php.Dockerfile
-    command: "npx jest src/integration.test.ts"
+    command: 'npx jest src/integration.test.ts'
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=php
 
   integration_python:
+    depends_on:
+      - httpbin
     build:
       context: .
       dockerfile: integrations/python.Dockerfile
-    command: "npx jest src/integration.test.ts"
+    command: 'npx jest src/integration.test.ts'
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=python
 
   integration_shell:
+    depends_on:
+      - httpbin
     build:
       context: .
       dockerfile: integrations/shell.Dockerfile
-    command: "npx jest src/integration.test.ts"
+    command: 'npx jest src/integration.test.ts'
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=shell
