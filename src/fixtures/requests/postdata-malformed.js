@@ -10,12 +10,7 @@ module.exports = {
         request: {
           method: 'POST',
           url: 'https://httpbin.org/anything',
-          headers: [
-            {
-              name: 'content-type',
-              value: 'application/json',
-            },
-          ],
+          headers: [],
           postData: {
             // Per the HAR spec `postData` should always have `mimeType` but this fixture is
             // testing when that isn't the case.
