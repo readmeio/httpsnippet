@@ -48,8 +48,8 @@ module.exports = {
               data: '',
               files: {},
               form: {
-                foo: 'bar',
-                hello: 'world',
+                foo: ['bar'],
+                hello: ['world'],
               },
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

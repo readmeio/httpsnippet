@@ -195,7 +195,7 @@ availableTargets()
               // Some targets send files that have a new line at the end of them without that new
               // line so we need to make our assertion universal across all targets.
               let files = {};
-              if (Object.keys(response.files).length) {
+              if (Object.keys(response.files || {}).length) {
                 files = Object.entries(response.files)
                   .map(([k, v]) => ({ [k]: String(v).trim() }))
                   .reduce((prev, next) => Object.assign(prev, next));

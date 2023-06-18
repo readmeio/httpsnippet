@@ -1,10 +1,21 @@
 version: '3'
 services:
   httpbin:
-    image: mccutchen/go-httpbin:v2.5.0
-    command: ['/bin/go-httpbin', '-port', '8081']
-    ports:
-      - 8081:8081
+    image: llimllib/go-httpbin
+    command: ['/bin/go-httpbin', '-port', '443']
+    volumes:
+      - ./integrations/https-cert:/https-cert:ro
+    environment:
+      - HTTPS_CERT_FILE=/https-cert/httpbin.org.pem
+      - HTTPS_KEY_FILE=/https-cert/httpbin.org-key.pem
+    networks:
+      default:
+        # on the docker-compose network, this httpbin will be aliased as
+        # httpbin.org. To make this work with HTTPS, each integration test
+        # container needs to install the root CA contained in
+        # ./integrations/https-cert/rootCA.pem
+        aliases:
+          - httpbin.org
 
   integration_node:
     depends_on:
@@ -16,6 +27,7 @@ services:
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=node
+      - NODE_ENV=integration
 
   integration_php:
     depends_on:
@@ -27,6 +39,7 @@ services:
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=php
+      - NODE_ENV=integration
 
   integration_python:
     depends_on:
@@ -38,6 +51,7 @@ services:
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=python
+      - NODE_ENV=integration
 
   integration_shell:
     depends_on:
@@ -46,6 +60,9 @@ services:
       context: .
       dockerfile: integrations/shell.Dockerfile
     command: 'npx jest src/integration.test.ts'
+    volumes:
+      - ./integrations/https-cert:/https-cert:ro
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=shell
+      - NODE_ENV=integration
