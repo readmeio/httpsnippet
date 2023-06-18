@@ -243,20 +243,24 @@ availableTargets()
                     JSON.stringify(JSON.parse(expected.data))
                   );
                 }
-              } else {
+                // httpbin-go includes multipart/form-data in the `data` response
+                // field, which I think is sensible. In this case, the response
+                // includes a randomly-generated boundary and is difficult to
+                // sensibly match against, so don't check the data attribute
+              } else if (!expected.headers?.['Content-Type']?.[0].includes('multipart/form-data')) {
                 expect(response.data).toStrictEqual(expected.data);
               }
 
               // `multipart/form-data` needs some special tests to assert that boundaries were sent
               // and received properly.
-              if (expected.headers?.['Content-Type']?.includes('multipart/form-data')) {
+              if (expected.headers?.['Content-Type']?.[0].includes('multipart/form-data')) {
                 if (expected.headers['Content-Type'] === response.headers['Content-Type']) {
                   // If the headers match identically, great! If not we need to make sure that
                   // there's a boundary set up.
                 } else {
                   // It doesn't matter that the /right/ boundary is set up because some targets may
                   // add their own, we just need to make sure that **a** boundary is present.
-                  const contentTypes: string[] = response.headers['Content-Type']
+                  const contentTypes: string[] = response.headers['Content-Type'][0]
                     .split(';')
                     .map((p: string) => p.trim());
 
