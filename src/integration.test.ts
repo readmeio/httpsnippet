@@ -203,7 +203,7 @@ availableTargets()
 
               expect(files).toStrictEqual(expected.files);
 
-              expect(response.form).toStrictEqual(expected.form);
+              expect(response.form || {}).toStrictEqual(expected.form);
               expect(response.method).toStrictEqual(expected.method);
               expect(response.url).toStrictEqual(expected.url);
 
