@@ -1,13 +1,15 @@
 version: '3'
 services:
   httpbin:
-    image: llimllib/go-httpbin
+    image: mccutchen/go-httpbin
     command: ['/bin/go-httpbin', '-port', '8080']
 
   # the job of this container is to:
   # - host our fake "httpbin.org"
   # - terminate SSL
-  # - forward 443 and 80 to the httpbin
+  # - forward both 443 and 80 to the httpbin
+  #
+  # see integrations/Caddyfile for its config
   reverse_proxy:
     image: caddy:2.6.4
     depends_on:
