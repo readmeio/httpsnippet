@@ -290,12 +290,12 @@ function integrationTest(
     // `multipart/form-data` needs some special tests to assert that boundaries were sent
     // and received properly.
     if (expectMultipart) {
-      // If the headers match identically, great! If not we need to make sure that
-      // there's a boundary set up.
-      if (expected.headers['Content-Type'][0] !== response.headers['Content-Type']) {
-        expect(response.headers).toHaveProperty('Content-Type');
-        // It doesn't matter that the /right/ boundary is set up because some targets may
-        // add their own, we just need to make sure that **a** boundary is present.
+      if (expected.headers['Content-Type'][0] !== response.headers['Content-Type'][0]) {
+        // If the headers match identically, great! If not we need to make sure that
+        // there's a boundary set up. It doesn't matter that the
+        // /right/ boundary is set up because some targets may add
+        // their own, we just need to make sure that **a** boundary
+        // is present.
         const contentTypes: string[] = response.headers['Content-Type'][0].split(';').map((p: string) => p.trim());
 
         expect(contentTypes).toHaveLength(2);
