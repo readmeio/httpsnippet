@@ -182,7 +182,7 @@ export const requests: Client<RequestsOptions> = {
     blank();
 
     // Print response
-    push('print(response.json())');
+    push('print(response.text())');
 
     return join();
   },

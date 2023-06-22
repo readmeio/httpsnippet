@@ -75,15 +75,15 @@ const clientFilter = (target: TargetId): string[] => {
 
 const testFilter =
   <T>(property: keyof T, list: T[keyof T][], ignore = false) =>
-  (item: T) => {
-    if (!list.length) {
-      return true;
-    } else if (ignore) {
-      return list.length > 0 ? !list.includes(item[property]) : true;
-    }
+    (item: T) => {
+      if (!list.length) {
+        return true;
+      } else if (ignore) {
+        return list.length > 0 ? !list.includes(item[property]) : true;
+      }
 
-    return list.length > 0 ? list.includes(item[property]) : true;
-  };
+      return list.length > 0 ? list.includes(item[property]) : true;
+    };
 
 /**
  * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!
@@ -165,6 +165,7 @@ availableTargets()
               try {
                 response = JSON.parse(stdout);
               } catch (err) {
+                console.error(err, response);
                 // Some JS targets print out their response with `console.log(json)` which creates
                 // a JSON object that we can't access with `JSON.parse()`.
                 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!
