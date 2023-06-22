@@ -267,7 +267,6 @@ availableTargets()
                     .split(';')
                     .map((p: string) => p.trim());
 
-                  console.warn(response.headers);
                   expect(contentTypes).toHaveLength(2);
                   expect(contentTypes.map(type => type.includes('boundary=')).filter(Boolean)).toHaveLength(1);
                 }
