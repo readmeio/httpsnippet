@@ -9,7 +9,6 @@ export const csharp: Target = {
     title: 'C#',
     extname: '.cs',
     default: 'restsharp',
-    cli: 'dotnet',
   },
 
   clientsById: {
