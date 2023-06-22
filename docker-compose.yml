@@ -46,6 +46,8 @@ services:
       context: .
       dockerfile: integrations/php.Dockerfile
     command: 'npx jest src/integration.test.ts'
+    volumes:
+      - ./integrations/https-cert:/https-cert:ro
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=php
@@ -58,10 +60,13 @@ services:
       context: .
       dockerfile: integrations/python.Dockerfile
     command: 'npx jest src/integration.test.ts'
+    volumes:
+      - ./integrations/https-cert:/https-cert:ro
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=python
       - NODE_ENV=integration
+      - REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 
   integration_shell:
     depends_on:
