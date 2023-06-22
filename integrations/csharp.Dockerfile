@@ -1,9 +1,16 @@
-FROM node:20-bullseye-slim AS node
-FROM mcr.microsoft.com/dotnet/sdk:7.0-bullseye-slim
+FROM node:20-alpine3.18 AS node
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine3.18
 
-# Microsoft's image is built on bullseye, so copy over the appropriate node
-# stuff from the node:20-bullseye image. I found the necessary stuff to copy
-# here:
+COPY integrations/https-cert/rootCA.pem /root/integration-test.pem
+
+# install the integration test certs
+RUN apk --no-cache add ca-certificates && \
+  rm -rf /var/cache/apk/* && \
+  cp /root/integration-test.pem /usr/local/share/ca-certificates/ && \
+  update-ca-certificates
+
+# copy node stuff from the node image to the dotnet image. Source for the
+# necessary files:
 # https://github.com/pyodide/pyodide/blob/1691d347d15a2c211cd49aebe6f15d42dfdf2369/Dockerfile#L105
 COPY --from=node /usr/local/bin/node /usr/local/bin/
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
@@ -30,4 +37,3 @@ RUN npm install
 
 # keep this last so that once this docker image is built it can be used quickly
 ADD . /src
-
