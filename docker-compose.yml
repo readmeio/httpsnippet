@@ -80,6 +80,8 @@ services:
       - NODE_ENV=integration
 
   integration_csharp:
+    depends_on:
+      - reverse_proxy
     build:
       context: .
       dockerfile: integrations/csharp.Dockerfile
