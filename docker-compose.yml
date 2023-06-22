@@ -2,15 +2,25 @@ version: '3'
 services:
   httpbin:
     image: llimllib/go-httpbin
-    command: ['/bin/go-httpbin', '-port', '443']
+    command: ['/bin/go-httpbin', '-port', '8080']
+
+  # the job of this container is to:
+  # - host our fake "httpbin.org"
+  # - terminate SSL
+  # - forward 443 and 80 to the httpbin
+  reverse_proxy:
+    image: caddy:2.6.4
+    depends_on:
+      - httpbin
     volumes:
       - ./integrations/https-cert:/https-cert:ro
+      - ./integrations/Caddyfile:/etc/caddy/Caddyfile
     environment:
       - HTTPS_CERT_FILE=/https-cert/httpbin.org.pem
       - HTTPS_KEY_FILE=/https-cert/httpbin.org-key.pem
     networks:
       default:
-        # on the docker-compose network, this httpbin will be aliased as
+        # on the docker-compose network, this proxy will be aliased as
         # httpbin.org. To make this work with HTTPS, each integration test
         # container needs to install the root CA contained in
         # ./integrations/https-cert/rootCA.pem
@@ -19,7 +29,7 @@ services:
 
   integration_node:
     depends_on:
-      - httpbin
+      - reverse_proxy
     build:
       context: .
       dockerfile: integrations/node.Dockerfile
@@ -31,7 +41,7 @@ services:
 
   integration_php:
     depends_on:
-      - httpbin
+      - reverse_proxy
     build:
       context: .
       dockerfile: integrations/php.Dockerfile
@@ -43,7 +53,7 @@ services:
 
   integration_python:
     depends_on:
-      - httpbin
+      - reverse_proxy
     build:
       context: .
       dockerfile: integrations/python.Dockerfile
@@ -55,7 +65,7 @@ services:
 
   integration_shell:
     depends_on:
-      - httpbin
+      - reverse_proxy
     build:
       context: .
       dockerfile: integrations/shell.Dockerfile
