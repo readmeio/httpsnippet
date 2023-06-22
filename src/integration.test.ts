@@ -75,15 +75,15 @@ const clientFilter = (target: TargetId): string[] => {
 
 const testFilter =
   <T>(property: keyof T, list: T[keyof T][], ignore = false) =>
-    (item: T) => {
-      if (!list.length) {
-        return true;
-      } else if (ignore) {
-        return list.length > 0 ? !list.includes(item[property]) : true;
-      }
+  (item: T) => {
+    if (!list.length) {
+      return true;
+    } else if (ignore) {
+      return list.length > 0 ? !list.includes(item[property]) : true;
+    }
 
-      return list.length > 0 ? list.includes(item[property]) : true;
-    };
+    return list.length > 0 ? list.includes(item[property]) : true;
+  };
 
 /**
  * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!
