@@ -8,6 +8,8 @@ RUN apk --no-cache add ca-certificates && \
   cp /root/integration-test.pem /usr/local/share/ca-certificates/ && \
   update-ca-certificates
 
+WORKDIR /src
+
 ADD package.json /src/
 
 # https://www.npmjs.com/package/axios
@@ -18,5 +20,4 @@ RUN npm install axios request
 # https://www.npmjs.com/package/node-fetch
 RUN npm install node-fetch@2
 
-WORKDIR /src
 ADD . /src
