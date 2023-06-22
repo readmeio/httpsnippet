@@ -219,7 +219,7 @@ availableTargets()
               // which we don't want to do, this is the way it's got to be.
               if (fixture === 'application-json' && fixtureExtension === '.js') {
                 const respJSON = response.json;
-                respJSON.arr_mix[2] = { arr_mix_nested: {} };
+                respJSON.arr_mix[2] = { arr_mix_nested: [] };
 
                 expect(respJSON).toStrictEqual(expected.json);
               } else {
