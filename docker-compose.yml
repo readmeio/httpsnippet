@@ -49,8 +49,6 @@ services:
       context: .
       dockerfile: integrations/php.Dockerfile
     command: 'npx jest src/integration.test.ts'
-    volumes:
-      - ./integrations/https-cert:/https-cert:ro
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=php
@@ -63,8 +61,6 @@ services:
       context: .
       dockerfile: integrations/python.Dockerfile
     command: 'npx jest src/integration.test.ts'
-    volumes:
-      - ./integrations/https-cert:/https-cert:ro
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=python
@@ -78,8 +74,6 @@ services:
       context: .
       dockerfile: integrations/shell.Dockerfile
     command: 'npx jest src/integration.test.ts'
-    volumes:
-      - ./integrations/https-cert:/https-cert:ro
     environment:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=shell
