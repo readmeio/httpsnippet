@@ -230,7 +230,7 @@ function integrationTest(
     // Some targets send files that have a new line at the end of them without that new
     // line so we need to make our assertion universal across all targets.
     let files = {};
-    if (Object.keys(response.files).length) {
+    if (Object.keys(response.files || {}).length) {
       files = Object.entries(response.files)
         .map(([k, v]) => ({ [k]: String(v).trim() }))
         .reduce((prev, next) => Object.assign(prev, next));
@@ -298,9 +298,17 @@ function integrationTest(
         expect(contentTypes.map(type => type.includes('boundary=')).filter(Boolean)).toHaveLength(1);
       }
     } else {
-      Object.entries(expected.headers).forEach(([name, value]) => {
+      // Content-type headers particularly may contain the text-encoding, so we
+      // can't check for exact equality. For example, "Content-Type:
+      // text/plain; charset=utf-8" is perfectly valid and we don't want to
+      // fail it for not having the `text/plain` content type. In the future,
+      // we may want to try and be more smart about parsing the header value,
+      // but for now, just check that the expected header value is contained
+      // anywhere within the received header
+      const headers = expected.headers as Record<string, string[]>;
+      Object.entries(headers).forEach(([name, value]) => {
         expect(response.headers).toHaveProperty(name);
-        expect(response.headers[name]).toContain(value);
+        expect(response.headers[name][0]).toContain(value[0]);
       });
     }
   });
