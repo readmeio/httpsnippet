@@ -20,4 +20,6 @@ RUN npm install axios request
 # https://www.npmjs.com/package/node-fetch
 RUN npm install node-fetch@2
 
+RUN npm install
+
 ADD . /src
