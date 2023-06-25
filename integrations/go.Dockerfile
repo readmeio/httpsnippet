@@ -15,9 +15,6 @@ RUN apk update && \
 
 WORKDIR /src
 
-# copy the only test fixture into the fixtures dir
-ADD src/fixtures/files/hello.txt /src/IntTestCsharp/src/fixtures/files/
-
 # add pacakge.json first so we don't have to `npm install` unless it changes
 ADD package.json /src/
 RUN npm install
