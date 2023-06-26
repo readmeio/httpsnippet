@@ -18,6 +18,7 @@ const ENVIRONMENT_CONFIG = {
     // Every client + target that we test in an HTTPBin-powered Docker environment.
     c: ['libcurl'],
     csharp: ['httpclient', 'restsharp'],
+    go: ['native'],
     node: ['axios', 'fetch', 'native', 'request'],
     php: ['curl', 'guzzle'],
     python: ['requests'],
@@ -62,6 +63,9 @@ int main(void) {
     );
     shell.execSync(`gcc ${inf} -o ${exe} -lcurl`);
     return shell.execSync(exe);
+  },
+  go: (fixturePath: string) => {
+    return shell.execSync(`go run ${fixturePath}`);
   },
 };
 
