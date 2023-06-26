@@ -47,8 +47,10 @@ const EXEC_FUNCTION: Record<string, (arg: string) => Buffer> = {
     return shell.execSync('cd /src/IntTestCsharp && dotnet run Program.cs');
   },
   c: (fixturePath: string) => {
+    const inf = `/tmp/${path.basename(fixturePath, '.c')}.c`;
+    const exe = `/tmp/${path.basename(fixturePath, '.c')}`;
     writeFileSync(
-      '/tmp/c.c',
+      inf,
       `
 #include <curl/curl.h>
 #include <stdio.h>
@@ -58,8 +60,8 @@ int main(void) {
   ${readFileSync(fixturePath, 'utf8')}
 }`
     );
-    shell.execSync('gcc /tmp/c.c -o /tmp/test-bin -lcurl');
-    return shell.execSync('/tmp/test-bin');
+    shell.execSync(`gcc ${inf} -o ${exe} -lcurl`);
+    return shell.execSync(exe);
   },
 };
 
