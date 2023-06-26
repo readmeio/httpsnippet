@@ -5,7 +5,7 @@ import type { TargetId } from './targets/targets';
 import type { Response } from 'har-format';
 
 import shell from 'child_process';
-import { readdirSync } from 'fs';
+import { readdirSync, readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 import { format } from 'util';
 
@@ -16,6 +16,7 @@ const expectedBasePath = ['src', 'fixtures', 'requests'];
 const ENVIRONMENT_CONFIG = {
   docker: {
     // Every client + target that we test in an HTTPBin-powered Docker environment.
+    c: ['libcurl'],
     csharp: ['httpclient', 'restsharp'],
     node: ['axios', 'fetch', 'native', 'request'],
     php: ['curl', 'guzzle'],
@@ -44,6 +45,21 @@ const EXEC_FUNCTION: Record<string, (arg: string) => Buffer> = {
     // - run Program.cs and return the output
     shell.execSync(`cp ${fixturePath} /src/IntTestCsharp/Program.cs`);
     return shell.execSync('cd /src/IntTestCsharp && dotnet run Program.cs');
+  },
+  c: (fixturePath: string) => {
+    writeFileSync(
+      '/tmp/c.c',
+      `
+#include <curl/curl.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+  ${readFileSync(fixturePath, 'utf8')}
+}`
+    );
+    shell.execSync('gcc /tmp/c.c -o /tmp/test-bin -lcurl');
+    return shell.execSync('/tmp/test-bin');
   },
 };
 
