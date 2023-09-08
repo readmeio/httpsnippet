@@ -1,11 +1,11 @@
-/* eslint-disable jest/valid-title */
-/* eslint-disable jest/no-export */
 import type { HTTPSnippetOptions, Request } from '..';
 import type { ClientId, TargetId } from '../targets/targets';
 
-import { writeFileSync } from 'fs';
-import { readFile } from 'fs/promises';
-import path from 'path';
+import { writeFileSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+
+import { describe, it, expect } from 'vitest';
 
 import { HTTPSnippet } from '..';
 

@@ -1,13 +1,15 @@
-/* eslint-disable jest/no-conditional-expect */
+/* eslint-disable vitest/no-conditional-expect */
 import type { Request } from '.';
 import type { AvailableTarget } from './helpers/utils';
 import type { TargetId } from './targets/targets';
 import type { Response } from 'har-format';
 
-import shell from 'child_process';
-import { readdirSync, readFileSync, writeFileSync } from 'fs';
-import path from 'path';
-import { format } from 'util';
+import shell from 'node:child_process';
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+import { format } from 'node:util';
+
+import { describe, test, expect } from 'vitest';
 
 import { availableTargets, extname } from './helpers/utils';
 
@@ -25,7 +27,7 @@ const ENVIRONMENT_CONFIG = {
     shell: ['curl'],
   },
   local: {
-    // When running tests locally, or within a Jest CI environment, we shold limit the targets that
+    // When running tests locally, or within a CI environment, we shold limit the targets that
     // we're testing so as to not require a mess of dependency requirements that would be better
     // served within a container.
     node: ['native'],
@@ -59,7 +61,7 @@ const EXEC_FUNCTION: Record<string, (arg: string) => Buffer> = {
 
 int main(void) {
   ${readFileSync(fixturePath, 'utf8')}
-}`
+}`,
     );
     shell.execSync(`gcc ${inf} -o ${exe} -lcurl`);
     return shell.execSync(exe);
@@ -144,7 +146,6 @@ availableTargets()
           return;
         }
 
-        // eslint-disable-next-line jest/valid-title
         describe(clientId, () => {
           fixtures.filter(testFilter(0, fixtureIgnoreFilter, true)).forEach(([fixture, request]) => {
             if (fixture === 'custom-method' && clientId === 'restsharp') {
@@ -165,7 +166,7 @@ function integrationTest(
   clientId: string,
   { key: targetId, cli: targetCLI, extname: fixtureExtension }: AvailableTarget,
   fixture: string,
-  request: Request
+  request: Request,
 ) {
   test(`should return the expected response for \`${fixture}\``, () => {
     const basePath = path.join('src', 'targets', targetId, clientId, 'fixtures', `${fixture}${extname(targetId)}`);
@@ -241,7 +242,7 @@ function integrationTest(
       expect(response.headers).toStrictEqual(
         expect.objectContaining({
           ...expected.headers,
-        })
+        }),
       );
 
       return;

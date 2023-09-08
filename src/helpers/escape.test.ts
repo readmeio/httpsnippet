@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { escapeString } from './escape';
 
 describe('Escape methods', () => {
@@ -20,7 +22,7 @@ describe('Escape methods', () => {
 
     it('escapes unrepresentable characters', () => {
       expect(
-        escapeString('hello \u0000') // 0 = ASCII 'null' character
+        escapeString('hello \u0000'), // 0 = ASCII 'null' character
       ).toBe('hello \\u0000');
     });
   });

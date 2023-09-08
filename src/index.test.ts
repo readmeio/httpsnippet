@@ -1,5 +1,7 @@
 import type { Request } from '.';
 
+import { describe, it, expect } from 'vitest';
+
 import { mimetypes } from './fixtures/mimetypes';
 import headers from './fixtures/requests/headers';
 import query from './fixtures/requests/query';

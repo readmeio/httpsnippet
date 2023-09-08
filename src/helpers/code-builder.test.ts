@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { CodeBuilder } from './code-builder';
 
 describe('codeBuilder', () => {
