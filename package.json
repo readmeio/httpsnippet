@@ -4,33 +4,36 @@
   "description": "HTTP Request snippet generator for *most* languages",
   "homepage": "https://github.com/readmeio/httpsnippet",
   "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
     },
     "./helpers/code-builder": {
-      "types": "./dist/helpers/code-builder.d.ts",
-      "require": "./dist/helpers/code-builder.js",
-      "import": "./dist/helpers/code-builder.mjs"
+      "require": "./dist/helpers/code-builder.cjs",
+      "import": "./dist/helpers/code-builder.js"
     },
     "./helpers/reducer": {
-      "types": "./dist/helpers/reducer.d.ts",
-      "require": "./dist/helpers/reducer.js",
-      "import": "./dist/helpers/reducer.mjs"
+      "require": "./dist/helpers/reducer.cjs",
+      "import": "./dist/helpers/reducer.js"
     },
     "./targets": {
-      "types": "./dist/targets/index.d.ts",
-      "require": "./dist/targets/index.js",
-      "import": "./dist/targets/index.mjs"
+      "require": "./dist/targets/index.cjs",
+      "import": "./dist/targets/index.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "sideEffects": false,
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.cts",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "api",
     "clojure",
@@ -60,12 +63,6 @@
     "unirest",
     "xhr",
     "xmlhttprequest"
-  ],
-  "engines": {
-    "node": ">=16"
-  },
-  "files": [
-    "dist"
   ],
   "repository": {
     "type": "git",
