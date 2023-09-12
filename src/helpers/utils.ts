@@ -1,6 +1,6 @@
-import type { ClientInfo, TargetId, TargetInfo } from '../targets';
+import type { ClientInfo, TargetId, TargetInfo } from '../targets/index.js';
 
-import { targets } from '../targets';
+import { targets } from '../targets/index.js';
 
 export interface AvailableTarget extends TargetInfo {
   clients: ClientInfo[];

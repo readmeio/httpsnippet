@@ -1,7 +1,7 @@
-import type { Target } from '..';
+import type { Target } from '../index.js';
 
-import { restmethod } from './restmethod/client';
-import { webrequest } from './webrequest/client';
+import { restmethod } from './restmethod/client.js';
+import { webrequest } from './webrequest/client.js';
 
 export const powershell: Target = {
   info: {

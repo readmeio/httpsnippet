@@ -1,7 +1,7 @@
-import type { Client } from '../..';
+import type { Client } from '../../index.js';
 
-import { CodeBuilder } from '../../../helpers/code-builder';
-import { escapeForSingleQuotes } from '../../../helpers/escape';
+import { CodeBuilder } from '../../../helpers/code-builder.js';
+import { escapeForSingleQuotes } from '../../../helpers/escape.js';
 
 export const native: Client = {
   info: {

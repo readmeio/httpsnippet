@@ -1,6 +1,6 @@
-import type { Client } from '../..';
+import type { Client } from '../../index.js';
 
-import { generatePowershellConvert } from '../common';
+import { generatePowershellConvert } from '../common.js';
 
 export const webrequest: Client = {
   info: {

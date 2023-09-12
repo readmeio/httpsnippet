@@ -1,8 +1,8 @@
-import type { Target } from '..';
+import type { Target } from '../index.js';
 
-import { curl } from './curl/client';
-import { httpie } from './httpie/client';
-import { wget } from './wget/client';
+import { curl } from './curl/client.js';
+import { httpie } from './httpie/client.js';
+import { wget } from './wget/client.js';
 
 export const shell: Target = {
   info: {

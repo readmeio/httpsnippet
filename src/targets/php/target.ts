@@ -1,9 +1,9 @@
-import type { Target } from '..';
+import type { Target } from '../index.js';
 
-import { curl } from './curl/client';
-import { guzzle } from './guzzle/client';
-import { http1 } from './http1/client';
-import { http2 } from './http2/client';
+import { curl } from './curl/client.js';
+import { guzzle } from './guzzle/client.js';
+import { http1 } from './http1/client.js';
+import { http2 } from './http2/client.js';
 
 export const php: Target = {
   info: {

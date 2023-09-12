@@ -1,10 +1,10 @@
-import type { Target } from '..';
+import type { Target } from '../index.js';
 
-import { axios } from './axios/client';
-import { fetch } from './fetch/client';
-import { native } from './native/client';
-import { request } from './request/client';
-import { unirest } from './unirest/client';
+import { axios } from './axios/client.js';
+import { fetch } from './fetch/client.js';
+import { native } from './native/client.js';
+import { request } from './request/client.js';
+import { unirest } from './unirest/client.js';
 
 export const node: Target = {
   info: {

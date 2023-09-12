@@ -1,6 +1,6 @@
-import type { Target } from '..';
+import type { Target } from '../index.js';
 
-import { requests } from './requests/client';
+import { requests } from './requests/client.js';
 
 export const python: Target = {
   info: {

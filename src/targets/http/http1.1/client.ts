@@ -8,9 +8,9 @@
  *
  * For any questions or issues regarding the generated code snippet, please open an issue mentioning the author.
  */
-import type { Client } from '../..';
+import type { Client } from '../../index.js';
 
-import { CodeBuilder } from '../../../helpers/code-builder';
+import { CodeBuilder } from '../../../helpers/code-builder.js';
 
 const CRLF = '\r\n';
 

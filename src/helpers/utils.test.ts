@@ -1,4 +1,6 @@
-import { availableTargets, extname } from './utils';
+import { describe, it, expect } from 'vitest';
+
+import { availableTargets, extname } from './utils.js';
 
 describe('availableTargets', () => {
   it('returns all available targets', () => {

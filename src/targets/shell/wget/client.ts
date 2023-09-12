@@ -7,10 +7,10 @@
  *
  * for any questions or issues regarding the generated code snippet, please open an issue mentioning the author.
  */
-import type { Client } from '../..';
+import type { Client } from '../../index.js';
 
-import { CodeBuilder } from '../../../helpers/code-builder';
-import { escape, quote } from '../../../helpers/shell';
+import { CodeBuilder } from '../../../helpers/code-builder.js';
+import { escape, quote } from '../../../helpers/shell.js';
 
 export interface WgetOptions {
   indent?: string | false;

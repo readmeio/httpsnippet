@@ -1,7 +1,7 @@
-import type { Client } from '../..';
+import type { Client } from '../../index.js';
 
-import { CodeBuilder } from '../../../helpers/code-builder';
-import { escapeForDoubleQuotes } from '../../../helpers/escape';
+import { CodeBuilder } from '../../../helpers/code-builder.js';
+import { escapeForDoubleQuotes } from '../../../helpers/escape.js';
 
 function title(s: string): string {
   return s[0].toUpperCase() + s.slice(1).toLowerCase();

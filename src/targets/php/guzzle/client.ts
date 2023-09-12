@@ -7,12 +7,12 @@
  *
  * for any questions or issues regarding the generated code snippet, please open an issue mentioning the author.
  */
-import type { Client } from '../..';
+import type { Client } from '../../index.js';
 
-import { CodeBuilder } from '../../../helpers/code-builder';
-import { escapeForSingleQuotes } from '../../../helpers/escape';
-import { getHeader, getHeaderName, hasHeader } from '../../../helpers/headers';
-import { convertType } from '../helpers';
+import { CodeBuilder } from '../../../helpers/code-builder.js';
+import { escapeForSingleQuotes } from '../../../helpers/escape.js';
+import { getHeader, getHeaderName, hasHeader } from '../../../helpers/headers.js';
+import { convertType } from '../helpers.js';
 
 export interface GuzzleOptions {
   closingTag?: boolean;

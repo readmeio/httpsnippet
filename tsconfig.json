@@ -5,7 +5,8 @@
     "downlevelIteration": true,
     "esModuleInterop": true,
     "lib": ["DOM", "ES2020"],
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "outDir": "dist",
     "paths": {
       "map-stream": ["./.sink.d.ts"],

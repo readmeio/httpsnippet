@@ -1,14 +1,16 @@
-import type { Client, ClientId, Target, TargetId } from '.';
-import type { HTTPSnippetOptions, Request } from '..';
+import type { Client, ClientId, Target, TargetId } from './index.js';
+import type { HTTPSnippetOptions, Request } from '../index.js';
 
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
-import { HTTPSnippet } from '..';
-import short from '../fixtures/requests/short';
-import { availableTargets, extname } from '../helpers/utils';
+import { describe, afterEach, it, expect } from 'vitest';
 
-import { isClient, isTarget, addTarget, addTargetClient, targets } from '.';
+import short from '../fixtures/requests/short.cjs';
+import { availableTargets, extname } from '../helpers/utils.js';
+import { HTTPSnippet } from '../index.js';
+
+import { isClient, isTarget, addTarget, addTargetClient, targets } from './index.js';
 
 const expectedBasePath = ['src', 'fixtures', 'requests'];
 

@@ -1,6 +1,6 @@
-import type { Target } from '..';
+import type { Target } from '../index.js';
 
-import { nsurlsession } from './nsurlsession/client';
+import { nsurlsession } from './nsurlsession/client.js';
 
 export const swift: Target = {
   info: {

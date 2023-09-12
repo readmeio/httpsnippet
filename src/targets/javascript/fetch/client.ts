@@ -7,12 +7,12 @@
  *
  * for any questions or issues regarding the generated code snippet, please open an issue mentioning the author.
  */
-import type { Client } from '../..';
+import type { Client } from '../../index.js';
 
 import stringifyObject from 'stringify-object';
 
-import { CodeBuilder } from '../../../helpers/code-builder';
-import { getHeaderName } from '../../../helpers/headers';
+import { CodeBuilder } from '../../../helpers/code-builder.js';
+import { getHeaderName } from '../../../helpers/headers.js';
 
 interface FetchOptions {
   credentials?: Record<string, string> | null;
