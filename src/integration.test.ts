@@ -221,12 +221,10 @@ function integrationTest(
     try {
       response = JSON.parse(stdout);
     } catch (err) {
-      console.log({ fixtureExtension, stdout });
-
       // Some JS targets print out their response with `console.log(json)` which creates
       // a JSON object that we can't access with `JSON.parse()`.
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!
-      if (['.js', '.cjs'].includes(fixtureExtension)) {
+      if (!['.js', '.cjs'].includes(fixtureExtension)) {
         throw err;
       }
 
