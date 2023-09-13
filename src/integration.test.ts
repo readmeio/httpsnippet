@@ -224,7 +224,7 @@ function integrationTest(
       // Some JS targets print out their response with `console.log(json)` which creates
       // a JSON object that we can't access with `JSON.parse()`.
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!
-      if (fixtureExtension !== '.js' && fixtureExtension !== '.cjs') {
+      if (['.js', '.cjs'].includes(fixtureExtension)) {
         throw err;
       }
 
@@ -273,7 +273,7 @@ function integrationTest(
     // Of course the side effect to this is is that now these test cases may be subject
     // to flakiness but without updating the root snippets to not use `console.log()`,
     // which we don't want to do, this is the way it's got to be.
-    if (fixture === 'application-json' && fixtureExtension === '.js') {
+    if (fixture === 'application-json' && ['.js', '.cjs'].includes(fixtureExtension)) {
       const respJSON = response.json;
       respJSON.arr_mix[2] = { arr_mix_nested: [] };
 
