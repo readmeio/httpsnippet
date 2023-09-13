@@ -137,20 +137,13 @@ availableTargets()
   .forEach(target => {
     const { key: targetId, title, clients } = target;
 
-    const targetClients = clients.filter(testFilter('key', clientFilter(target.key)));
-    if (!targetClients.length) {
-      return;
-    }
-
     describe.skipIf(process.env.NODE_ENV === 'test')(`${title} integration tests`, () => {
-      targetClients.forEach(({ key: clientId }) => {
+      clients.filter(testFilter('key', clientFilter(target.key))).forEach(({ key: clientId }) => {
         // If we're in an HTTPBin-powered Docker environment we only want to run tests for the
         // client that our Docker has been configured for.
-        if (process.env.HTTPBIN && process.env.INTEGRATION_CLIENT !== targetId) {
-          return;
-        }
+        const shouldSkip = process.env.HTTPBIN && process.env.INTEGRATION_CLIENT !== targetId;
 
-        describe(clientId, () => {
+        describe.skipIf(shouldSkip)(clientId, () => {
           fixtures.filter(testFilter(0, fixtureIgnoreFilter, true)).forEach(([fixture, request]) => {
             if (fixture === 'custom-method' && clientId === 'restsharp') {
               // restsharp doesn't even let you express calling an invalid
