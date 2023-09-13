@@ -9,7 +9,6 @@ export const javascript: Target = {
   info: {
     key: 'javascript',
     title: 'JavaScript',
-    extname: '.js',
     default: 'xhr',
   },
 

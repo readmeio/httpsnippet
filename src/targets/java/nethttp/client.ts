@@ -22,6 +22,7 @@ export const nethttp: Client = {
     title: 'java.net.http',
     link: 'https://openjdk.java.net/groups/net/httpclient/intro.html',
     description: 'Java Standardized HTTP Client API',
+    extname: '.java',
   },
   convert: ({ allHeaders, fullUrl, method, postData }, options) => {
     const opts = {

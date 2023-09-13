@@ -19,6 +19,7 @@ export const axios: Client = {
     title: 'Axios',
     link: 'https://github.com/axios/axios',
     description: 'Promise based HTTP client for the browser and node.js',
+    extname: '.cjs',
   },
   convert: ({ method, fullUrl, allHeaders, postData }, options) => {
     const opts = {

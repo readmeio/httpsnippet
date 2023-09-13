@@ -19,6 +19,7 @@ export const httr: Client = {
     title: 'httr',
     link: 'https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html',
     description: 'httr: Tools for Working with URLs and HTTP',
+    extname: '.r',
   },
   convert: ({ url, queryObj, queryString, postData, allHeaders, method }) => {
     // Start snippet

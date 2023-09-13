@@ -16,6 +16,7 @@ export const native: Client = {
     title: 'Native JSON',
     link: 'https://www.json.org/json-en.html',
     description: 'A JSON represetation of any HAR payload.',
+    extname: '.json',
   },
   convert: ({ postData }, inputOpts) => {
     const opts = {

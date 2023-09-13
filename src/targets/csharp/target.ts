@@ -7,7 +7,6 @@ export const csharp: Target = {
   info: {
     key: 'csharp',
     title: 'C#',
-    extname: '.cs',
     default: 'restsharp',
     cli: 'dotnet',
   },

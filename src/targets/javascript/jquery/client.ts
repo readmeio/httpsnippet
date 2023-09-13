@@ -20,6 +20,7 @@ export const jquery: Client = {
     title: 'jQuery',
     link: 'http://api.jquery.com/jquery.ajax/',
     description: 'Perform an asynchronous HTTP (Ajax) requests with jQuery',
+    extname: '.js',
   },
   convert: ({ fullUrl, method, allHeaders, postData }, options) => {
     const opts = {

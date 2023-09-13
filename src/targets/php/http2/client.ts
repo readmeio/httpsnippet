@@ -25,6 +25,7 @@ export const http2: Client<Http2Options> = {
     title: 'HTTP v2',
     link: 'http://devel-m6w6.rhcloud.com/mdref/http',
     description: 'PHP with pecl/http v2',
+    extname: '.php',
   },
   convert: ({ postData, headersObj, method, queryObj, cookiesObj, url }, options = {}) => {
     const { closingTag = false, indent = '  ', noTags = false, shortTags = false } = options;

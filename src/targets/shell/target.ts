@@ -8,7 +8,6 @@ export const shell: Target = {
   info: {
     key: 'shell',
     title: 'Shell',
-    extname: '.sh',
     default: 'curl',
     cli: '%s',
   },

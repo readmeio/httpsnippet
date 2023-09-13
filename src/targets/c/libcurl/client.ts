@@ -9,6 +9,7 @@ export const libcurl: Client = {
     title: 'Libcurl',
     link: 'http://curl.haxx.se/libcurl',
     description: 'Simple REST and HTTP API Client for C',
+    extname: '.c',
   },
   convert: ({ method, fullUrl, headersObj, allHeaders, postData }) => {
     const { push, blank, join } = new CodeBuilder();

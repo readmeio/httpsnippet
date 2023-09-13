@@ -9,7 +9,6 @@ export const php: Target = {
   info: {
     key: 'php',
     title: 'PHP',
-    extname: '.php',
     default: 'curl',
     cli: 'php %s',
   },

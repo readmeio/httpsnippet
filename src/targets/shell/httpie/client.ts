@@ -32,6 +32,7 @@ export const httpie: Client<HttpieOptions> = {
     title: 'HTTPie',
     link: 'http://httpie.org/',
     description: 'a CLI, cURL-like tool for humans',
+    extname: '.sh',
   },
   convert: ({ allHeaders, postData, queryObj, fullUrl, method, url }, options) => {
     const opts = {

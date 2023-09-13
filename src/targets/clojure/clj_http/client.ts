@@ -112,6 +112,7 @@ export const clj_http: Client = {
     title: 'clj-http',
     link: 'https://github.com/dakrone/clj-http',
     description: 'An idiomatic clojure http client wrapping the apache client.',
+    extname: '.clj',
   },
   convert: ({ queryObj, method, postData, url, allHeaders }, options) => {
     const { push, join } = new CodeBuilder({ indent: options?.indent });

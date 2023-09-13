@@ -41,6 +41,7 @@ export const httpclient: Client = {
     title: 'HttpClient',
     link: 'https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient',
     description: '.NET Standard HTTP Client',
+    extname: '.cs',
   },
   convert: ({ allHeaders, postData, method, fullUrl }, options) => {
     const opts = {

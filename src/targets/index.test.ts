@@ -55,9 +55,9 @@ const testFilter =
 
 availableTargets()
   .filter(testFilter('key', targetFilter))
-  .forEach(({ key: targetId, title, extname: fixtureExtension, clients }) => {
+  .forEach(({ key: targetId, title, clients }) => {
     describe(`${title} Request Validation`, () => {
-      clients.filter(testFilter('key', clientFilter)).forEach(({ key: clientId }) => {
+      clients.filter(testFilter('key', clientFilter)).forEach(({ key: clientId, extname: fixtureExtension }) => {
         describe(`${clientId}`, () => {
           fixtures.filter(testFilter(0, fixtureFilter)).forEach(([fixture, request]) => {
             const expectedPath = path.join(
@@ -66,7 +66,7 @@ availableTargets()
               targetId,
               clientId,
               'fixtures',
-              `${fixture}${extname(targetId)}`,
+              `${fixture}${extname(targetId, clientId)}`,
             );
             try {
               const options: HTTPSnippetOptions = {};
@@ -145,10 +145,6 @@ describe('isTarget', () => {
       'target title must be a non-zero-length string',
     );
     // @ts-expect-error intentionally incorrect
-    expect(() => isTarget({ info: { key: 'z', title: 't' } })).toThrow(
-      'targets must have an `info` object with the property `extname`',
-    );
-    // @ts-expect-error intentionally incorrect
     expect(() => isTarget({ info: { key: 'z', title: 't', extname: '' } })).toThrow(
       'No clients provided in target z.  You must provide the property `clientsById` containg your clients.',
     );
@@ -181,7 +177,7 @@ describe('isTarget', () => {
 
     expect(
       isTarget({
-        info: { key: 'z' as TargetId, title: 't', extname: null, default: 'a' },
+        info: { key: 'z' as TargetId, title: 't', default: 'a' },
         clientsById: {
           a: {
             info: {
@@ -189,6 +185,7 @@ describe('isTarget', () => {
               title: 'a',
               description: '',
               link: '',
+              extname: null,
             },
             convert: () => '',
           },
@@ -233,16 +230,20 @@ describe('isClient', () => {
       'targets client must have an `info` object with property `link`',
     );
     // @ts-expect-error intentionally incorrect
-    expect(() => isClient({ info: { key: 'a', title: '', link: '', description: '' } })).toThrow(
+    expect(() => isClient({ info: { key: 'a', description: '', title: '', link: '' } })).toThrow(
+      'targets client must have an `info` object with the property `extname`',
+    );
+    // @ts-expect-error intentionally incorrect
+    expect(() => isClient({ info: { key: 'a', title: '', link: '', description: '', extname: '' } })).toThrow(
       'targets client must have a `convert` property containing a conversion function',
     );
     expect(() =>
       // @ts-expect-error intentionally incorrect
-      isClient({ info: { key: 'a', title: '', link: '', description: '' }, convert: '' }),
+      isClient({ info: { key: 'a', title: '', link: '', description: '', extname: '' }, convert: '' }),
     ).toThrow('targets client must have a `convert` property containing a conversion function');
     expect(
       isClient({
-        info: { key: 'a', title: '', link: '', description: '' },
+        info: { key: 'a', title: '', link: '', description: '', extname: null },
         convert: () => '',
       }),
     ).toBeTruthy();
@@ -292,6 +293,7 @@ describe('addTargetClient', () => {
         title: 'Custom HTTP library',
         link: 'https://example.com',
         description: 'A custom HTTP library',
+        extname: '.custom',
       },
       convert: () => {
         return 'This was generated from a custom client.';

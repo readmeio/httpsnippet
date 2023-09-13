@@ -27,6 +27,7 @@ export const guzzle: Client<GuzzleOptions> = {
     title: 'Guzzle',
     link: 'http://docs.guzzlephp.org/en/stable/',
     description: 'PHP with Guzzle',
+    extname: '.php',
   },
   convert: ({ postData, fullUrl, method, cookies, headersObj }, options) => {
     const opts = {

@@ -6,7 +6,6 @@ export const clojure: Target = {
   info: {
     key: 'clojure',
     title: 'Clojure',
-    extname: '.clj',
     default: 'clj_http',
   },
   clientsById: {

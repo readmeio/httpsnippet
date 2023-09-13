@@ -18,6 +18,7 @@ export const unirest: Client = {
     title: 'Unirest',
     link: 'http://unirest.io/java.html',
     description: 'Lightweight HTTP Request Client Library',
+    extname: '.java',
   },
   convert: ({ method, allHeaders, postData, fullUrl }, options) => {
     const opts = {

@@ -25,6 +25,7 @@ export const xhr: Client = {
     title: 'XMLHttpRequest',
     link: 'https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest',
     description: 'W3C Standard API that provides scripted client functionality',
+    extname: '.js',
   },
   convert: ({ postData, allHeaders, method, fullUrl }, options) => {
     const opts = {

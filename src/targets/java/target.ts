@@ -9,7 +9,6 @@ export const java: Target = {
   info: {
     key: 'java',
     title: 'Java',
-    extname: '.java',
     default: 'unirest',
   },
 

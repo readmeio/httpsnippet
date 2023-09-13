@@ -24,6 +24,7 @@ export const fetch: Client<FetchOptions> = {
     title: 'fetch',
     link: 'https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch',
     description: 'Perform asynchronous HTTP requests with the Fetch API',
+    extname: '.js',
   },
   convert: ({ method, allHeaders, postData, fullUrl }, inputOpts) => {
     const opts = {

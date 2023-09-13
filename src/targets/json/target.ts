@@ -6,7 +6,6 @@ export const json: Target = {
   info: {
     key: 'json',
     title: 'JSON',
-    extname: '.json',
     default: 'native',
   },
   clientsById: {

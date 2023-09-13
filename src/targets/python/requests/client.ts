@@ -26,6 +26,7 @@ export const requests: Client<RequestsOptions> = {
     title: 'Requests',
     link: 'http://docs.python-requests.org/en/latest/api/#requests.request',
     description: 'Requests HTTP library',
+    extname: '.py',
   },
   convert: ({ fullUrl, postData, allHeaders, method }, options) => {
     const opts = {

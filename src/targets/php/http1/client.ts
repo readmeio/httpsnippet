@@ -24,6 +24,7 @@ export const http1: Client<Http1Options> = {
     title: 'HTTP v1',
     link: 'http://php.net/manual/en/book.http.php',
     description: 'PHP with pecl/http v1',
+    extname: '.php',
   },
   convert: ({ method, url, postData, queryObj, headersObj, cookiesObj }, options = {}) => {
     const { closingTag = false, indent = '  ', noTags = false, shortTags = false } = options;

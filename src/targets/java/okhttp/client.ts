@@ -18,6 +18,7 @@ export const okhttp: Client = {
     title: 'OkHttp',
     link: 'http://square.github.io/okhttp/',
     description: 'An HTTP Request Client Library',
+    extname: '.java',
   },
   convert: ({ postData, method, fullUrl, allHeaders }, options) => {
     const opts = {

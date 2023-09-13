@@ -28,6 +28,7 @@ export const curl: Client<CurlOptions> = {
     title: 'cURL',
     link: 'http://php.net/manual/en/book.curl.php',
     description: 'PHP with ext-curl',
+    extname: '.php',
   },
   convert: ({ uriObj, postData, fullUrl, method, httpVersion, cookies, headersObj }, options = {}) => {
     const {

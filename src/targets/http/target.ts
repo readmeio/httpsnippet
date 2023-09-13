@@ -6,7 +6,6 @@ export const http: Target = {
   info: {
     key: 'http',
     title: 'HTTP',
-    extname: null,
     default: '1.1',
   },
   clientsById: {

@@ -19,6 +19,7 @@ export const request: Client = {
     title: 'Request',
     link: 'https://github.com/request/request',
     description: 'Simplified HTTP request client',
+    extname: '.cjs',
   },
   convert: ({ method, url, fullUrl, postData, headersObj, cookies }, options) => {
     const opts = {

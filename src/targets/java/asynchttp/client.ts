@@ -18,6 +18,7 @@ export const asynchttp: Client = {
     title: 'AsyncHttp',
     link: 'https://github.com/AsyncHttpClient/async-http-client',
     description: 'Asynchronous Http and WebSocket Client library for Java',
+    extname: '.java',
   },
   convert: ({ method, allHeaders, postData, fullUrl }, options) => {
     const opts = {

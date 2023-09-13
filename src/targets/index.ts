@@ -28,6 +28,7 @@ export type ClientId = string;
 
 export interface ClientInfo {
   description: string;
+  extname: Extension;
   key: ClientId;
   link: string;
   title: string;
@@ -48,7 +49,6 @@ export type Extension = `.${string}` | null;
 export interface TargetInfo {
   cli?: string;
   default: string;
-  extname: Extension;
   key: TargetId;
   title: string;
 }
@@ -108,10 +108,6 @@ export const isTarget = (target: Target): target is Target => {
 
   if (!target.info.title) {
     throw new Error('target title must be a non-zero-length string');
-  }
-
-  if (!Object.prototype.hasOwnProperty.call(target.info, 'extname')) {
-    throw new Error('targets must have an `info` object with the property `extname`');
   }
 
   if (
@@ -177,6 +173,10 @@ export const isClient = (client: Client): client is Client => {
 
   if (!Object.prototype.hasOwnProperty.call(client.info, 'link')) {
     throw new Error('targets client must have an `info` object with property `link`');
+  }
+
+  if (!Object.prototype.hasOwnProperty.call(client.info, 'extname')) {
+    throw new Error('targets client must have an `info` object with the property `extname`');
   }
 
   if (!Object.prototype.hasOwnProperty.call(client, 'convert') || typeof client.convert !== 'function') {

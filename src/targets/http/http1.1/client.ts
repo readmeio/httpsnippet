@@ -31,6 +31,7 @@ export const http11: Client<Http11Options> = {
     title: 'HTTP/1.1',
     link: 'https://tools.ietf.org/html/rfc7230',
     description: 'HTTP/1.1 request string in accordance with RFC 7230',
+    extname: null,
   },
   convert: ({ method, fullUrl, uriObj, httpVersion, allHeaders, postData }, options) => {
     const opts = {

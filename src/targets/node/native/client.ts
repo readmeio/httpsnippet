@@ -19,6 +19,7 @@ export const native: Client = {
     title: 'HTTP',
     link: 'http://nodejs.org/api/http.html#http_http_request_options_callback',
     description: 'Node.js native HTTP interface',
+    extname: '.cjs',
   },
   convert: ({ uriObj, method, allHeaders, postData }, options = {}) => {
     const { indent = '  ' } = options;

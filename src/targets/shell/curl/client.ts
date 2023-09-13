@@ -54,6 +54,7 @@ export const curl: Client<CurlOptions> = {
     title: 'cURL',
     link: 'http://curl.haxx.se/',
     description: 'cURL is a command line tool and library for transferring data with URL syntax',
+    extname: '.sh',
   },
   convert: ({ fullUrl, method, httpVersion, headersObj, allHeaders, postData }, options = {}) => {
     const { indent = '  ', short = false, binary = false, globOff = false } = options;

@@ -24,6 +24,7 @@ export const wget: Client<WgetOptions> = {
     title: 'Wget',
     link: 'https://www.gnu.org/software/wget/',
     description: 'a free software package for retrieving files using HTTP, HTTPS',
+    extname: '.sh',
   },
   convert: ({ method, postData, allHeaders, fullUrl }, options) => {
     const opts = {

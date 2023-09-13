@@ -23,6 +23,7 @@ export const nsurlsession: Client<NsurlsessionOptions> = {
     title: 'NSURLSession',
     link: 'https://developer.apple.com/library/mac/documentation/Foundation/Reference/NSURLSession_class/index.html',
     description: "Foundation's NSURLSession request",
+    extname: '.m',
   },
   convert: ({ allHeaders, postData, method, fullUrl }, options) => {
     const opts = {

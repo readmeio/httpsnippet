@@ -19,6 +19,7 @@ export const unirest: Client = {
     title: 'Unirest',
     link: 'http://unirest.io/nodejs.html',
     description: 'Lightweight HTTP Request Client Library',
+    extname: '.cjs',
   },
   convert: ({ method, url, cookies, queryObj, postData, headersObj }, options) => {
     const opts = {

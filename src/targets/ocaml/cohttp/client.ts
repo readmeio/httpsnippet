@@ -18,6 +18,7 @@ export const cohttp: Client = {
     title: 'CoHTTP',
     link: 'https://github.com/mirage/ocaml-cohttp',
     description: 'Cohttp is a very lightweight HTTP server using Lwt or Async for OCaml',
+    extname: '.ml',
   },
   convert: ({ fullUrl, allHeaders, postData, method }, options) => {
     const opts = {
