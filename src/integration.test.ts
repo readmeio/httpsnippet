@@ -221,7 +221,7 @@ function integrationTest(
     try {
       response = JSON.parse(stdout);
     } catch (err) {
-      console.log({ stdout });
+      console.log({ fixtureExtension, stdout });
 
       // Some JS targets print out their response with `console.log(json)` which creates
       // a JSON object that we can't access with `JSON.parse()`.
