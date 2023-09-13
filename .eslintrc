@@ -22,6 +22,14 @@
 
     "vitest/require-hook": "off"
   },
+  "overrides": [
+    {
+      "files": ["src/fixtures/**"],
+      "rules": {
+        "import/no-commonjs": "off"
+      }
+    }
+  ],
   "env": {
     "browser": true
   }

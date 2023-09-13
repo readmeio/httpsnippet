@@ -71,7 +71,7 @@
   "scripts": {
     "build": "tsup",
     "clean": "rm -rf dist/",
-    "lint": "eslint .",
+    "lint": "eslint . --ext .js,.cjs,.ts",
     "prebuild": "npm run clean",
     "prepack": "npm run build",
     "pretest": "npm run lint",
