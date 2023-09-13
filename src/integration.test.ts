@@ -168,12 +168,13 @@ availableTargets()
 
 function integrationTest(
   clientId: string,
-  { key: targetId, cli: targetCLI, extname: fixtureExtension }: AvailableTarget,
+  { key: targetId, cli: targetCLI }: AvailableTarget,
   fixture: string,
   request: Request,
 ) {
   test(`should return the expected response for \`${fixture}\``, () => {
-    const basePath = path.join('src', 'targets', targetId, clientId, 'fixtures', `${fixture}${extname(targetId)}`);
+    const fixtureExtension = extname(targetId, clientId);
+    const basePath = path.join('src', 'targets', targetId, clientId, 'fixtures', `${fixture}${fixtureExtension}`);
 
     // Clone the fixture we're testing against to another object because for multipart cases
     // we're deleting the header, and if we don't clone the fixture to another object, that
@@ -230,7 +231,7 @@ function integrationTest(
       // Some JS targets print out their response with `console.log(json)` which creates
       // a JSON object that we can't access with `JSON.parse()`.
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!
-      if (fixtureExtension !== '.js') {
+      if (fixtureExtension !== '.js' && fixtureExtension !== '.cjs') {
         throw err;
       }
 
