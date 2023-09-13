@@ -79,7 +79,7 @@
     "test": "vitest --coverage"
   },
   "devDependencies": {
-    "@readme/eslint-config": "^13.0.0",
+    "@readme/eslint-config": "^13.0.1",
     "@types/eslint": "^8.44.2",
     "@types/har-format": "^1.2.12",
     "@types/node": "^20.5.9",
