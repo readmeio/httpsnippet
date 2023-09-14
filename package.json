@@ -78,6 +78,11 @@
     "prettier": "prettier --list-different --write .",
     "test": "vitest --coverage"
   },
+  "dependencies": {
+    "formdata-to-string": "^1.1.0",
+    "qs": "^6.11.2",
+    "stringify-object": "^3.3.0"
+  },
   "devDependencies": {
     "@readme/eslint-config": "^13.0.1",
     "@types/eslint": "^8.44.2",
@@ -93,11 +98,6 @@
     "type-fest": "^4.3.1",
     "typescript": "^5.2.2",
     "vitest": "^0.34.4"
-  },
-  "dependencies": {
-    "formdata-to-string": "^1.0.1",
-    "qs": "^6.11.2",
-    "stringify-object": "^3.3.0"
   },
   "prettier": "@readme/eslint-config/prettier"
 }

@@ -212,23 +212,7 @@ export class HTTPSnippet {
 
           const boundary = '---011000010111000001101001'; // this is binary for "api"
           request.postData.boundary = boundary;
-          request.postData.text = await formDataToString(form).then(str => {
-            // `formdata-to-string` creates a boundary that contains `--formdata-undici-<number>`
-            // but for the purpose of our code snippet we want something a little cleaner.
-            return str.replace(
-              /([-]+)formdata-undici-(\d+)/gim,
-
-              /**
-               * The boundary that's in a multipart payload has to have a boundary prefix with two
-               * extra hyphens. If we don't add this, and just replace the `--formdata-uncici-`
-               * boundary with our custom boundary then all multipart payloads will end up being
-               * fully corrutped when a request is made from the client.
-               *
-               * @see {@link https://datatracker.ietf.org/doc/html/rfc7578#section-4.1}
-               */
-              `--${boundary}`,
-            );
-          });
+          request.postData.text = await formDataToString(form, { boundary });
 
           // Since headers are case-sensitive we need to see if there's an existing `Content-Type` header that we can override.
           const contentTypeHeader = getHeaderName(request.headersObj, 'content-type') || 'content-type';
