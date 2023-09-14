@@ -59,7 +59,7 @@ availableTargets()
     describe(`${title} Request Validation`, () => {
       clients.filter(testFilter('key', clientFilter)).forEach(({ key: clientId, extname: fixtureExtension }) => {
         describe(`${clientId}`, () => {
-          fixtures.filter(testFilter(0, fixtureFilter)).forEach(([fixture, request]) => {
+          fixtures.filter(testFilter(0, fixtureFilter)).forEach(async ([fixture, request]) => {
             const expectedPath = path.join(
               'src',
               'targets',
@@ -77,8 +77,10 @@ availableTargets()
               }
 
               const expected = readFileSync(expectedPath).toString();
-              const { convert } = new HTTPSnippet(request, options);
-              const result = convert(targetId, clientId); //?
+              const snippet = new HTTPSnippet(request, options);
+              await snippet.init();
+
+              const result = snippet.convert(targetId, clientId);
 
               if (OVERWRITE_EVERYTHING && result) {
                 writeFileSync(expectedPath, String(result));
@@ -286,7 +288,7 @@ describe('addTargetClient', () => {
     delete targets.node.clientsById.custom;
   });
 
-  it('should add a new custom target', () => {
+  it('should add a new custom target', async () => {
     const customClient: Client = {
       info: {
         key: 'custom',
@@ -302,8 +304,10 @@ describe('addTargetClient', () => {
 
     addTargetClient('node', customClient);
 
-    const { convert } = new HTTPSnippet(short.log.entries[0].request as Request, {});
-    const result = convert('node', 'custom');
+    const snippet = new HTTPSnippet(short.log.entries[0].request as Request, {});
+    await snippet.init();
+
+    const result = snippet.convert('node', 'custom');
 
     expect(result).toBe('This was generated from a custom client.');
   });

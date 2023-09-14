@@ -63,6 +63,8 @@ const snippet = new HTTPSnippet({
   url: 'httsp://httpbin.org/anything',
 });
 
+await snippet.init();
+
 // generate Node.js: Native output
 console.log(snippet.convert('node'));
 
@@ -101,6 +103,8 @@ const snippet = new HTTPSnippet({
   method: 'GET',
   url: 'https://httpbin.org/anything',
 });
+
+await snippet.init();
 
 // generate Shell: cURL output
 console.log(

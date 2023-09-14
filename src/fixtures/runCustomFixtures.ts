@@ -24,13 +24,16 @@ export interface CustomFixture {
 
 export const runCustomFixtures = ({ targetId, clientId, tests }: CustomFixture) => {
   describe(`custom fixtures for ${targetId}:${clientId}`, () => {
-    tests.forEach(({ it: title, expected: fixtureFile, options, input: request }) => {
+    tests.forEach(async ({ it: title, expected: fixtureFile, options, input: request }) => {
       const opts: HTTPSnippetOptions = {};
       if (options.harIsAlreadyEncoded) {
         opts.harIsAlreadyEncoded = options.harIsAlreadyEncoded;
       }
 
-      const result = new HTTPSnippet(request, opts).convert(targetId, clientId, options);
+      const snippet = new HTTPSnippet(request, opts);
+      await snippet.init();
+
+      const result = snippet.convert(targetId, clientId, options);
       const filePath = path.join(__dirname, '..', 'targets', targetId, clientId, 'fixtures', fixtureFile);
       if (process.env.OVERWRITE_EVERYTHING) {
         writeFileSync(filePath, String(result));

@@ -74,12 +74,16 @@ const isHarEntry = (value: any): value is HarEntry =>
   Array.isArray(value.log.entries);
 
 export class HTTPSnippet {
+  initCalled = false;
+
+  entries: Entry[] = [];
+
   requests: Request[] = [];
 
-  constructor(input: HarEntry | HarRequest, opts: HTTPSnippetOptions = {}) {
-    let entries: Entry[] = [];
+  options: HTTPSnippetOptions = {};
 
-    const options = {
+  constructor(input: HarEntry | HarRequest, opts: HTTPSnippetOptions = {}) {
+    this.options = {
       harIsAlreadyEncoded: false,
       ...opts,
     };
@@ -89,16 +93,19 @@ export class HTTPSnippet {
 
     // is it har?
     if (isHarEntry(input)) {
-      entries = input.log.entries;
+      this.entries = input.log.entries;
     } else {
-      entries = [
+      this.entries = [
         {
           request: input,
         },
       ];
     }
+  }
 
-    entries.forEach(({ request }) => {
+  init() {
+    this.initCalled = true;
+    this.entries.forEach(({ request }) => {
       // add optional properties to make validation successful
       const req = {
         bodySize: 0,
@@ -118,11 +125,13 @@ export class HTTPSnippet {
         req.postData.mimeType = 'application/octet-stream';
       }
 
-      this.requests.push(this.prepare(req as HarRequest, options));
+      this.requests.push(this.prepare(req as HarRequest, this.options));
     });
+
+    return this;
   }
 
-  prepare = (harRequest: HarRequest, options: HTTPSnippetOptions) => {
+  prepare(harRequest: HarRequest, options: HTTPSnippetOptions) {
     const request: Request = {
       ...harRequest,
       fullUrl: '',
@@ -334,9 +343,13 @@ export class HTTPSnippet {
       url,
       uriObj,
     };
-  };
+  }
 
-  convert = (targetId: TargetId, clientId?: ClientId, options?: any) => {
+  convert(targetId: TargetId, clientId?: ClientId, options?: any) {
+    if (!this.initCalled) {
+      throw new Error('The `.init()` method must be invoked before `.convert()`.');
+    }
+
     if (!options && clientId) {
       options = clientId;
     }
@@ -349,5 +362,5 @@ export class HTTPSnippet {
     const { convert } = target.clientsById[clientId || target.info.default];
     const results = this.requests.map(request => convert(request, options));
     return results.length === 1 ? results[0] : results;
-  };
+  }
 }
