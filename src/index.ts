@@ -5,12 +5,9 @@ import type { UrlWithParsedQuery } from 'node:url';
 
 import { format as urlFormat, parse as urlParse } from 'node:url';
 
-import FormData from 'form-data';
+import formDataToString from 'formdata-to-string';
 import { stringify as queryStringify } from 'qs';
 
-import mapStream from 'map-stream';
-
-import { formDataIterator, isBlob } from './helpers/form-data.js';
 import { getHeaderName } from './helpers/headers.js';
 import { reducer } from './helpers/reducer.js';
 import { targets } from './targets/index.js';
@@ -103,8 +100,11 @@ export class HTTPSnippet {
     }
   }
 
-  init() {
+  async init() {
     this.initCalled = true;
+
+    const promises: Promise<Request>[] = [];
+
     this.entries.forEach(({ request }) => {
       // add optional properties to make validation successful
       const req = {
@@ -125,13 +125,15 @@ export class HTTPSnippet {
         req.postData.mimeType = 'application/octet-stream';
       }
 
-      this.requests.push(this.prepare(req as HarRequest, this.options));
+      promises.push(this.prepare(req as HarRequest, this.options));
     });
+
+    this.requests = await Promise.all(promises);
 
     return this;
   }
 
-  prepare(harRequest: HarRequest, options: HTTPSnippetOptions) {
+  async prepare(harRequest: HarRequest, options: HTTPSnippetOptions) {
     const request: Request = {
       ...harRequest,
       fullUrl: '',
@@ -195,64 +197,38 @@ export class HTTPSnippet {
         if (request.postData?.params) {
           const form = new FormData();
 
-          // The `form-data` module returns one of two things: a native FormData object, or its own polyfill
-          // Since the polyfill does not support the full API of the native FormData object, when this library is running in a browser environment it'll fail on two things:
-          //
-          //  1. The API for `form.append()` has three arguments and the third should only be present when the second is a
-          //    Blob or USVString.
-          //  1. `FormData.pipe()` isn't a function.
-          //
-          // Since the native FormData object is iterable, we easily detect what version of `form-data` we're working with here to allow `multipart/form-data` requests to be compiled under both browser and Node environments.
-          //
-          // This hack is pretty awful but it's the only way we can use this library in the browser as if we code this against just the native FormData object, we can't polyfill that back into Node because Blob and File objects, which something like `formdata-polyfill` requires, don't exist there.
-          // @ts-expect-error TODO
-          const isNativeFormData = typeof form[Symbol.iterator] === 'function';
-
-          // TODO: THIS ABSOLUTELY MUST BE REMOVED.
-          // IT BREAKS SOME USE-CASES FOR MULTIPART FORMS THAT DEPEND ON BEING ABLE TO SET THE BOUNDARY.
-          // easter egg
-          const boundary = '---011000010111000001101001'; // this is binary for "api". yep.
-          if (!isNativeFormData) {
-            // @ts-expect-error THIS IS WRONG.  VERY WRONG.
-            form._boundary = boundary;
-          }
-
           request.postData?.params.forEach(param => {
             const name = param.name;
             const value = param.value || '';
             const filename = param.fileName || null;
+            const contentType = param.contentType || '';
 
-            if (isNativeFormData) {
-              if (isBlob(value)) {
-                // @ts-expect-error TODO
-                form.append(name, value, filename);
-              } else {
-                form.append(name, value);
-              }
+            if (filename) {
+              form.append(name, new Blob([value], { type: contentType }), filename);
             } else {
-              form.append(name, value, {
-                // @ts-expect-error TODO
-                filename,
-                // @ts-expect-error TODO
-                contentType: param.contentType || null,
-              });
+              form.append(name, value);
             }
           });
 
-          if (isNativeFormData) {
-            // eslint-disable-next-line no-restricted-syntax
-            for (const data of formDataIterator(form, boundary)) {
-              request.postData.text += data;
-            }
-          } else {
-            form.pipe(
-              mapStream((data: string) => {
-                request.postData.text += data;
-              }),
-            );
-          }
-
+          const boundary = '---011000010111000001101001'; // this is binary for "api"
           request.postData.boundary = boundary;
+          request.postData.text = await formDataToString(form).then(str => {
+            // `formdata-to-string` creates a boundary that contains `--formdata-undici-<number>`
+            // but for the purpose of our code snippet we want something a little cleaner.
+            return str.replace(
+              /([-]+)formdata-undici-(\d+)/gim,
+
+              /**
+               * The boundary that's in a multipart payload has to have a boundary prefix with two
+               * extra hyphens. If we don't add this, and just replace the `--formdata-uncici-`
+               * boundary with our custom boundary then all multipart payloads will end up being
+               * fully corrutped when a request is made from the client.
+               *
+               * @see {@link https://datatracker.ietf.org/doc/html/rfc7578#section-4.1}
+               */
+              `--${boundary}`,
+            );
+          });
 
           // Since headers are case-sensitive we need to see if there's an existing `Content-Type` header that we can override.
           const contentTypeHeader = getHeaderName(request.headersObj, 'content-type') || 'content-type';
