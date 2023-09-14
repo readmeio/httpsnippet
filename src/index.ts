@@ -210,7 +210,7 @@ export class HTTPSnippet {
             }
           });
 
-          const boundary = '---011000010111000001101001'; // this is binary for "api"
+          const boundary = '---011000010111000001101001'; // this is binary for "api" (easter egg)
           request.postData.boundary = boundary;
           request.postData.text = await formDataToString(form, { boundary });
 
