@@ -63,14 +63,12 @@ const snippet = new HTTPSnippet({
   url: 'httsp://httpbin.org/anything',
 });
 
-await snippet.init();
-
 // generate Node.js: Native output
-console.log(snippet.convert('node'));
+console.log(await snippet.convert('node'));
 
 // generate Node.js: Native output, indent with tabs
 console.log(
-  snippet.convert('node', {
+  await snippet.convert('node', {
     indent: '\t',
   }),
 );
@@ -104,17 +102,15 @@ const snippet = new HTTPSnippet({
   url: 'https://httpbin.org/anything',
 });
 
-await snippet.init();
-
 // generate Shell: cURL output
 console.log(
-  snippet.convert('shell', 'curl', {
+  await snippet.convert('shell', 'curl', {
     indent: '\t',
   }),
 );
 
 // generate Node.js: Unirest output
-console.log(snippet.convert('node', 'unirest'));
+console.log(await snippet.convert('node', 'unirest'));
 ```
 
 ### addTarget(target)

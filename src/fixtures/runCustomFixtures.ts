@@ -31,9 +31,7 @@ export const runCustomFixtures = ({ targetId, clientId, tests }: CustomFixture) 
       }
 
       const snippet = new HTTPSnippet(request, opts);
-      await snippet.init();
-
-      const result = snippet.convert(targetId, clientId, options);
+      const result = await snippet.convert(targetId, clientId, options);
       const filePath = path.join(__dirname, '..', 'targets', targetId, clientId, 'fixtures', fixtureFile);
       if (process.env.OVERWRITE_EVERYTHING) {
         writeFileSync(filePath, String(result));

@@ -321,9 +321,9 @@ export class HTTPSnippet {
     };
   }
 
-  convert(targetId: TargetId, clientId?: ClientId, options?: any) {
+  async convert(targetId: TargetId, clientId?: ClientId, options?: any) {
     if (!this.initCalled) {
-      throw new Error('The `.init()` method must be invoked before `.convert()`.');
+      await this.init();
     }
 
     if (!options && clientId) {

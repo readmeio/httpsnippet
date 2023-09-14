@@ -87,9 +87,8 @@ describe('request validation', () => {
 
               expected = readFileSync(expectedPath).toString();
               const snippet = new HTTPSnippet(request, options);
-              await snippet.init();
 
-              result = snippet.convert(targetId, clientId);
+              result = await snippet.convert(targetId, clientId);
 
               if (OVERWRITE_EVERYTHING && result) {
                 writeFileSync(expectedPath, String(result));
@@ -313,9 +312,8 @@ describe('addTargetClient', () => {
     addTargetClient('node', customClient);
 
     const snippet = new HTTPSnippet(short.log.entries[0].request as Request, {});
-    await snippet.init();
 
-    const result = snippet.convert('node', 'custom');
+    const result = await snippet.convert('node', 'custom');
 
     expect(result).toBe('This was generated from a custom client.');
   });

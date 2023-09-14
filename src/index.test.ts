@@ -12,20 +12,11 @@ import { HTTPSnippet } from './index.js';
 describe('HTTPSnippet', () => {
   it('should return false if no matching target', async () => {
     const snippet = new HTTPSnippet(short.log.entries[0].request as Request);
-    await snippet.init();
 
     // @ts-expect-error intentionally incorrect
-    const result = snippet.convert(null);
+    const result = await snippet.convert(null);
 
     expect(result).toBe(false);
-  });
-
-  it('should throw an error if you try to convert before initializing', () => {
-    const snippet = new HTTPSnippet(short.log.entries[0].request as Request);
-
-    expect(() => {
-      snippet.convert('node');
-    }).toThrow(new Error('The `.init()` method must be invoked before `.convert()`.'));
   });
 
   describe('repair malformed `postData`', () => {
@@ -35,7 +26,8 @@ describe('HTTPSnippet', () => {
         url: 'https://httpbin.org/anything',
         postData: {},
       } as Request);
-      await snippet.init();
+
+      await snippet.convert('node');
 
       const request = snippet.requests[0];
       expect(request.postData).toStrictEqual({
@@ -52,7 +44,7 @@ describe('HTTPSnippet', () => {
           params: [],
         },
       } as Request);
-      await snippet.init();
+      await snippet.convert('node');
 
       const request = snippet.requests[0];
       expect(request.postData).toStrictEqual({
@@ -69,7 +61,7 @@ describe('HTTPSnippet', () => {
           text: '',
         },
       } as Request);
-      await snippet.init();
+      await snippet.convert('node');
 
       const request = snippet.requests[0];
       expect(request.postData).toStrictEqual({
@@ -104,7 +96,7 @@ describe('HTTPSnippet', () => {
       },
     });
 
-    await snippet.init();
+    await snippet.convert('node');
 
     expect(snippet).toHaveProperty('requests');
     expect(Array.isArray(snippet.requests)).toBeTruthy();
@@ -146,7 +138,7 @@ describe('HTTPSnippet', () => {
       input: keyof typeof mimetypes;
     }[])('mimetype conversion of $input to $output', async ({ input, expected }) => {
       const snippet = new HTTPSnippet(mimetypes[input]);
-      await snippet.init();
+      await snippet.convert('node');
 
       const request = snippet.requests[0];
       expect(request.postData.mimeType).toStrictEqual(expected);
@@ -155,7 +147,7 @@ describe('HTTPSnippet', () => {
 
   it('should set postData.text to empty string when postData.params is undefined in application/x-www-form-urlencoded', async () => {
     const snippet = new HTTPSnippet(mimetypes['application/x-www-form-urlencoded']);
-    await snippet.init();
+    await snippet.convert('node');
 
     const request = snippet.requests[0];
     expect(request.postData.text).toBe('');
@@ -165,7 +157,7 @@ describe('HTTPSnippet', () => {
     describe('uriObj', () => {
       it('should add uriObj', async () => {
         const snippet = new HTTPSnippet(query.log.entries[0].request as Request);
-        await snippet.init();
+        await snippet.convert('node');
 
         const request = snippet.requests[0];
 
@@ -191,7 +183,7 @@ describe('HTTPSnippet', () => {
 
       it('should fix the `path` property of uriObj to match queryString', async () => {
         const snippet = new HTTPSnippet(query.log.entries[0].request as Request);
-        await snippet.init();
+        await snippet.convert('node');
 
         const request = snippet.requests[0];
         expect(request.uriObj.path).toBe('/anything?foo=bar&foo=baz&baz=abc&key=value');
@@ -201,7 +193,7 @@ describe('HTTPSnippet', () => {
     describe('queryObj', () => {
       it('should add queryObj', async () => {
         const snippet = new HTTPSnippet(query.log.entries[0].request as Request);
-        await snippet.init();
+        await snippet.convert('node');
 
         const request = snippet.requests[0];
         expect(request.queryObj).toMatchObject({ baz: 'abc', key: 'value', foo: ['bar', 'baz'] });
@@ -211,7 +203,7 @@ describe('HTTPSnippet', () => {
     describe('headersObj', () => {
       it('should add headersObj', async () => {
         const snippet = new HTTPSnippet(headers.log.entries[0].request as Request);
-        await snippet.init();
+        await snippet.convert('node');
 
         const request = snippet.requests[0];
         expect(request.headersObj).toMatchObject({
@@ -233,7 +225,7 @@ describe('HTTPSnippet', () => {
           ],
         } as Request);
 
-        await snippet.init();
+        await snippet.convert('node');
 
         const request = snippet.requests[0];
 
@@ -257,7 +249,7 @@ describe('HTTPSnippet', () => {
           ],
         } as Request);
 
-        await snippet.init();
+        await snippet.convert('node');
 
         const request = snippet.requests[0];
 
@@ -272,7 +264,7 @@ describe('HTTPSnippet', () => {
     describe('url', () => {
       it('should modify the original url to strip query string', async () => {
         const snippet = new HTTPSnippet(query.log.entries[0].request as Request);
-        await snippet.init();
+        await snippet.convert('node');
 
         const request = snippet.requests[0];
         expect(request.url).toBe('https://httpbin.org/anything');
@@ -282,7 +274,7 @@ describe('HTTPSnippet', () => {
     describe('fullUrl', () => {
       it('adds fullURL', async () => {
         const snippet = new HTTPSnippet(query.log.entries[0].request as Request);
-        await snippet.init();
+        await snippet.convert('node');
 
         const request = snippet.requests[0];
         expect(request.fullUrl).toBe('https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value');
