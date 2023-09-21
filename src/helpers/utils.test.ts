@@ -6,6 +6,16 @@ describe('availableTargets', () => {
   it('returns all available targets', () => {
     expect(availableTargets()).toMatchSnapshot();
   });
+
+  describe('default value check', () => {
+    it.each(
+      availableTargets().map(target => {
+        return [target.title, target];
+      }),
+    )('should match `default` value with one of the client keys (%s)', (_, target) => {
+      expect(target.clients.some(client => client.key === target.default)).toBe(true);
+    });
+  });
 });
 
 describe('extname', () => {
