@@ -191,7 +191,7 @@ export class HTTPSnippet {
 
         if (request.postData?.params) {
           const boundary = '---011000010111000001101001'; // this is binary for "api" (easter egg)
-          const carraige = `${boundary}--`;
+          const carriage = `${boundary}--`;
           const rn = '\r\n';
 
           /*! formdata-polyfill. MIT License. Jimmy Wärting <https://jimmy.warting.se/opensource> */
@@ -222,7 +222,7 @@ export class HTTPSnippet {
             }
           });
 
-          payload.push(`--${carraige}`);
+          payload.push(`--${carriage}`);
 
           request.postData.boundary = boundary;
           request.postData.text = payload.join(rn);
