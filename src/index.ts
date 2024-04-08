@@ -194,22 +194,28 @@ export class HTTPSnippet {
           const carraige = `${boundary}--`;
           const rn = '\r\n';
 
+          /*! formdata-polyfill. MIT License. Jimmy Wärting <https://jimmy.warting.se/opensource> */
+          const escape = (str: string) => str.replace(/\n/g, '%0A').replace(/\r/g, '%0D').replace(/"/g, '%22');
+          const normalizeLinefeeds = (value: string) => value.replace(/\r?\n|\r/g, '\r\n');
+
           const payload = [`--${boundary}`];
           request.postData?.params.forEach((param, i) => {
             const name = param.name;
             const value = param.value || '';
             const filename = param.fileName || null;
-            const contentType = param.contentType || '';
+            const contentType = param.contentType || 'application/octet-stream';
 
             if (filename) {
-              payload.push(`Content-Disposition: form-data; name="${name}"; filename="${filename}"`);
+              payload.push(
+                `Content-Disposition: form-data; name="${escape(normalizeLinefeeds(name))}"; filename="${filename}"`,
+              );
               payload.push(`Content-Type: ${contentType}`);
             } else {
-              payload.push(`Content-Disposition: form-data; name="${name}"`);
+              payload.push(`Content-Disposition: form-data; name="${escape(normalizeLinefeeds(name))}"`);
             }
 
             payload.push('');
-            payload.push(value);
+            payload.push(normalizeLinefeeds(value));
 
             if (i !== (request.postData.params as Param[]).length - 1) {
               payload.push(`--${boundary}`);
