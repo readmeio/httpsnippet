@@ -5,7 +5,8 @@ import Foundation
 
 let headers = ["Content-Type": "multipart/form-data"]
 
-var request = URLRequest(url: URL(string: "https://httpbin.org/anything")!)
+let url = URL(string: "https://httpbin.org/anything")!
+var request = URLRequest(url: url)
 request.httpMethod = "POST"
 request.allHTTPHeaderFields = headers
 

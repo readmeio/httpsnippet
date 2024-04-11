@@ -5,7 +5,8 @@ import Foundation
 
 let headers = ["cookie": "foo=bar; bar=baz"]
 
-var request = URLRequest(url: URL(string: "https://httpbin.org/cookies")!)
+let url = URL(string: "https://httpbin.org/cookies")!
+var request = URLRequest(url: url)
 request.httpMethod = "GET"
 request.allHTTPHeaderFields = headers
 

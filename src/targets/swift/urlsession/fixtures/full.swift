@@ -11,7 +11,8 @@ let headers = [
 
 let postData = Data("foo=bar".utf8)
 
-var components = URLComponents(url: URL(string: "https://httpbin.org/anything?key=value")!, resolvingAgainstBaseURL: true)!
+let url = URL(string: "https://httpbin.org/anything?key=value")!
+var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
 let queryItems: [URLQueryItem] = [
   URLQueryItem(name: "foo", value: "bar"),
   URLQueryItem(name: "foo", value: "baz"),

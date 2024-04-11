@@ -3,7 +3,8 @@ import Foundation
   import FoundationNetworking
 #endif
 
-var components = URLComponents(url: URL(string: "https://httpbin.org/anything")!, resolvingAgainstBaseURL: true)!
+let url = URL(string: "https://httpbin.org/anything")!
+var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
 let queryItems: [URLQueryItem] = [
   URLQueryItem(name: "foo[bar]", value: "baz,zap"),
   URLQueryItem(name: "fiz", value: "buz"),

@@ -3,7 +3,8 @@ import Foundation
   import FoundationNetworking
 #endif
 
-var request = URLRequest(url: URL(string: "http://httpbin.org/anything")!)
+let url = URL(string: "http://httpbin.org/anything")!
+var request = URLRequest(url: url)
 request.httpMethod = "GET"
 
 let (data, response) = try await URLSession.shared.data(for: request)

@@ -122,11 +122,13 @@ export const urlsession: Client<UrlsessionOptions> = {
 
     blank();
 
+    push(`let url = URL(string: "${uriObj.href}")!`);
+
     const queries = queryObj ? Object.entries(queryObj) : [];
     if (queries.length < 1) {
-      push(`var request = URLRequest(url: URL(string: "${uriObj.href}")!)`);
+      push('var request = URLRequest(url: url)');
     } else {
-      push(`var components = URLComponents(url: URL(string: "${uriObj.href}")!, resolvingAgainstBaseURL: true)!`);
+      push('var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!');
       push('let queryItems: [URLQueryItem] = [');
 
       queries.forEach(query => {

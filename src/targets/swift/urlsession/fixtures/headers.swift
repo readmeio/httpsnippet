@@ -10,7 +10,8 @@ let headers = [
   "quoted-value": "\"quoted\" 'string'"
 ]
 
-var request = URLRequest(url: URL(string: "https://httpbin.org/headers")!)
+let url = URL(string: "https://httpbin.org/headers")!
+var request = URLRequest(url: url)
 request.httpMethod = "GET"
 request.allHTTPHeaderFields = headers
 
