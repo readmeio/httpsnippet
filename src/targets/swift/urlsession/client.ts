@@ -136,11 +136,11 @@ export const urlsession: Client<UrlsessionOptions> = {
         const value = query[1];
         switch (Object.prototype.toString.call(value)) {
           case '[object String]':
-            push(`  URLQueryItem(name: "${key}", value: "${value}"),`);
+            push(`${opts.indent}URLQueryItem(name: "${key}", value: "${value}"),`);
             break;
           case '[object Array]':
             value.forEach(val => {
-              push(`  URLQueryItem(name: "${key}", value: "${val}"),`);
+              push(`${opts.indent}URLQueryItem(name: "${key}", value: "${val}"),`);
             });
             break;
         }
