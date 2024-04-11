@@ -132,7 +132,7 @@ export const urlsession: Client<UrlsessionOptions> = {
       push('let queryItems: [URLQueryItem] = [');
 
       queries.forEach(query => {
-        const key = query[0].toString();
+        const key = query[0];
         const value = query[1];
         switch (Object.prototype.toString.call(value)) {
           case '[object String]':
