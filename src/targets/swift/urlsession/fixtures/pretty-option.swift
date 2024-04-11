@@ -7,7 +7,16 @@ let headers = ["cookie": "foo=bar; bar=baz", "accept": "application/json", "cont
 
 let postData = Data("foo=bar".utf8)
 
-var request = URLRequest(url: URL(string: "https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value")!)
+var components = URLComponents(url: URL(string: "https://httpbin.org/anything?key=value")!, resolvingAgainstBaseURL: true)!
+let queryItems: [URLQueryItem] = [
+  URLQueryItem(name: "foo", value: "bar"),
+  URLQueryItem(name: "foo", value: "baz"),
+  URLQueryItem(name: "baz", value: "abc"),
+  URLQueryItem(name: "key", value: "value"),
+]
+components.queryItems = components.queryItems.map { $0 + queryItems } ?? queryItems
+
+var request = URLRequest(url: components.url!)
 request.httpMethod = "POST"
 request.allHTTPHeaderFields = headers
 request.httpBody = postData

@@ -3,7 +3,15 @@ import Foundation
   import FoundationNetworking
 #endif
 
-var request = URLRequest(url: URL(string: "https://httpbin.org/anything?foo%5Bbar%5D=baz%2Czap&fiz=buz&key=value")!)
+var components = URLComponents(url: URL(string: "https://httpbin.org/anything")!, resolvingAgainstBaseURL: true)!
+let queryItems: [URLQueryItem] = [
+  URLQueryItem(name: "foo[bar]", value: "baz,zap"),
+  URLQueryItem(name: "fiz", value: "buz"),
+  URLQueryItem(name: "key", value: "value"),
+]
+components.queryItems = components.queryItems.map { $0 + queryItems } ?? queryItems
+
+var request = URLRequest(url: components.url!)
 request.httpMethod = "GET"
 
 let (data, response) = try await URLSession.shared.data(for: request)
