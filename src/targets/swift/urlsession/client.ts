@@ -25,7 +25,7 @@ export const urlsession: Client<UrlsessionOptions> = {
     description: "Foundation's URLSession request",
     extname: '.swift',
   },
-  convert: ({ allHeaders, postData, fullUrl, method }, options) => {
+  convert: ({ allHeaders, postData, uriObj, queryObj, method }, options) => {
     const opts = {
       indent: '  ',
       pretty: true,
@@ -122,7 +122,34 @@ export const urlsession: Client<UrlsessionOptions> = {
 
     blank();
 
-    push(`var request = URLRequest(url: URL(string: "${fullUrl}")!)`);
+    const queries = queryObj ? Object.entries(queryObj) : [];
+    if (queries.length < 1) {
+      push(`var request = URLRequest(url: URL(string: "${uriObj.href}")!)`);
+    } else {
+      push(`var components = URLComponents(url: URL(string: "${uriObj.href}")!, resolvingAgainstBaseURL: true)!`);
+      push('let queryItems: [URLQueryItem] = [');
+
+      queries.forEach(query => {
+        const key = query[0].toString();
+        const value = query[1];
+        switch (Object.prototype.toString.call(value)) {
+          case '[object String]':
+            push(`  URLQueryItem(name: "${key}", value: "${value}"),`);
+            break;
+          case '[object Array]':
+            value.forEach(val => {
+              push(`  URLQueryItem(name: "${key}", value: "${val}"),`);
+            });
+            break;
+        }
+      });
+      push(']');
+      push('components.queryItems = components.queryItems.map { $0 + queryItems } ?? queryItems');
+
+      blank();
+      push('var request = URLRequest(url: components.url!)');
+    }
+
     push(`request.httpMethod = "${method}"`);
 
     if (req.hasHeaders) {
