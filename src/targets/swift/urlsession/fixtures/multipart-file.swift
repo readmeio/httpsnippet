@@ -39,5 +39,5 @@ request.httpMethod = "POST"
 request.allHTTPHeaderFields = headers
 request.httpBody = postData
 
-let (data, response) = try await URLSession.shared.data(with: request)
+let (data, response) = try await URLSession.shared.data(for: request)
 print(String(decoding: data, as: UTF8.self))

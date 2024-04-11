@@ -6,5 +6,5 @@ import Foundation
 var request = URLRequest(url: URL(string: "https://httpbin.org/anything")!)
 request.httpMethod = "GET"
 
-let (data, response) = try await URLSession.shared.data(with: request)
+let (data, response) = try await URLSession.shared.data(for: request)
 print(String(decoding: data, as: UTF8.self))
