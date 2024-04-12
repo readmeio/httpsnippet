@@ -8,6 +8,7 @@ let headers = ["Content-Type": "multipart/form-data"]
 let url = URL(string: "https://httpbin.org/anything")!
 var request = URLRequest(url: url)
 request.httpMethod = "POST"
+request.timeoutInterval = 10
 request.allHTTPHeaderFields = headers
 
 let (data, response) = try await URLSession.shared.data(for: request)

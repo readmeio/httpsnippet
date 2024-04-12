@@ -13,6 +13,7 @@ let headers = [
 let url = URL(string: "https://httpbin.org/headers")!
 var request = URLRequest(url: url)
 request.httpMethod = "GET"
+request.timeoutInterval = 10
 request.allHTTPHeaderFields = headers
 
 let (data, response) = try await URLSession.shared.data(for: request)

@@ -29,7 +29,7 @@ export const urlsession: Client<UrlsessionOptions> = {
     const opts = {
       indent: '  ',
       pretty: true,
-      timeout: '10',
+      timeout: 10,
       ...options,
     };
 
@@ -153,6 +153,7 @@ export const urlsession: Client<UrlsessionOptions> = {
     }
 
     push(`request.httpMethod = "${method}"`);
+    push(`request.timeoutInterval = ${opts.timeout}`);
 
     if (req.hasHeaders) {
       push('request.allHTTPHeaderFields = headers');

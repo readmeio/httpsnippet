@@ -19,6 +19,7 @@ components.queryItems = components.queryItems.map { $0 + queryItems } ?? queryIt
 
 var request = URLRequest(url: components.url!)
 request.httpMethod = "POST"
+request.timeoutInterval = 10
 request.allHTTPHeaderFields = headers
 request.httpBody = postData
 
