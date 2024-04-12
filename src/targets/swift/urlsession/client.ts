@@ -77,17 +77,13 @@ export const urlsession: Client<UrlsessionOptions> = {
           push(`let boundary = "${postData.boundary}"`);
           blank();
           push('var body = ""');
-          push('var error: NSError? = nil');
           push('for param in parameters {');
           push('let paramName = param["name"]!', 1);
           push('body += "--\\(boundary)\\r\\n"', 1);
           push('body += "Content-Disposition:form-data; name=\\"\\(paramName)\\""', 1);
           push('if let filename = param["fileName"] {', 1);
           push('let contentType = param["content-type"]!', 2);
-          push('let fileContent = String(contentsOfFile: filename, encoding: String.Encoding.utf8)', 2);
-          push('if (error != nil) {', 2);
-          push('print(error as Any)', 3);
-          push('}', 2);
+          push('let fileContent = try String(contentsOfFile: filename, encoding: .utf8)', 2);
           push('body += "; filename=\\"\\(filename)\\"\\r\\n"', 2);
           push('body += "Content-Type: \\(contentType)\\r\\n\\r\\n"', 2);
           push('body += fileContent', 2);
@@ -95,6 +91,8 @@ export const urlsession: Client<UrlsessionOptions> = {
           push('body += "\\r\\n\\r\\n\\(paramValue)"', 2);
           push('}', 1);
           push('}');
+          blank();
+          push('let postData = Data(body.utf8)');
           blank();
           break;
 
