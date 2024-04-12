@@ -1,7 +1,4 @@
 import Foundation
-#if canImport(FoundationNetworking)
-  import FoundationNetworking
-#endif
 
 let headers = ["content-type": "application/x-www-form-urlencoded"]
 

@@ -37,9 +37,6 @@ export const urlsession: Client<UrlsessionOptions> = {
 
     // We just want to make sure people understand that is the only dependency
     push('import Foundation');
-    push('#if canImport(FoundationNetworking)');
-    push('  import FoundationNetworking');
-    push('#endif');
 
     const hasHeaders = Object.keys(allHeaders).length > 0;
 

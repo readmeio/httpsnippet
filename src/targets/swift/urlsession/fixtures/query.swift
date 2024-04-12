@@ -1,7 +1,4 @@
 import Foundation
-#if canImport(FoundationNetworking)
-  import FoundationNetworking
-#endif
 
 let url = URL(string: "https://httpbin.org/anything?key=value")!
 var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
