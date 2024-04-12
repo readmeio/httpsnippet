@@ -1,11 +1,5 @@
 import Foundation
 
-let headers = [
-  "cookie": "foo=bar; bar=baz",
-  "accept": "application/json",
-  "content-type": "application/x-www-form-urlencoded"
-]
-
 let postData = Data("foo=bar".utf8)
 
 let url = URL(string: "https://httpbin.org/anything?key=value")!
@@ -21,7 +15,11 @@ components.queryItems = components.queryItems.map { $0 + queryItems } ?? queryIt
 var request = URLRequest(url: components.url!)
 request.httpMethod = "POST"
 request.timeoutInterval = 10
-request.allHTTPHeaderFields = headers
+request.allHTTPHeaderFields = [
+  "cookie": "foo=bar; bar=baz",
+  "accept": "application/json",
+  "content-type": "application/x-www-form-urlencoded"
+]
 request.httpBody = postData
 
 let (data, response) = try await URLSession.shared.data(for: request)

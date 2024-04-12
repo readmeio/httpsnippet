@@ -10,7 +10,7 @@
 import type { Client } from '../../index.js';
 
 import { CodeBuilder } from '../../../helpers/code-builder.js';
-import { literalDeclaration } from '../helpers.js';
+import { literalRepresentation, literalDeclaration } from '../helpers.js';
 
 export interface UrlsessionOptions {
   pretty?: boolean;
@@ -37,13 +37,7 @@ export const urlsession: Client<UrlsessionOptions> = {
 
     // We just want to make sure people understand that is the only dependency
     push('import Foundation');
-
-    const hasHeaders = Object.keys(allHeaders).length > 0;
-
-    if (hasHeaders) {
-      blank();
-      push(literalDeclaration('headers', allHeaders, opts));
-    }
+    blank();
 
     const hasBody = postData.text || postData.jsonObj || postData.params;
     if (hasBody) {
@@ -52,13 +46,13 @@ export const urlsession: Client<UrlsessionOptions> = {
           // By appending parameters one by one in the resulting snippet,
           // we make it easier for the user to edit it according to his or her needs after pasting.
           // The user can just add/remove lines adding/removing body parameters.
-          blank();
           if (postData.params?.length) {
             const [head, ...tail] = postData.params;
             push(`${tail.length > 0 ? 'var' : 'let'} postData = Data("${head.name}=${head.value}".utf8)`);
             tail.forEach(({ name, value }) => {
               push(`postData.append(Data("&${name}=${value}".utf8))`);
             });
+            blank();
           }
           break;
 
@@ -66,8 +60,8 @@ export const urlsession: Client<UrlsessionOptions> = {
           if (postData.jsonObj) {
             push(`${literalDeclaration('parameters', postData.jsonObj, opts)} as [String : Any]`);
             blank();
-
             push('let postData = try JSONSerialization.data(withJSONObject: parameters, options: [])');
+            blank();
           }
           break;
 
@@ -101,15 +95,14 @@ export const urlsession: Client<UrlsessionOptions> = {
           push('body += "\\r\\n\\r\\n\\(paramValue)"', 2);
           push('}', 1);
           push('}');
+          blank();
           break;
 
         default:
-          blank();
           push(`let postData = Data("${postData.text}".utf8)`);
+          blank();
       }
     }
-
-    blank();
 
     push(`let url = URL(string: "${uriObj.href}")!`);
 
@@ -144,8 +137,8 @@ export const urlsession: Client<UrlsessionOptions> = {
     push(`request.httpMethod = "${method}"`);
     push(`request.timeoutInterval = ${opts.timeout}`);
 
-    if (hasHeaders) {
-      push('request.allHTTPHeaderFields = headers');
+    if (Object.keys(allHeaders).length) {
+      push(`request.allHTTPHeaderFields = ${literalRepresentation(allHeaders, opts)}`);
     }
 
     if (hasBody) {

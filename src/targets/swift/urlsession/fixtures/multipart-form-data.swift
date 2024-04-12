@@ -1,6 +1,5 @@
 import Foundation
 
-let headers = ["Content-Type": "multipart/form-data; boundary=---011000010111000001101001"]
 let parameters = [
   [
     "name": "foo",
@@ -34,7 +33,7 @@ let url = URL(string: "https://httpbin.org/anything")!
 var request = URLRequest(url: url)
 request.httpMethod = "POST"
 request.timeoutInterval = 10
-request.allHTTPHeaderFields = headers
+request.allHTTPHeaderFields = ["Content-Type": "multipart/form-data; boundary=---011000010111000001101001"]
 request.httpBody = postData
 
 let (data, response) = try await URLSession.shared.data(for: request)

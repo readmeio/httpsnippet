@@ -1,6 +1,5 @@
 import Foundation
 
-let headers = ["content-type": "application/json"]
 let parameters = [
   "number": 1,
   "string": "f\"oo",
@@ -16,7 +15,7 @@ let url = URL(string: "https://httpbin.org/anything")!
 var request = URLRequest(url: url)
 request.httpMethod = "POST"
 request.timeoutInterval = 10
-request.allHTTPHeaderFields = headers
+request.allHTTPHeaderFields = ["content-type": "application/json"]
 request.httpBody = postData
 
 let (data, response) = try await URLSession.shared.data(for: request)
