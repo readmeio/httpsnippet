@@ -168,8 +168,6 @@ export const urlsession: Client<UrlsessionOptions> = {
     push('let (data, response) = try await URLSession.shared.data(for: request)');
     push('print(String(decoding: data, as: UTF8.self))');
 
-    blank();
-
     return join();
   },
 };
