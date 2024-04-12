@@ -163,7 +163,6 @@ export const urlsession: Client<UrlsessionOptions> = {
     }
 
     blank();
-    // Retrieving the shared session will be less verbose than creating a new one.
 
     push('let (data, response) = try await URLSession.shared.data(for: request)');
     push('print(String(decoding: data, as: UTF8.self))');
