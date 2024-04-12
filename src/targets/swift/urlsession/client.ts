@@ -139,7 +139,7 @@ export const urlsession: Client<UrlsessionOptions> = {
             push(`${opts.indent}URLQueryItem(name: "${key}", value: "${value}"),`);
             break;
           case '[object Array]':
-            value.forEach(val => {
+            (value as string[]).forEach((val: string) => {
               push(`${opts.indent}URLQueryItem(name: "${key}", value: "${val}"),`);
             });
             break;
