@@ -35,27 +35,21 @@ export const urlsession: Client<UrlsessionOptions> = {
 
     const { push, blank, join } = new CodeBuilder({ indent: opts.indent });
 
-    // Markers for headers to be created as litteral objects and later be set on the URLRequest if exist
-    const req = {
-      hasHeaders: false,
-      hasBody: false,
-    };
-
     // We just want to make sure people understand that is the only dependency
     push('import Foundation');
     push('#if canImport(FoundationNetworking)');
     push('  import FoundationNetworking');
     push('#endif');
 
-    if (Object.keys(allHeaders).length) {
-      req.hasHeaders = true;
+    const hasHeaders = Object.keys(allHeaders).length > 0;
+
+    if (hasHeaders) {
       blank();
       push(literalDeclaration('headers', allHeaders, opts));
     }
 
-    if (postData.text || postData.jsonObj || postData.params) {
-      req.hasBody = true;
-
+    const hasBody = postData.text || postData.jsonObj || postData.params;
+    if (hasBody) {
       switch (postData.mimeType) {
         case 'application/x-www-form-urlencoded':
           // By appending parameters one by one in the resulting snippet,
@@ -68,8 +62,6 @@ export const urlsession: Client<UrlsessionOptions> = {
             tail.forEach(({ name, value }) => {
               push(`postData.append(Data("&${name}=${value}".utf8))`);
             });
-          } else {
-            req.hasBody = false;
           }
           break;
 
@@ -155,11 +147,11 @@ export const urlsession: Client<UrlsessionOptions> = {
     push(`request.httpMethod = "${method}"`);
     push(`request.timeoutInterval = ${opts.timeout}`);
 
-    if (req.hasHeaders) {
+    if (hasHeaders) {
       push('request.allHTTPHeaderFields = headers');
     }
 
-    if (req.hasBody) {
+    if (hasBody) {
       push('request.httpBody = postData');
     }
 
