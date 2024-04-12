@@ -35,7 +35,6 @@ export const urlsession: Client<UrlsessionOptions> = {
 
     const { push, blank, join } = new CodeBuilder({ indent: opts.indent });
 
-    // We just want to make sure people understand that is the only dependency
     push('import Foundation');
     blank();
 
