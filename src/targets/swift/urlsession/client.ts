@@ -46,11 +46,17 @@ export const urlsession: Client<UrlsessionOptions> = {
           // we make it easier for the user to edit it according to his or her needs after pasting.
           // The user can just add/remove lines adding/removing body parameters.
           if (postData.params?.length) {
-            const [head, ...tail] = postData.params;
-            push(`${tail.length > 0 ? 'var' : 'let'} postData = Data("${head.name}=${head.value}".utf8)`);
-            tail.forEach(({ name, value }) => {
-              push(`postData.append(Data("&${name}=${value}".utf8))`);
-            });
+            const parameters = postData.params.map(p => `"${p.name}": "${p.value}"`);
+            if (opts.pretty) {
+              push('let parameters = [');
+              parameters.forEach(param => push(`${param},`, 1));
+              push(']');
+            } else {
+              push(`let parameters = [${parameters.join(', ')}]`);
+            }
+
+            push('let joinedParameters = parameters.map { "\\($0.key)=\\($0.value)" }.joined(separator: "&")');
+            push('let postData = Data(joinedParameters.utf8)');
             blank();
           }
           break;

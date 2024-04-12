@@ -1,7 +1,11 @@
 import Foundation
 
-var postData = Data("foo=bar".utf8)
-postData.append(Data("&hello=world".utf8))
+let parameters = [
+  "foo": "bar",
+  "hello": "world",
+]
+let joinedParameters = parameters.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
+let postData = Data(joinedParameters.utf8)
 
 let url = URL(string: "https://httpbin.org/anything")!
 var request = URLRequest(url: url)
