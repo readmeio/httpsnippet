@@ -63,7 +63,7 @@ export const urlsession: Client<UrlsessionOptions> = {
 
         case 'application/json':
           if (postData.jsonObj) {
-            push(`${literalDeclaration('parameters', postData.jsonObj, opts)} as [String : Any]`);
+            push(`${literalDeclaration('parameters', postData.jsonObj, opts)} as [String : Any?]`);
             blank();
             push('let postData = try JSONSerialization.data(withJSONObject: parameters, options: [])');
             blank();
@@ -150,7 +150,7 @@ export const urlsession: Client<UrlsessionOptions> = {
 
     blank();
 
-    push('let (data, response) = try await URLSession.shared.data(for: request)');
+    push('let (data, _) = try await URLSession.shared.data(for: request)');
     push('print(String(decoding: data, as: UTF8.self))');
 
     return join();
