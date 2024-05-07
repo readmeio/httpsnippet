@@ -8,6 +8,7 @@ export const javascript: Target = {
   info: {
     key: 'javascript',
     title: 'JavaScript',
+    default: 'fetch',
   },
 
   clientsById: {
