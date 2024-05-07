@@ -1,7 +1,6 @@
 import type { Target } from '../index.js';
 
 import { axios } from './axios/client.js';
-import { native } from './native/client.js';
 import { unirest } from './unirest/client.js';
 
 export const node: Target = {
@@ -12,7 +11,6 @@ export const node: Target = {
     cli: 'node %s',
   },
   clientsById: {
-    native,
     unirest,
     axios,
   },
