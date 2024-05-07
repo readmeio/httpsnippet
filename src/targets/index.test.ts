@@ -266,7 +266,7 @@ describe('addTarget', () => {
   });
 
   it('should add a new custom target', async () => {
-    const { fetch: fetchClient } = await import('./node/fetch/client');
+    const { axios: axiosClient } = await import('./node/axios/client');
 
     const deno: Target = {
       info: {
@@ -274,10 +274,10 @@ describe('addTarget', () => {
         key: 'deno',
         title: 'Deno',
         extname: '.js',
-        default: 'fetch',
+        default: 'axios',
       },
       clientsById: {
-        fetch: fetchClient,
+        axios: axiosClient
       },
     };
 
