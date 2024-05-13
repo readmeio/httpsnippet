@@ -277,7 +277,7 @@ describe('addTarget', () => {
         default: 'axios',
       },
       clientsById: {
-        axios: axiosClient
+        axios: axiosClient,
       },
     };
 
