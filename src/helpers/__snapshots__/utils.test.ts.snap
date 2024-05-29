@@ -179,13 +179,6 @@ exports[`availableTargets > returns all available targets 1`] = `
     "cli": "node %s",
     "clients": [
       {
-        "description": "Perform asynchronous HTTP requests with the Fetch API",
-        "extname": ".js",
-        "key": "fetch",
-        "link": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
-        "title": "fetch",
-      },
-      {
         "description": "Lightweight HTTP Request Client Library",
         "extname": ".cjs",
         "key": "unirest",
@@ -201,7 +194,7 @@ exports[`availableTargets > returns all available targets 1`] = `
         "title": "Axios",
       },
     ],
-    "default": "fetch",
+    "default": "axios",
     "key": "node",
     "title": "Node.js",
   },
