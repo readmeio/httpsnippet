@@ -121,13 +121,6 @@ exports[`availableTargets > returns all available targets 1`] = `
   {
     "clients": [
       {
-        "description": "W3C Standard API that provides scripted client functionality",
-        "extname": ".js",
-        "key": "xhr",
-        "link": "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest",
-        "title": "XMLHttpRequest",
-      },
-      {
         "description": "Promise based HTTP client for the browser and node.js",
         "extname": ".js",
         "installation": "npm install axios --save",
@@ -150,7 +143,7 @@ exports[`availableTargets > returns all available targets 1`] = `
         "title": "jQuery",
       },
     ],
-    "default": "xhr",
+    "default": "fetch",
     "key": "javascript",
     "title": "JavaScript",
   },
@@ -186,21 +179,6 @@ exports[`availableTargets > returns all available targets 1`] = `
     "cli": "node %s",
     "clients": [
       {
-        "description": "Node.js native HTTP interface",
-        "extname": ".cjs",
-        "key": "native",
-        "link": "http://nodejs.org/api/http.html#http_http_request_options_callback",
-        "title": "HTTP",
-      },
-      {
-        "description": "Simplified HTTP request client",
-        "extname": ".cjs",
-        "installation": "npm install request --save",
-        "key": "request",
-        "link": "https://github.com/request/request",
-        "title": "Request",
-      },
-      {
         "description": "Lightweight HTTP Request Client Library",
         "extname": ".cjs",
         "key": "unirest",
@@ -216,15 +194,14 @@ exports[`availableTargets > returns all available targets 1`] = `
         "title": "Axios",
       },
       {
-        "description": "Simplified HTTP node-fetch client",
-        "extname": ".cjs",
-        "installation": "npm install node-fetch@2 --save",
+        "description": "Perform asynchronous HTTP requests with the Fetch API",
+        "extname": ".js",
         "key": "fetch",
-        "link": "https://github.com/bitinn/node-fetch",
-        "title": "Fetch",
+        "link": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+        "title": "fetch",
       },
     ],
-    "default": "native",
+    "default": "fetch",
     "key": "node",
     "title": "Node.js",
   },
