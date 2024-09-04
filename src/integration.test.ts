@@ -21,7 +21,7 @@ const ENVIRONMENT_CONFIG = {
     c: ['libcurl'],
     csharp: ['httpclient', 'restsharp'],
     go: ['native'],
-    node: ['axios', 'fetch', 'native', 'request'],
+    node: ['axios', 'fetch', 'native'],
     php: ['curl', 'guzzle'],
     python: ['requests'],
     shell: ['curl'],
