@@ -204,7 +204,7 @@ exports[`availableTargets > returns all available targets 1`] = `
         "description": "Perform asynchronous HTTP requests with the Fetch API",
         "extname": ".js",
         "key": "fetch",
-        "link": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+        "link": "https://nodejs.org/docs/latest/api/globals.html#fetch",
         "title": "fetch",
       },
     ],
