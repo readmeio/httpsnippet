@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const options = {
   method: 'GET',
@@ -13,9 +13,5 @@ const options = {
 
 axios
   .request(options)
-  .then(function (response) {
-    console.log(response.data);
-  })
-  .catch(function (error) {
-    console.error(error);
-  });
+  .then(res => console.log(res.data))
+  .catch(err => console.error(err));
