@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 const formData = new FormData();
-formData.append('foo', await fs.openAsBlob('src/fixtures/files/hello.txt'));
+formData.append('foo', await new Response(fs.createReadStream('src/fixtures/files/hello.txt')).blob());
 formData.append('bar', 'Bonjour le monde');
 
 const url = 'https://httpbin.org/anything';

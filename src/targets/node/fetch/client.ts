@@ -73,7 +73,12 @@ export const fetch: Client = {
 
           if (param.fileName) {
             includeFS = true;
-            push(`formData.append('${param.name}', await fs.openAsBlob('${param.fileName}'));`);
+
+            // Whenever we drop support for Node 18 we can change this blob work to use
+            // `fs.openAsBlob('filename')`.
+            push(
+              `formData.append('${param.name}', await new Response(fs.createReadStream('${param.fileName}')).blob());`,
+            );
           }
         });
 

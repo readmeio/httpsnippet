@@ -10,6 +10,6 @@
   "files.insertFinalNewline": false,
 
   "search.exclude": {
-    "coverage": true,
+    "coverage": true
   }
 }
