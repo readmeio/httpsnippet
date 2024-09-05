@@ -187,10 +187,11 @@ exports[`availableTargets > returns all available targets 1`] = `
         "title": "Axios",
       },
       {
-        "description": "Perform asynchronous HTTP requests with the Fetch API",
+        "description": "Simplified HTTP node-fetch client",
         "extname": ".cjs",
+        "installation": "npm install node-fetch@2 --save",
         "key": "fetch",
-        "link": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+        "link": "https://github.com/bitinn/node-fetch",
         "title": "Fetch",
       },
     ],
