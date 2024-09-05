@@ -121,6 +121,13 @@ exports[`availableTargets > returns all available targets 1`] = `
   {
     "clients": [
       {
+        "description": "W3C Standard API that provides scripted client functionality",
+        "extname": ".js",
+        "key": "xhr",
+        "link": "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest",
+        "title": "XMLHttpRequest",
+      },
+      {
         "description": "Promise based HTTP client for the browser and node.js",
         "extname": ".js",
         "installation": "npm install axios --save",
@@ -143,7 +150,7 @@ exports[`availableTargets > returns all available targets 1`] = `
         "title": "jQuery",
       },
     ],
-    "default": "fetch",
+    "default": "xhr",
     "key": "javascript",
     "title": "JavaScript",
   },
@@ -201,7 +208,7 @@ exports[`availableTargets > returns all available targets 1`] = `
         "title": "fetch",
       },
     ],
-    "default": "native",
+    "default": "fetch",
     "key": "node",
     "title": "Node.js",
   },
