@@ -180,7 +180,7 @@ exports[`availableTargets > returns all available targets 1`] = `
     "clients": [
       {
         "description": "Promise based HTTP client for the browser and node.js",
-        "extname": ".cjs",
+        "extname": ".js",
         "installation": "npm install axios --save",
         "key": "axios",
         "link": "https://github.com/axios/axios",
