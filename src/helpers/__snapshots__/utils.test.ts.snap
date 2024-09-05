@@ -193,13 +193,6 @@ exports[`availableTargets > returns all available targets 1`] = `
         "title": "HTTP",
       },
       {
-        "description": "Lightweight HTTP Request Client Library",
-        "extname": ".cjs",
-        "key": "unirest",
-        "link": "http://unirest.io/nodejs.html",
-        "title": "Unirest",
-      },
-      {
         "description": "Promise based HTTP client for the browser and node.js",
         "extname": ".cjs",
         "installation": "npm install axios --save",
