@@ -1,6 +1,4 @@
-const fetch = require('node-fetch');
-
-const url = 'https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value';
+const url = 'https://httpbin.org/anything';
 const options = {method: 'GET'};
 
 fetch(url, options)

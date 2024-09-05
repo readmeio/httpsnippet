@@ -1,5 +1,3 @@
-const fetch = require('node-fetch');
-
 const url = 'https://httpbin.org/headers';
 const options = {
   method: 'GET',

@@ -1,7 +1,8 @@
-const fetch = require('node-fetch');
+const formData = new FormData();
+formData.append('foo', 'bar');
 
 const url = 'https://httpbin.org/anything';
-const options = {method: 'POST', headers: {'Content-Type': 'multipart/form-data'}};
+const options = {method: 'POST', body: formData};
 
 fetch(url, options)
   .then(res => res.json())

@@ -1,11 +1,5 @@
-const fetch = require('node-fetch');
-
 const url = 'https://httpbin.org/anything';
-const options = {
-  method: 'POST',
-  headers: {'content-type': 'application/json'},
-  body: JSON.stringify({foo: 'bar'})
-};
+const options = {method: 'POST', headers: {'content-type': 'text/plain'}, body: 'Hello World'};
 
 fetch(url, options)
   .then(res => res.json())

@@ -1,14 +1,14 @@
-const { URLSearchParams } = require('url');
-const fetch = require('node-fetch');
 const encodedParams = new URLSearchParams();
-
 encodedParams.set('foo', 'bar');
-encodedParams.set('hello', 'world');
 
-const url = 'https://httpbin.org/anything';
+const url = 'https://httpbin.org/anything?foo=bar&foo=baz&baz=abc&key=value';
 const options = {
   method: 'POST',
-  headers: {'content-type': 'application/x-www-form-urlencoded'},
+  headers: {
+    accept: 'application/json',
+    'content-type': 'application/x-www-form-urlencoded',
+    cookie: 'foo=bar; bar=baz'
+  },
   body: encodedParams
 };
 
