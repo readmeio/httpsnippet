@@ -179,6 +179,13 @@ exports[`availableTargets > returns all available targets 1`] = `
     "cli": "node %s",
     "clients": [
       {
+        "description": "Node.js native HTTP interface",
+        "extname": ".cjs",
+        "key": "native",
+        "link": "http://nodejs.org/api/http.html#http_http_request_options_callback",
+        "title": "HTTP",
+      },
+      {
         "description": "Promise based HTTP client for the browser and node.js",
         "extname": ".js",
         "installation": "npm install axios --save",
@@ -194,7 +201,7 @@ exports[`availableTargets > returns all available targets 1`] = `
         "title": "fetch",
       },
     ],
-    "default": "fetch",
+    "default": "native",
     "key": "node",
     "title": "Node.js",
   },
