@@ -9,7 +9,7 @@ export const fetch: Client = {
   info: {
     key: 'fetch',
     title: 'fetch',
-    link: 'https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch',
+    link: 'https://nodejs.org/docs/latest/api/globals.html#fetch',
     description: 'Perform asynchronous HTTP requests with the Fetch API',
     extname: '.js',
   },
