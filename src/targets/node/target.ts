@@ -8,7 +8,7 @@ export const node: Target = {
   info: {
     key: 'node',
     title: 'Node.js',
-    default: 'native',
+    default: 'fetch',
     cli: 'node %s',
   },
   clientsById: {
