@@ -132,7 +132,7 @@ export const fetch: Client = {
     push('fetch(url, options)');
     push('.then(res => res.json())', 1);
     push('.then(json => console.log(json))', 1);
-    push(".catch(err => console.error('error:' + err));", 1);
+    push('.catch(err => console.error(err));', 1);
 
     return join()
       .replace(/'encodedParams'/, 'encodedParams')
