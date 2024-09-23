@@ -70,11 +70,12 @@
     "attw": "attw --pack --format table-flipped",
     "build": "tsup",
     "clean": "rm -rf dist/",
-    "lint": "eslint . --ext .js,.cjs,.ts",
+    "lint": "npm run lint:js && npm run prettier",
+    "lint:js": "eslint . --ext .js,.cjs,.ts && prettier --check .",
     "prebuild": "npm run clean",
     "prepack": "npm run build",
-    "pretest": "npm run lint && npm run prettier",
-    "prettier": "prettier --list-different --write .",
+    "prettier": "prettier --check .",
+    "prettier:write": "prettier --check --write .",
     "test": "vitest run --coverage"
   },
   "dependencies": {
