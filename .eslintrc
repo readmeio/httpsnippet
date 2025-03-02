@@ -3,11 +3,11 @@
     "@readme/eslint-config",
     "@readme/eslint-config/esm",
     "@readme/eslint-config/typescript",
-    "@readme/eslint-config/testing/vitest"
+    "@readme/eslint-config/testing/vitest",
   ],
   "root": true,
   "env": {
-    "browser": true
+    "browser": true,
   },
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
@@ -21,26 +21,26 @@
     "no-underscore-dangle": ["error", { "allow": ["_boundary"] }],
     "spaced-comment": "off",
 
-    "vitest/require-hook": [
+    "@vitest/require-hook": [
       "error",
       {
-        "allowedFunctionCalls": ["runCustomFixtures"]
-      }
-    ]
+        "allowedFunctionCalls": ["runCustomFixtures"],
+      },
+    ],
   },
   "overrides": [
     {
       "files": ["src/fixtures/**"],
       "rules": {
         "import/no-commonjs": "off",
-        "unicorn/prefer-module": "off"
-      }
+        "unicorn/prefer-module": "off",
+      },
     },
     {
       "files": ["src/**/*.test.*"],
       "rules": {
-        "unicorn/prefer-module": "off"
-      }
-    }
-  ]
+        "unicorn/prefer-module": "off",
+      },
+    },
+  ],
 }

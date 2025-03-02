@@ -255,6 +255,7 @@ export class HTTPSnippet {
         if (request.postData.text) {
           try {
             request.postData.jsonObj = JSON.parse(request.postData.text);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
           } catch (e) {
             // force back to `text/plain` if headers have proper content-type value, then this should also work
             request.postData.mimeType = 'text/plain';

@@ -99,7 +99,7 @@ describe('HTTPSnippet', () => {
     snippet.convert('node');
 
     expect(snippet).toHaveProperty('requests');
-    expect(Array.isArray(snippet.requests)).toBeTruthy();
+    expect(Array.isArray(snippet.requests)).toBe(true);
     expect(snippet.requests).toHaveLength(2);
   });
 
