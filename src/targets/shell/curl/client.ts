@@ -188,7 +188,6 @@ export const curl: Client<CurlOptions> = {
                   `${binary ? '--data-binary' : arg('data')} '\n${JSON.stringify(jsonPayload, null, indentJSON)}\n'`,
                 );
               }
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
             } catch (err) {
               // no-op
             }

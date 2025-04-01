@@ -210,7 +210,6 @@ function integrationTest(
 
       try {
         expect(stdout).toStrictEqual(harResponse.content.text);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
         // Some targets always assume that their response is JSON and for this case
         // (`custom-method`) will print out an empty string instead.
