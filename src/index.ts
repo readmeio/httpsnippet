@@ -302,12 +302,12 @@ export class HTTPSnippet {
       ...urlWithParsedQuery,
       query: null,
       search: null,
-    });
+    }); //?
 
     const fullUrl = urlFormat({
       ...urlWithParsedQuery,
       ...uriObj,
-    });
+    }); //?
 
     return {
       ...request,
@@ -318,7 +318,7 @@ export class HTTPSnippet {
     };
   }
 
-  convert(targetId: TargetId, clientId?: ClientId, options?: any): string[] | false {
+  convert(targetId: TargetId, clientId?: ClientId, options?: any) {
     if (!this.initCalled) {
       this.init();
     }
@@ -337,7 +337,7 @@ export class HTTPSnippet {
     return results;
   }
 
-  installation(targetId: TargetId, clientId?: ClientId, options?: any): (string | false)[] | false {
+  installation(targetId: TargetId, clientId?: ClientId, options?: any) {
     if (!this.initCalled) {
       this.init();
     }
