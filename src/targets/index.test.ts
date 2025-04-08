@@ -303,6 +303,9 @@ describe('addTargetClient', () => {
         link: 'https://example.com',
         description: 'A custom HTTP library',
         extname: '.custom',
+        installation: request => {
+          return `brew install ${request.fullUrl}`;
+        },
       },
       convert: () => {
         return 'This was generated from a custom client.';
@@ -314,8 +317,10 @@ describe('addTargetClient', () => {
     const snippet = new HTTPSnippet(short.log.entries[0].request as Request, {});
 
     const result = snippet.convert('node', 'custom')[0];
-
     expect(result).toBe('This was generated from a custom client.');
+
+    const install = snippet.installation('node', 'custom')[0];
+    expect(install).toBe('brew install https://httpbin.org/anything');
   });
 });
 
