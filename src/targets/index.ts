@@ -29,7 +29,6 @@ export type ClientId = string;
 export interface ClientInfo {
   description: string;
   extname: Extension;
-  installation?: string;
   key: ClientId;
   link: string;
   title: string;
@@ -43,6 +42,12 @@ export type Converter<T extends Record<string, any>> = (
 export interface Client<T extends Record<string, any> = Record<string, any>> {
   convert: Converter<T>;
   info: ClientInfo;
+  /**
+   * Generates a command to install the client.
+   *
+   * @example `npm install axios`
+   */
+  installation?: Converter<T>;
 }
 
 export interface ClientPlugin<T extends Record<string, any> = Record<string, any>> {

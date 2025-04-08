@@ -302,12 +302,12 @@ export class HTTPSnippet {
       ...urlWithParsedQuery,
       query: null,
       search: null,
-    }); //?
+    });
 
     const fullUrl = urlFormat({
       ...urlWithParsedQuery,
       ...uriObj,
-    }); //?
+    });
 
     return {
       ...request,
@@ -318,7 +318,7 @@ export class HTTPSnippet {
     };
   }
 
-  convert(targetId: TargetId, clientId?: ClientId, options?: any) {
+  convert(targetId: TargetId, clientId?: ClientId, options?: any): string[] | false {
     if (!this.initCalled) {
       this.init();
     }
@@ -334,6 +334,25 @@ export class HTTPSnippet {
 
     const { convert } = target.clientsById[clientId || target.info.default];
     const results = this.requests.map(request => convert(request, options));
+    return results;
+  }
+
+  installation(targetId: TargetId, clientId?: ClientId, options?: any): (string | false)[] | false {
+    if (!this.initCalled) {
+      this.init();
+    }
+
+    if (!options && clientId) {
+      options = clientId;
+    }
+
+    const target = targets[targetId];
+    if (!target) {
+      return false;
+    }
+
+    const { installation } = target.clientsById[clientId || target.info.default];
+    const results = this.requests.map(request => (installation ? installation(request, options) : false));
     return results;
   }
 }
