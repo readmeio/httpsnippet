@@ -1,7 +1,9 @@
+import type { CodeBuilderOptions } from './helpers/code-builder.js';
 import type { ReducedHelperObject } from './helpers/reducer.js';
 import type { ClientId, TargetId } from './targets/index.js';
 import type { Param, PostDataCommon, Request as NpmHarRequest } from 'har-format';
 import type { UrlWithParsedQuery } from 'node:url';
+import type { Merge } from 'type-fest';
 
 import { format as urlFormat, parse as urlParse } from 'node:url';
 
@@ -24,6 +26,8 @@ type PostDataBase = PostDataCommon & {
   params?: Param[];
   text?: string;
 };
+
+export type { Client } from './targets/index.js';
 
 export type HarRequest = Omit<NpmHarRequest, 'postData'> & { postData: PostDataBase };
 
@@ -57,6 +61,8 @@ interface HarEntry {
     version: string;
   };
 }
+
+export type Options = Merge<CodeBuilderOptions, Record<string, any>>;
 
 export interface HTTPSnippetOptions {
   harIsAlreadyEncoded?: boolean;
@@ -318,13 +324,13 @@ export class HTTPSnippet {
     };
   }
 
-  convert(targetId: TargetId, clientId?: ClientId, options?: any) {
+  convert(targetId: TargetId, clientId?: ClientId, options?: Options) {
     if (!this.initCalled) {
       this.init();
     }
 
     if (!options && clientId) {
-      options = clientId;
+      options = { clientId };
     }
 
     const target = targets[targetId];
@@ -337,13 +343,13 @@ export class HTTPSnippet {
     return results;
   }
 
-  installation(targetId: TargetId, clientId?: ClientId, options?: any) {
+  installation(targetId: TargetId, clientId?: ClientId, options?: Options) {
     if (!this.initCalled) {
       this.init();
     }
 
     if (!options && clientId) {
-      options = clientId;
+      options = { clientId };
     }
 
     const target = targets[targetId];
