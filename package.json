@@ -80,7 +80,8 @@
   },
   "dependencies": {
     "qs": "^6.11.2",
-    "stringify-object": "^3.3.0"
+    "stringify-object": "^3.3.0",
+    "type-fest": "^4.15.0"
   },
   "devDependencies": {
     "@readme/eslint-config": "^14.4.2",
@@ -94,7 +95,6 @@
     "prettier": "^3.0.3",
     "require-directory": "^2.1.1",
     "tsup": "^8.0.1",
-    "type-fest": "^4.15.0",
     "typescript": "^5.4.4",
     "vitest": "^3.0.5"
   },
