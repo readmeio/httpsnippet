@@ -70,7 +70,7 @@
     "attw": "attw --pack --format table-flipped",
     "build": "tsup",
     "clean": "rm -rf dist/",
-    "lint": "npm run lint:js && npm run prettier",
+    "lint": "npm run lint:js && npm run prettier && tsc --noEmit",
     "lint:js": "eslint . --ext .js,.cjs,.ts && prettier --check .",
     "prebuild": "npm run clean",
     "prepack": "npm run build",
