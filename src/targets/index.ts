@@ -27,16 +27,47 @@ export type TargetId = keyof typeof targets;
 export type ClientId = string;
 
 export interface ClientInfo<T extends Record<string, any> = Record<string, any>> {
+  /**
+   * A description of the client.
+   *
+   * @example Promise based HTTP client for the browser and node.js
+   */
   description: string;
+
+  /**
+   * The default file extension for the client.
+   *
+   * @example `.js`
+   */
   extname: Extension;
   /**
    * Retrieve or generate a command to install the client.
    *
-   * @example `npm install axios`
+   * @example () => 'npm install axios --save';
    */
   installation?: Converter<T>;
+
+  /**
+   * A unique identifier for the client.
+   *
+   * This should be a string that is unique to the client for the given target.
+   *
+   * @example `axios`
+   */
   key: ClientId;
+
+  /**
+   * A link to the documentation or homepage of the client.
+   *
+   * @example https://github.com/axios/axios
+   */
   link: string;
+
+  /**
+   * The formatted name of the client.
+   *
+   * @example Axios
+   */
   title: string;
 }
 
