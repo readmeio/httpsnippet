@@ -348,11 +348,11 @@ export class HTTPSnippet {
 
     const target = targets[targetId];
     if (!target) {
-      return false;
+      return [false];
     }
 
-    const { installation } = target.clientsById[clientId || target.info.default];
-    const results = this.requests.map(request => (installation ? installation(request, options) : false));
+    const { info } = target.clientsById[clientId || target.info.default];
+    const results = this.requests.map(request => (info?.installation ? info.installation(request, options) : false));
     return results;
   }
 }

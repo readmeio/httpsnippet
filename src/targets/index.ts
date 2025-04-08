@@ -26,9 +26,15 @@ export type TargetId = keyof typeof targets;
 
 export type ClientId = string;
 
-export interface ClientInfo {
+export interface ClientInfo<T extends Record<string, any> = Record<string, any>> {
   description: string;
   extname: Extension;
+  /**
+   * Retrieve or generate a command to install the client.
+   *
+   * @example `npm install axios`
+   */
+  installation?: Converter<T>;
   key: ClientId;
   link: string;
   title: string;
@@ -41,13 +47,7 @@ export type Converter<T extends Record<string, any>> = (
 
 export interface Client<T extends Record<string, any> = Record<string, any>> {
   convert: Converter<T>;
-  info: ClientInfo;
-  /**
-   * Generates a command to install the client.
-   *
-   * @example `npm install axios`
-   */
-  installation?: Converter<T>;
+  info: ClientInfo<T>;
 }
 
 export interface ClientPlugin<T extends Record<string, any> = Record<string, any>> {
