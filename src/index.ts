@@ -105,7 +105,7 @@ export class HTTPSnippet {
     }
   }
 
-  init() {
+  init(): HTTPSnippet {
     this.initCalled = true;
 
     this.requests = this.entries.map(({ request }) => {
@@ -134,7 +134,15 @@ export class HTTPSnippet {
     return this;
   }
 
-  prepare(harRequest: HarRequest, options: HTTPSnippetOptions) {
+  prepare(
+    harRequest: HarRequest,
+    options: HTTPSnippetOptions,
+  ): Request & {
+    allHeaders: Record<string, string[] | string>;
+    fullUrl: string;
+    url: any;
+    uriObj: any;
+  } {
     const request: Request = {
       ...harRequest,
       fullUrl: '',
@@ -308,12 +316,12 @@ export class HTTPSnippet {
       ...urlWithParsedQuery,
       query: null,
       search: null,
-    }); //?
+    });
 
     const fullUrl = urlFormat({
       ...urlWithParsedQuery,
       ...uriObj,
-    }); //?
+    });
 
     return {
       ...request,
@@ -324,7 +332,7 @@ export class HTTPSnippet {
     };
   }
 
-  convert(targetId: TargetId, clientId?: ClientId, options?: Options) {
+  convert(targetId: TargetId, clientId?: ClientId, options?: Options): (string | false)[] {
     if (!this.initCalled) {
       this.init();
     }
@@ -335,7 +343,7 @@ export class HTTPSnippet {
 
     const target = targets[targetId];
     if (!target) {
-      return false;
+      return [false];
     }
 
     const { convert } = target.clientsById[clientId || target.info.default];
@@ -343,7 +351,7 @@ export class HTTPSnippet {
     return results;
   }
 
-  installation(targetId: TargetId, clientId?: ClientId, options?: Options) {
+  installation(targetId: TargetId, clientId?: ClientId, options?: Options): (string | false)[] {
     if (!this.initCalled) {
       this.init();
     }

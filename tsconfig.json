@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "declaration": true,
     "downlevelIteration": true,
     "esModuleInterop": true,
+    "isolatedDeclarations": true,
     "lib": ["DOM", "ES2020"],
     "module": "ESNext",
     "moduleResolution": "Bundler",

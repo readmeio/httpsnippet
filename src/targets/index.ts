@@ -100,7 +100,28 @@ export interface Target {
   info: TargetInfo;
 }
 
-export const targets = {
+type supportedTargets =
+  | 'c'
+  | 'clojure'
+  | 'csharp'
+  | 'go'
+  | 'http'
+  | 'java'
+  | 'javascript'
+  | 'json'
+  | 'kotlin'
+  | 'node'
+  | 'objc'
+  | 'ocaml'
+  | 'php'
+  | 'powershell'
+  | 'python'
+  | 'r'
+  | 'ruby'
+  | 'shell'
+  | 'swift';
+
+export const targets: Record<supportedTargets, Target> = {
   c,
   clojure,
   csharp,
@@ -181,7 +202,7 @@ export const isTarget = (target: Target): target is Target => {
   return true;
 };
 
-export const addTarget = (target: Target) => {
+export const addTarget = (target: Target): void => {
   if (!isTarget(target)) {
     return;
   }
@@ -228,11 +249,11 @@ export const isClient = (client: Client): client is Client => {
   return true;
 };
 
-export const addClientPlugin = (plugin: ClientPlugin) => {
+export const addClientPlugin = (plugin: ClientPlugin): void => {
   addTargetClient(plugin.target, plugin.client);
 };
 
-export const addTargetClient = (targetId: TargetId, client: Client) => {
+export const addTargetClient = (targetId: TargetId, client: Client): void => {
   if (!isClient(client)) {
     return;
   }

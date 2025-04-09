@@ -30,7 +30,7 @@ export interface EscapeOptions {
  * See https://tc39.es/ecma262/multipage/structured-data.html#sec-quotejsonstring
  * for the complete original algorithm.
  */
-export function escapeString(rawValue: any, options: EscapeOptions = {}) {
+export function escapeString(rawValue: any, options: EscapeOptions = {}): string {
   const { delimiter = '"', escapeChar = '\\', escapeNewlines = true } = options;
 
   const stringValue = rawValue.toString();
@@ -79,7 +79,7 @@ export function escapeString(rawValue: any, options: EscapeOptions = {}) {
  *
  * If value is not a string, it will be stringified with .toString() first.
  */
-export const escapeForSingleQuotes = (value: any) => escapeString(value, { delimiter: "'" });
+export const escapeForSingleQuotes = (value: any): string => escapeString(value, { delimiter: "'" });
 
 /**
  * Make a string value safe to insert literally into a snippet within double quotes,
@@ -88,4 +88,4 @@ export const escapeForSingleQuotes = (value: any) => escapeString(value, { delim
  *
  * If value is not a string, it will be stringified with .toString() first.
  */
-export const escapeForDoubleQuotes = (value: any) => escapeString(value, { delimiter: '"' });
+export const escapeForDoubleQuotes = (value: any): string => escapeString(value, { delimiter: '"' });

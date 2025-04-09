@@ -6,8 +6,8 @@ import { getHeader } from '../../helpers/headers.js';
 
 export type PowershellCommand = 'Invoke-RestMethod' | 'Invoke-WebRequest';
 
-export const generatePowershellConvert = (command: PowershellCommand) => {
-  const convert: Converter<any> = ({ method, headersObj, cookies, uriObj, fullUrl, postData, allHeaders }) => {
+export const generatePowershellConvert = (command: PowershellCommand): Converter<object> => {
+  const convert: Converter<object> = ({ method, headersObj, cookies, uriObj, fullUrl, postData, allHeaders }) => {
     const { push, join } = new CodeBuilder();
     const methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'];
 

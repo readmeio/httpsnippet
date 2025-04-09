@@ -16,7 +16,7 @@ describe('HTTPSnippet', () => {
     // @ts-expect-error intentionally incorrect
     const result = snippet.convert(null);
 
-    expect(result).toBe(false);
+    expect(result).toStrictEqual([false]);
   });
 
   describe('repair malformed `postData`', () => {

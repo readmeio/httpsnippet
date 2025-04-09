@@ -1,6 +1,9 @@
 export type ReducedHelperObject = Record<string, string[] | string>;
 
-export const reducer = <T extends { name: string; value: string }>(accumulator: ReducedHelperObject, pair: T) => {
+export const reducer = <T extends { name: string; value: string }>(
+  accumulator: ReducedHelperObject,
+  pair: T,
+): ReducedHelperObject => {
   const currentValue = accumulator[pair.name];
   if (currentValue === undefined) {
     accumulator[pair.name] = pair.value;

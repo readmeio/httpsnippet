@@ -22,7 +22,7 @@ export interface CustomFixture {
   }[];
 }
 
-export const runCustomFixtures = ({ targetId, clientId, tests }: CustomFixture) => {
+export const runCustomFixtures = ({ targetId, clientId, tests }: CustomFixture): void => {
   describe(`custom fixtures for ${targetId}:${clientId}`, () => {
     it.each(tests.map(t => [t.it, t]))('%s', async (_, { expected: fixtureFile, options, input: request }) => {
       const opts: HTTPSnippetOptions = {};

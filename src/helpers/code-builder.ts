@@ -24,7 +24,7 @@ export class CodeBuilder {
 
   indentationCharacter: string = DEFAULT_INDENTATION_CHARACTER;
 
-  lineJoin = DEFAULT_LINE_JOIN;
+  lineJoin: string = DEFAULT_LINE_JOIN;
 
   /**
    * Helper object to format and aggragate lines of code.
@@ -46,7 +46,7 @@ export class CodeBuilder {
   /**
    * Add the line at the beginning of the current lines
    */
-  unshift = (line: string, indentationLevel?: number) => {
+  unshift = (line: string, indentationLevel?: number): void => {
     const newLine = this.indentLine(line, indentationLevel);
     this.code.unshift(newLine);
   };
@@ -54,7 +54,7 @@ export class CodeBuilder {
   /**
    * Add the line at the end of the current lines
    */
-  push = (line: string, indentationLevel?: number) => {
+  push = (line: string, indentationLevel?: number): void => {
     const newLine = this.indentLine(line, indentationLevel);
     this.code.push(newLine);
   };
@@ -62,14 +62,14 @@ export class CodeBuilder {
   /**
    * Add an empty line at the end of current lines
    */
-  blank = () => {
+  blank = (): void => {
     this.code.push('');
   };
 
   /**
    * Concatenate all current lines using the given lineJoin, then apply any replacers that may have been added
    */
-  join = () => {
+  join = (): string => {
     const unreplacedCode = this.code.join(this.lineJoin);
     const replacedOutput = this.postProcessors.reduce((accumulator, replacer) => replacer(accumulator), unreplacedCode);
     return replacedOutput;
@@ -79,7 +79,7 @@ export class CodeBuilder {
    * Often when writing modules you may wish to add a literal tag or bit of metadata that you wish to transform after other processing as a final step.
    * To do so, you can provide a PostProcessor function and it will be run automatically for you when you call `join()` later on.
    */
-  addPostProcessor = (postProcessor: PostProcessor) => {
+  addPostProcessor = (postProcessor: PostProcessor): void => {
     this.postProcessors = [...this.postProcessors, postProcessor];
   };
 }

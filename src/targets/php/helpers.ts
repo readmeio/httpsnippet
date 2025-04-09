@@ -1,6 +1,6 @@
 import { escapeString } from '../../helpers/escape.js';
 
-export const convertType = (obj: any[] | any, indent?: string, lastIndent?: string) => {
+export const convertType = (obj: any[] | any, indent?: string, lastIndent?: string): unknown => {
   lastIndent = lastIndent || '';
   indent = indent || '';
 
@@ -41,7 +41,7 @@ export const convertType = (obj: any[] | any, indent?: string, lastIndent?: stri
   }
 };
 
-export const supportedMethods = [
+export const supportedMethods: string[] = [
   'ACL',
   'BASELINE_CONTROL',
   'CHECKIN',
