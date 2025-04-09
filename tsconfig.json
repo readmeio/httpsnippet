@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "downlevelIteration": true,
     "esModuleInterop": true,
     "isolatedDeclarations": true,
     "lib": ["DOM", "ES2020"],
@@ -10,13 +9,12 @@
     "noEmit": true,
     "outDir": "dist",
     "resolveJsonModule": true,
+    "strict": true,
     "target": "ES2020",
-
     // Allows us to not have to typeguard in catches.
     // https://bobbyhadz.com/blog/typescript-object-is-of-type-unknown
     "useUnknownInCatchVariables": false,
-
-    "strict": true
+    "verbatimModuleSyntax": true
   },
   "exclude": ["dist/", "./src/fixtures/", "**/*.test.ts"],
   "include": ["./src/**/*"]

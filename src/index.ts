@@ -140,8 +140,21 @@ export class HTTPSnippet {
   ): Request & {
     allHeaders: Record<string, string[] | string>;
     fullUrl: string;
-    url: any;
-    uriObj: any;
+    url: string;
+    uriObj: {
+      query: ReducedHelperObject;
+      search: string;
+      path: string | null;
+      auth: string | null;
+      hash: string | null;
+      host: string | null;
+      hostname: string | null;
+      href: string;
+      pathname: string | null;
+      protocol: string | null;
+      slashes: boolean | null;
+      port: string | null;
+    };
   } {
     const request: Request = {
       ...harRequest,

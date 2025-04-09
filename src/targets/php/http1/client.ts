@@ -36,14 +36,14 @@ export const http1: Client<Http1Options> = {
       blank();
     }
 
-    if (!supportedMethods.includes(method.toUpperCase())) {
+    if (!supportedMethods.includes(method.toUpperCase() as (typeof supportedMethods)[number])) {
       push(`HttpRequest::methodRegister('${method}');`);
     }
 
     push('$request = new HttpRequest();');
     push(`$request->setUrl(${convertType(url)});`);
 
-    if (supportedMethods.includes(method.toUpperCase())) {
+    if (supportedMethods.includes(method.toUpperCase() as (typeof supportedMethods)[number])) {
       push(`$request->setMethod(HTTP_METH_${method.toUpperCase()});`);
     } else {
       push(`$request->setMethod(HttpRequest::HTTP_METH_${method.toUpperCase()});`);
