@@ -37,7 +37,7 @@ export const native: Client = {
         }
         break;
 
-      case 'multipart/form-data':
+      case 'multipart/form-data': {
         if (!postData.params) {
           break;
         }
@@ -50,6 +50,7 @@ export const native: Client = {
 
         payload = multipartPayload;
         break;
+      }
 
       default:
         if (postData.text) {

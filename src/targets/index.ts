@@ -1,6 +1,6 @@
+import type { Merge } from 'type-fest';
 import type { CodeBuilderOptions } from '../helpers/code-builder.js';
 import type { Request } from '../index.js';
-import type { Merge } from 'type-fest';
 
 import { c } from './c/target.js';
 import { clojure } from './clojure/target.js';

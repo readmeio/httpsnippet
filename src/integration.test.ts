@@ -1,15 +1,14 @@
-/* eslint-disable @vitest/no-conditional-expect */
+import type { Response } from 'har-format';
 import type { AvailableTarget } from './helpers/utils.js';
 import type { Request } from './index.js';
 import type { TargetId } from './targets/index.js';
-import type { Response } from 'har-format';
 
 import shell from 'node:child_process';
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { format } from 'node:util';
 
-import { describe, test, expect } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
 import { availableTargets, extname } from './helpers/utils.js';
 
@@ -180,7 +179,7 @@ function integrationTest(
     const url = har.log.entries[0].request.url;
     const harResponse = har.log.entries[0].response as Response;
 
-    let stdout;
+    let stdout: Buffer | string;
     try {
       // If there's a runner function, use that; otherwise just call
       // <interpreter> <fixture-path>

@@ -112,9 +112,7 @@ export const guzzle: Client<GuzzleOptions> = {
     // construct headers
     const headers = Object.keys(headersObj)
       .sort()
-      .map(function (key) {
-        return `${opts.indent}${opts.indent}'${key}' => '${escapeForSingleQuotes(headersObj[key])}',`;
-      });
+      .map(key => `${opts.indent}${opts.indent}'${key}' => '${escapeForSingleQuotes(headersObj[key])}',`);
 
     // construct cookies
     const cookieString = cookies

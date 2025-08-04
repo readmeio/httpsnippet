@@ -121,7 +121,7 @@ export const httpie: Client<HttpieOptions> = {
 
     if (postData.mimeType === 'application/x-www-form-urlencoded') {
       // construct post params
-      if (postData.params && postData.params.length) {
+      if (postData.params?.length) {
         flags.push(opts.short ? '-f' : '--form');
 
         postData.params.forEach(param => {

@@ -1,9 +1,10 @@
+/** biome-ignore-all lint/performance/noBarrelFile: This doesn't really have the aspects of being a barrel file. */
+import type { UrlWithParsedQuery } from 'node:url';
+import type { Request as NpmHarRequest, Param, PostDataCommon } from 'har-format';
+import type { Merge } from 'type-fest';
 import type { CodeBuilderOptions } from './helpers/code-builder.js';
 import type { ReducedHelperObject } from './helpers/reducer.js';
 import type { ClientId, TargetId } from './targets/index.js';
-import type { Param, PostDataCommon, Request as NpmHarRequest } from 'har-format';
-import type { UrlWithParsedQuery } from 'node:url';
-import type { Merge } from 'type-fest';
 
 import { format as urlFormat, parse as urlParse } from 'node:url';
 
@@ -14,7 +15,7 @@ import { reducer } from './helpers/reducer.js';
 import { targets } from './targets/index.js';
 
 export { availableTargets, extname } from './helpers/utils.js';
-export { addTarget, addTargetClient, addClientPlugin } from './targets/index.js';
+export { addClientPlugin, addTarget, addTargetClient } from './targets/index.js';
 
 /** is this wrong?  yes.  according to the spec (http://www.softwareishard.com/blog/har-12-spec/#postData) it's technically wrong since `params` and `text` are (by the spec) mutually exclusive.  However, in practice, this is not what is often the case.
  *
@@ -167,12 +168,12 @@ export class HTTPSnippet {
     };
 
     // construct query objects
-    if (request.queryString && request.queryString.length) {
+    if (request?.queryString.length) {
       request.queryObj = request.queryString.reduce(reducer, {});
     }
 
     // construct headers objects
-    if (request.headers && request.headers.length) {
+    if (request?.headers.length) {
       const http2VersionRegex = /^HTTP\/2/;
       request.headersObj = request.headers.reduce((accumulator, { name, value }) => {
         const headerName = http2VersionRegex.exec(request.httpVersion) ? name.toLocaleLowerCase() : name;
@@ -184,7 +185,7 @@ export class HTTPSnippet {
     }
 
     // construct headers objects
-    if (request.cookies && request.cookies.length) {
+    if (request?.cookies.length) {
       request.cookiesObj = request.cookies.reduceRight(
         (accumulator, { name, value }) => ({
           ...accumulator,
@@ -222,7 +223,7 @@ export class HTTPSnippet {
           const rn = '\r\n';
 
           /*! formdata-polyfill. MIT License. Jimmy Wärting <https://jimmy.warting.se/opensource> */
-          const escape = (str: string) => str.replace(/\n/g, '%0A').replace(/\r/g, '%0D').replace(/"/g, '%22');
+          const escapeStr = (str: string) => str.replace(/\n/g, '%0A').replace(/\r/g, '%0D').replace(/"/g, '%22');
           const normalizeLinefeeds = (value: string) => value.replace(/\r?\n|\r/g, '\r\n');
 
           const payload = [`--${boundary}`];
@@ -234,7 +235,7 @@ export class HTTPSnippet {
 
             if (filename) {
               payload.push(
-                `Content-Disposition: form-data; name="${escape(normalizeLinefeeds(name))}"; filename="${filename}"`,
+                `Content-Disposition: form-data; name="${escapeStr(normalizeLinefeeds(name))}"; filename="${filename}"`,
               );
               payload.push(`Content-Type: ${contentType}`);
             } else {
@@ -305,7 +306,7 @@ export class HTTPSnippet {
     }; //?
 
     // reset uriObj values for a clean url
-    let search;
+    let search: string;
     if (options.harIsAlreadyEncoded) {
       search = queryStringify(request.queryObj, {
         encode: false,

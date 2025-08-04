@@ -51,7 +51,7 @@ export const fetch: Client = {
         }
         break;
 
-      case 'multipart/form-data':
+      case 'multipart/form-data': {
         if (!postData.params) {
           break;
         }
@@ -85,6 +85,7 @@ export const fetch: Client = {
         reqOpts.body = 'formData';
         blank();
         break;
+      }
 
       default:
         if (postData.text) {

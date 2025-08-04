@@ -1,16 +1,15 @@
-import type { Client, ClientId, ClientPlugin, Target, TargetId } from './index.js';
 import type { HTTPSnippetOptions, Request } from '../index.js';
+import type { Client, ClientId, ClientPlugin, Target, TargetId } from './index.js';
 
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
-import { describe, afterEach, it, expect } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 
 import short from '../fixtures/requests/short.cjs';
 import { availableTargets, extname } from '../helpers/utils.js';
 import { HTTPSnippet } from '../index.js';
-
-import { isClient, isTarget, addTarget, addTargetClient, targets, addClientPlugin } from './index.js';
+import { addClientPlugin, addTarget, addTargetClient, isClient, isTarget, targets } from './index.js';
 
 const expectedBasePath = ['src', 'fixtures', 'requests'];
 
@@ -74,7 +73,7 @@ describe('request validation', () => {
               `${fixture}${extname(targetId, clientId)}`,
             );
 
-            let result: string[] | false;
+            let result: string | string[] | false;
             let expected: string;
 
             try {
@@ -266,7 +265,7 @@ describe('addTarget', () => {
   });
 
   it('should add a new custom target', async () => {
-    const { fetch: fetchClient } = await import('./node/fetch/client');
+    const { fetch: fetchClient } = await import('./node/fetch/client.ts');
 
     const deno: Target = {
       info: {
