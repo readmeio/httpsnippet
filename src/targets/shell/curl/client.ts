@@ -156,7 +156,6 @@ export const curl: Client<CurlOptions> = {
           break;
         }
 
-        // eslint-disable-next-line no-case-declarations -- builtPayload is only used here.
         let builtPayload = false;
 
         // If we're dealing with a JSON variant, and our payload is JSON let's make it look a little

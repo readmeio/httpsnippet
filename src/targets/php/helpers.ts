@@ -27,7 +27,6 @@ export const convertType = (obj: any[] | any, indent?: string, lastIndent?: stri
 
     case '[object Object]': {
       const result: string[] = [];
-      // eslint-disable-next-line no-restricted-syntax
       for (const i in obj) {
         if (Object.prototype.hasOwnProperty.call(obj, i)) {
           result.push(`${convertType(i, indent)} => ${convertType(obj[i], `${indent}${indent}`, indent)}`);

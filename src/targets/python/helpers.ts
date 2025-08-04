@@ -54,7 +54,6 @@ export const literalRepresentation = (value: any, opts: Record<string, any>, ind
 
     case '[object Object]': {
       const keyValuePairs = [];
-      // eslint-disable-next-line guard-for-in, no-restricted-syntax
       for (const key in value) {
         keyValuePairs.push(`"${key}": ${literalRepresentation(value[key], opts, indentLevel)}`);
       }

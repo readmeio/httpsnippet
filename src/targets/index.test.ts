@@ -17,7 +17,6 @@ const inputFileNames = readdirSync(path.join(...expectedBasePath), 'utf-8');
 
 const fixtures: [string, Request][] = inputFileNames.map(inputFileName => [
   inputFileName.replace(path.extname(inputFileName), ''),
-  // eslint-disable-next-line import/no-dynamic-require, global-require, @typescript-eslint/no-require-imports
   require(path.resolve(...expectedBasePath, inputFileName)),
 ]);
 

@@ -74,7 +74,6 @@ const inputFileNames = readdirSync(path.join(...expectedBasePath), 'utf-8');
 
 const fixtures: [string, Request][] = inputFileNames.map(inputFileName => [
   inputFileName.replace(path.extname(inputFileName), ''),
-  // eslint-disable-next-line import/no-dynamic-require, global-require, @typescript-eslint/no-require-imports
   require(path.resolve(...expectedBasePath, inputFileName)),
 ]);
 
@@ -126,11 +125,9 @@ const testFilter =
  * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!
  */
 function looseJSONParse(obj: any) {
-  // eslint-disable-next-line no-new-func
   return new Function(`"use strict";return ${obj}`)();
 }
 
-// eslint-disable-next-line @vitest/require-hook
 availableTargets()
   .filter(target => target.cli)
   .filter(testFilter('key', environmentFilter()))
@@ -138,14 +135,12 @@ availableTargets()
     const { key: targetId, title, clients } = target;
 
     describe.skipIf(process.env.NODE_ENV === 'test')(`${title} integration tests`, () => {
-      // eslint-disable-next-line @vitest/require-hook
       clients.filter(testFilter('key', clientFilter(target.key))).forEach(({ key: clientId }) => {
         // If we're in an HTTPBin-powered Docker environment we only want to run tests for the
         // client that our Docker has been configured for.
         const shouldSkip = process.env.HTTPBIN && process.env.INTEGRATION_CLIENT !== targetId;
 
         describe.skipIf(shouldSkip)(`${clientId}`, () => {
-          // eslint-disable-next-line @vitest/require-hook
           fixtures.filter(testFilter(0, fixtureIgnoreFilter, true)).forEach(([fixture, request]) => {
             if (fixture === 'custom-method' && clientId === 'restsharp') {
               // restsharp doesn't even let you express calling an invalid

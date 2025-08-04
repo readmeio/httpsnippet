@@ -42,7 +42,6 @@ export const native: Client = {
           break;
         }
 
-        // eslint-disable-next-line no-case-declarations
         const multipartPayload: Record<string, any> = {};
         postData.params.forEach(param => {
           multipartPayload[param.name] = param.value;

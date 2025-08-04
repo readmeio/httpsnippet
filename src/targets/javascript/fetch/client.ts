@@ -66,7 +66,6 @@ export const fetch: Client<FetchOptions> = {
         }
 
         // The FormData API automatically adds a `Content-Type` header for `multipart/form-data` content and if we add our own here data won't be correctly transmitted.
-        // eslint-disable-next-line no-case-declarations -- We're only using `contentTypeHeader` within this block.
         const contentTypeHeader = getHeaderName(allHeaders, 'content-type');
         if (contentTypeHeader) {
           delete allHeaders[contentTypeHeader];
