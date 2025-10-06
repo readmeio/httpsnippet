@@ -82,7 +82,7 @@
   "dependencies": {
     "qs": "^6.11.2",
     "stringify-object": "^3.3.0",
-    "type-fest": "^4.39.1"
+    "type-fest": "^5.0.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.1.3",
