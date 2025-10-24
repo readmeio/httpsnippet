@@ -74,6 +74,7 @@ const inputFileNames = readdirSync(path.join(...expectedBasePath), 'utf-8');
 
 const fixtures: [string, Request][] = inputFileNames.map(inputFileName => [
   inputFileName.replace(path.extname(inputFileName), ''),
+  // biome-ignore lint/style/noCommonJs: Because we're dynamically loading fixtures we need to use `require`.
   require(path.resolve(...expectedBasePath, inputFileName)),
 ]);
 
@@ -204,7 +205,7 @@ function integrationTest(
 
       try {
         expect(stdout).toStrictEqual(harResponse.content.text);
-      } catch (err) {
+      } catch {
         // Some targets always assume that their response is JSON and for this case
         // (`custom-method`) will print out an empty string instead.
         expect(stdout).toBe('');

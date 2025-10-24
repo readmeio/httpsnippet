@@ -187,7 +187,7 @@ export const curl: Client<CurlOptions> = {
                   `${binary ? '--data-binary' : arg('data')} '\n${JSON.stringify(jsonPayload, null, indentJSON)}\n'`,
                 );
               }
-            } catch (err) {
+            } catch {
               // no-op
             }
           }

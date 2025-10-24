@@ -1,9 +1,9 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["@readme/standards/biome"],
+  "extends": ["@readme/standards/biome", "@readme/standards/biome/esm"],
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**/*.{cjs,mjs,js,mts,ts}", "!coverage/**", "!dist/**", "!src/targets/**/fixtures/**"],
+    "includes": ["**/*.{cjs,mjs,js,mts,ts}", "!coverage", "!dist", "!src/targets/**/fixtures"],
   },
   "linter": {
     "enabled": true,
@@ -28,4 +28,19 @@
       },
     },
   },
+  "overrides": [
+    {
+      "includes": ["src/**/*.test.ts"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            // Because we dynamically load test fixtures, and have to use `require` to do so, those
+            // files need to be `.cjs` files which collides with this extension as it wants them
+            // to be `.js`.
+            "useImportExtensions": "off",
+          },
+        },
+      },
+    },
+  ],
 }
