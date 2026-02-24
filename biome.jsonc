@@ -12,6 +12,10 @@
       "test": "all",
     },
     "rules": {
+      "correctness": {
+        // This is being flagged on Node built-ins. https://github.com/biomejs/biome/issues/8849
+        "noUnresolvedImports": "off",
+      },
       "performance": {
         "noAccumulatingSpread": "off", // @fixme
       },
@@ -22,6 +26,7 @@
       "suspicious": {
         "noExplicitAny": "off",
         "noPrototypeBuiltins": "off",
+
         // We unfortunatley have an `escape` option in our core targets that's being seen as
         // shadowing the global `escape` function.
         "noShadowRestrictedNames": "off",
@@ -38,6 +43,10 @@
             // files need to be `.cjs` files which collides with this extension as it wants them
             // to be `.js`.
             "useImportExtensions": "off",
+
+            // For the same reasons as `useImportExtensions`, because we load in some `.cjs` files
+            // in tests those use `module.exports` and do not have a "default" export.
+            "noUnresolvedImports": "off",
           },
         },
       },
