@@ -1,6 +1,6 @@
 {
   "name": "@readme/httpsnippet",
-  "version": "11.0.0",
+  "version": "11.1.0",
   "description": "HTTP Request snippet generator for *most* languages",
   "homepage": "https://github.com/readmeio/httpsnippet",
   "license": "MIT",
