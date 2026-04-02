@@ -11,9 +11,12 @@
     "resolveJsonModule": true,
     "strict": true,
     "target": "ES2020",
+    "types": ["node"],
+
     // Allows us to not have to typeguard in catches.
     // https://bobbyhadz.com/blog/typescript-object-is-of-type-unknown
     "useUnknownInCatchVariables": false,
+
     "verbatimModuleSyntax": true
   },
   "exclude": ["dist/", "./src/fixtures/", "**/*.test.ts"],
