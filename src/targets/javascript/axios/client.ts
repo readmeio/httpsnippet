@@ -20,7 +20,7 @@ export const axios: Client = {
     link: 'https://github.com/axios/axios',
     description: 'Promise based HTTP client for the browser and node.js',
     extname: '.js',
-    installation: 'npm install axios --save',
+    installation: () => 'npm install axios --save',
   },
   convert: ({ allHeaders, method, url, queryObj, postData }, options) => {
     const opts = {
@@ -99,12 +99,8 @@ export const axios: Client = {
 
     push('axios');
     push('.request(options)', 1);
-    push('.then(function (response) {', 1);
-    push('console.log(response.data);', 2);
-    push('})', 1);
-    push('.catch(function (error) {', 1);
-    push('console.error(error);', 2);
-    push('});', 1);
+    push('.then(res => console.log(res.data))', 1);
+    push('.catch(err => console.error(err));', 1);
 
     return join();
   },

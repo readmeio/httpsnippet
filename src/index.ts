@@ -1,11 +1,12 @@
+/** biome-ignore-all lint/performance/noBarrelFile: This doesn't really have the aspects of being a barrel file. */
+import type { UrlWithParsedQuery } from 'node:url';
 import type { Request as NpmHarRequest, Param, PostDataCommon } from 'har-format';
+import type { Merge } from 'type-fest';
+import type { CodeBuilderOptions } from './helpers/code-builder.js';
 import type { ReducedHelperObject } from './helpers/reducer.js';
 import type { ClientId, TargetId } from './targets/index.js';
-// eslint-disable-next-line unicorn/prefer-node-protocol
-import type { UrlWithParsedQuery } from 'url';
 
-// eslint-disable-next-line unicorn/prefer-node-protocol, node/no-deprecated-api
-import { format as urlFormat, parse as urlParse } from 'url';
+import { format as urlFormat, parse as urlParse } from 'node:url';
 
 import { stringify as queryStringify } from 'qs';
 
@@ -26,6 +27,8 @@ type PostDataBase = PostDataCommon & {
   params?: Param[];
   text?: string;
 };
+
+export type { Client } from './targets/index.js';
 
 export type HarRequest = Omit<NpmHarRequest, 'postData'> & { postData: PostDataBase };
 
@@ -59,6 +62,8 @@ interface HarEntry {
     version: string;
   };
 }
+
+export type Options = Merge<CodeBuilderOptions, Record<string, any>>;
 
 export interface HTTPSnippetOptions {
   harIsAlreadyEncoded?: boolean;
@@ -101,7 +106,7 @@ export class HTTPSnippet {
     }
   }
 
-  init() {
+  init(): HTTPSnippet {
     this.initCalled = true;
 
     this.requests = this.entries.map(({ request }) => {
@@ -130,7 +135,28 @@ export class HTTPSnippet {
     return this;
   }
 
-  prepare(harRequest: HarRequest, options: HTTPSnippetOptions) {
+  prepare(
+    harRequest: HarRequest,
+    options: HTTPSnippetOptions,
+  ): Request & {
+    allHeaders: Record<string, string[] | string>;
+    fullUrl: string;
+    url: string;
+    uriObj: {
+      query: ReducedHelperObject;
+      search: string;
+      path: string | null;
+      auth: string | null;
+      hash: string | null;
+      host: string | null;
+      hostname: string | null;
+      href: string;
+      pathname: string | null;
+      protocol: string | null;
+      slashes: boolean | null;
+      port: string | null;
+    };
+  } {
     const request: Request = {
       ...harRequest,
       fullUrl: '',
@@ -142,12 +168,12 @@ export class HTTPSnippet {
     };
 
     // construct query objects
-    if (request.queryString && request.queryString.length) {
+    if (request?.queryString.length) {
       request.queryObj = request.queryString.reduce(reducer, {});
     }
 
     // construct headers objects
-    if (request.headers && request.headers.length) {
+    if (request?.headers.length) {
       const http2VersionRegex = /^HTTP\/2/;
       request.headersObj = request.headers.reduce((accumulator, { name, value }) => {
         const headerName = http2VersionRegex.exec(request.httpVersion) ? name.toLocaleLowerCase() : name;
@@ -159,7 +185,7 @@ export class HTTPSnippet {
     }
 
     // construct headers objects
-    if (request.cookies && request.cookies.length) {
+    if (request?.cookies.length) {
       request.cookiesObj = request.cookies.reduceRight(
         (accumulator, { name, value }) => ({
           ...accumulator,
@@ -197,7 +223,7 @@ export class HTTPSnippet {
           const rn = '\r\n';
 
           /*! formdata-polyfill. MIT License. Jimmy Wärting <https://jimmy.warting.se/opensource> */
-          const escape = (str: string) => str.replace(/\n/g, '%0A').replace(/\r/g, '%0D').replace(/"/g, '%22');
+          const escapeStr = (str: string) => str.replace(/\n/g, '%0A').replace(/\r/g, '%0D').replace(/"/g, '%22');
           const normalizeLinefeeds = (value: string) => value.replace(/\r?\n|\r/g, '\r\n');
 
           const payload = [`--${boundary}`];
@@ -209,7 +235,7 @@ export class HTTPSnippet {
 
             if (filename) {
               payload.push(
-                `Content-Disposition: form-data; name="${escape(normalizeLinefeeds(name))}"; filename="${filename}"`,
+                `Content-Disposition: form-data; name="${escapeStr(normalizeLinefeeds(name))}"; filename="${filename}"`,
               );
               payload.push(`Content-Type: ${contentType}`);
             } else {
@@ -257,7 +283,7 @@ export class HTTPSnippet {
         if (request.postData.text) {
           try {
             request.postData.jsonObj = JSON.parse(request.postData.text);
-          } catch (e) {
+          } catch {
             // force back to `text/plain` if headers have proper content-type value, then this should also work
             request.postData.mimeType = 'text/plain';
           }
@@ -280,7 +306,7 @@ export class HTTPSnippet {
     }; //?
 
     // reset uriObj values for a clean url
-    let search;
+    let search: string;
     if (options.harIsAlreadyEncoded) {
       search = queryStringify(request.queryObj, {
         encode: false,
@@ -304,12 +330,12 @@ export class HTTPSnippet {
       ...urlWithParsedQuery,
       query: null,
       search: null,
-    }); //?
+    });
 
     const fullUrl = urlFormat({
       ...urlWithParsedQuery,
       ...uriObj,
-    }); //?
+    });
 
     return {
       ...request,
@@ -320,22 +346,41 @@ export class HTTPSnippet {
     };
   }
 
-  convert(targetId: TargetId, clientId?: ClientId, options?: any) {
+  convert(targetId: TargetId, clientId?: ClientId, options?: Options): (string | false)[] {
     if (!this.initCalled) {
       this.init();
     }
 
     if (!options && clientId) {
-      options = clientId;
+      options = { clientId };
     }
 
     const target = targets[targetId];
     if (!target) {
-      return false;
+      return [false];
     }
 
     const { convert } = target.clientsById[clientId || target.info.default];
     const results = this.requests.map(request => convert(request, options));
+    return results;
+  }
+
+  installation(targetId: TargetId, clientId?: ClientId, options?: Options): (string | false)[] {
+    if (!this.initCalled) {
+      this.init();
+    }
+
+    if (!options && clientId) {
+      options = { clientId };
+    }
+
+    const target = targets[targetId];
+    if (!target) {
+      return [false];
+    }
+
+    const { info } = target.clientsById[clientId || target.info.default];
+    const results = this.requests.map(request => (info?.installation ? info.installation(request, options) : false));
     return results;
   }
 }

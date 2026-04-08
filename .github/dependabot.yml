@@ -4,8 +4,6 @@ updates:
     directory: '/'
     schedule:
       interval: monthly
-    reviewers:
-      - erunion
     labels:
       - dependencies
     groups:
@@ -23,13 +21,16 @@ updates:
     schedule:
       interval: monthly
     open-pull-requests-limit: 10
-    reviewers:
-      - erunion
     labels:
       - dependencies
     groups:
       minor-development-deps:
         dependency-type: 'development'
+        update-types:
+          - minor
+          - patch
+      minor-production-deps:
+        dependency-type: 'production'
         update-types:
           - minor
           - patch

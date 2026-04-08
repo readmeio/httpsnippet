@@ -10,7 +10,7 @@
 import type { Client } from '../../index.js';
 
 import { CodeBuilder } from '../../../helpers/code-builder.js';
-import { literalRepresentation, literalDeclaration } from '../helpers.js';
+import { literalDeclaration, literalRepresentation } from '../helpers.js';
 
 export interface UrlsessionOptions {
   pretty?: boolean;
@@ -49,7 +49,9 @@ export const urlsession: Client<UrlsessionOptions> = {
             const parameters = postData.params.map(p => `"${p.name}": "${p.value}"`);
             if (opts.pretty) {
               push('let parameters = [');
-              parameters.forEach(param => push(`${param},`, 1));
+              parameters.forEach(param => {
+                push(`${param},`, 1);
+              });
               push(']');
             } else {
               push(`let parameters = [${parameters.join(', ')}]`);

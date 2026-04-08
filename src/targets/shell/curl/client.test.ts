@@ -89,6 +89,21 @@ runCustomFixtures({
       expected: 'urlencode.sh',
     },
     {
+      it: 'should use --data-urlencode for form-urlencoded params with special characters in values',
+      input: {
+        ...applicationFormEncoded.log.entries[0].request,
+        postData: {
+          mimeType: 'application/x-www-form-urlencoded',
+          params: [
+            { name: 'query', value: 'hello world' },
+            { name: 'filter', value: 'status=active&type=user' },
+          ],
+        },
+      } as Request,
+      options: {},
+      expected: 'urlencode-values.sh',
+    },
+    {
       it: 'should send JSON-encoded data with single quotes within a HEREDOC',
       input: {
         method: 'POST',

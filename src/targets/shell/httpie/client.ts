@@ -33,7 +33,7 @@ export const httpie: Client<HttpieOptions> = {
     link: 'http://httpie.org/',
     description: 'a CLI, cURL-like tool for humans',
     extname: '.sh',
-    installation: 'brew install httpie',
+    installation: () => 'brew install httpie',
   },
   convert: ({ allHeaders, postData, queryObj, fullUrl, method, url }, options) => {
     const opts = {
@@ -121,7 +121,7 @@ export const httpie: Client<HttpieOptions> = {
 
     if (postData.mimeType === 'application/x-www-form-urlencoded') {
       // construct post params
-      if (postData.params && postData.params.length) {
+      if (postData.params?.length) {
         flags.push(opts.short ? '-f' : '--form');
 
         postData.params.forEach(param => {

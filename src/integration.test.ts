@@ -1,15 +1,14 @@
-/* eslint-disable vitest/no-conditional-expect */
+import type { Response } from 'har-format';
 import type { AvailableTarget } from './helpers/utils.js';
 import type { Request } from './index.js';
 import type { TargetId } from './targets/index.js';
-import type { Response } from 'har-format';
 
 import shell from 'node:child_process';
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { format } from 'node:util';
 
-import { describe, test, expect } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
 import { availableTargets, extname } from './helpers/utils.js';
 
@@ -21,7 +20,7 @@ const ENVIRONMENT_CONFIG = {
     c: ['libcurl'],
     csharp: ['httpclient', 'restsharp'],
     go: ['native'],
-    node: ['axios', 'fetch', 'native', 'request'],
+    node: ['axios', 'fetch'],
     php: ['curl', 'guzzle'],
     python: ['requests'],
     shell: ['curl'],
@@ -30,7 +29,7 @@ const ENVIRONMENT_CONFIG = {
     // When running tests locally, or within a CI environment, we shold limit the targets that
     // we're testing so as to not require a mess of dependency requirements that would be better
     // served within a container.
-    node: ['native'],
+    node: ['fetch'],
     php: ['curl'],
     python: ['requests'],
     shell: ['curl'],
@@ -75,7 +74,7 @@ const inputFileNames = readdirSync(path.join(...expectedBasePath), 'utf-8');
 
 const fixtures: [string, Request][] = inputFileNames.map(inputFileName => [
   inputFileName.replace(path.extname(inputFileName), ''),
-  // eslint-disable-next-line import/no-dynamic-require, global-require
+  // biome-ignore lint/style/noCommonJs: Because we're dynamically loading fixtures we need to use `require`.
   require(path.resolve(...expectedBasePath, inputFileName)),
 ]);
 
@@ -127,11 +126,9 @@ const testFilter =
  * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!
  */
 function looseJSONParse(obj: any) {
-  // eslint-disable-next-line no-new-func
   return new Function(`"use strict";return ${obj}`)();
 }
 
-// eslint-disable-next-line vitest/require-hook
 availableTargets()
   .filter(target => target.cli)
   .filter(testFilter('key', environmentFilter()))
@@ -139,14 +136,12 @@ availableTargets()
     const { key: targetId, title, clients } = target;
 
     describe.skipIf(process.env.NODE_ENV === 'test')(`${title} integration tests`, () => {
-      // eslint-disable-next-line vitest/require-hook
       clients.filter(testFilter('key', clientFilter(target.key))).forEach(({ key: clientId }) => {
         // If we're in an HTTPBin-powered Docker environment we only want to run tests for the
         // client that our Docker has been configured for.
         const shouldSkip = process.env.HTTPBIN && process.env.INTEGRATION_CLIENT !== targetId;
 
-        describe.skipIf(shouldSkip)(clientId, () => {
-          // eslint-disable-next-line vitest/require-hook
+        describe.skipIf(shouldSkip)(`${clientId}`, () => {
           fixtures.filter(testFilter(0, fixtureIgnoreFilter, true)).forEach(([fixture, request]) => {
             if (fixture === 'custom-method' && clientId === 'restsharp') {
               // restsharp doesn't even let you express calling an invalid
@@ -180,7 +175,7 @@ function integrationTest(
     const url = har.log.entries[0].request.url;
     const harResponse = har.log.entries[0].response as Response;
 
-    let stdout;
+    let stdout: Buffer | string;
     try {
       // If there's a runner function, use that; otherwise just call
       // <interpreter> <fixture-path>
@@ -210,7 +205,7 @@ function integrationTest(
 
       try {
         expect(stdout).toStrictEqual(harResponse.content.text);
-      } catch (err) {
+      } catch {
         // Some targets always assume that their response is JSON and for this case
         // (`custom-method`) will print out an empty string instead.
         expect(stdout).toBe('');

@@ -138,11 +138,9 @@ export const curl: Client<CurlOptions> = {
       case 'application/x-www-form-urlencoded':
         if (postData.params) {
           postData.params.forEach(param => {
-            const unencoded = param.name;
             const encoded = encodeURIComponent(param.name);
-            const needsEncoding = encoded !== unencoded;
-            const name = needsEncoding ? encoded : unencoded;
-            const flag = binary ? '--data-binary' : needsEncoding ? '--data-urlencode' : arg('data');
+            const name = encoded !== param.name ? encoded : param.name;
+            const flag = binary ? '--data-binary' : '--data-urlencode';
             push(`${flag} ${quote(`${name}=${param.value}`)}`);
           });
         } else {
@@ -150,13 +148,12 @@ export const curl: Client<CurlOptions> = {
         }
         break;
 
-      default:
+      default: {
         // raw request body
         if (!postData.text) {
           break;
         }
 
-        // eslint-disable-next-line no-case-declarations -- builtPayload is only used here.
         let builtPayload = false;
 
         // If we're dealing with a JSON variant, and our payload is JSON let's make it look a little
@@ -188,7 +185,7 @@ export const curl: Client<CurlOptions> = {
                   `${binary ? '--data-binary' : arg('data')} '\n${JSON.stringify(jsonPayload, null, indentJSON)}\n'`,
                 );
               }
-            } catch (err) {
+            } catch {
               // no-op
             }
           }
@@ -197,6 +194,7 @@ export const curl: Client<CurlOptions> = {
         if (!builtPayload) {
           push(`${binary ? '--data-binary' : arg('data')} ${quote(postData.text)}`);
         }
+      }
     }
 
     return join();

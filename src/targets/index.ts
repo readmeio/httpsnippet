@@ -1,6 +1,6 @@
+import type { Merge } from 'type-fest';
 import type { CodeBuilderOptions } from '../helpers/code-builder.js';
 import type { Request } from '../index.js';
-import type { Merge } from 'type-fest';
 
 import { c } from './c/target.js';
 import { clojure } from './clojure/target.js';
@@ -26,12 +26,48 @@ export type TargetId = keyof typeof targets;
 
 export type ClientId = string;
 
-export interface ClientInfo {
+export interface ClientInfo<T extends Record<string, any> = Record<string, any>> {
+  /**
+   * A description of the client.
+   *
+   * @example Promise based HTTP client for the browser and node.js
+   */
   description: string;
+
+  /**
+   * The default file extension for the client.
+   *
+   * @example `.js`
+   */
   extname: Extension;
-  installation?: string;
+  /**
+   * Retrieve or generate a command to install the client.
+   *
+   * @example () => 'npm install axios --save';
+   */
+  installation?: Converter<T>;
+
+  /**
+   * A unique identifier for the client.
+   *
+   * This should be a string that is unique to the client for the given target.
+   *
+   * @example `axios`
+   */
   key: ClientId;
+
+  /**
+   * A link to the documentation or homepage of the client.
+   *
+   * @example https://github.com/axios/axios
+   */
   link: string;
+
+  /**
+   * The formatted name of the client.
+   *
+   * @example Axios
+   */
   title: string;
 }
 
@@ -42,7 +78,7 @@ export type Converter<T extends Record<string, any>> = (
 
 export interface Client<T extends Record<string, any> = Record<string, any>> {
   convert: Converter<T>;
-  info: ClientInfo;
+  info: ClientInfo<T>;
 }
 
 export interface ClientPlugin<T extends Record<string, any> = Record<string, any>> {
@@ -64,7 +100,28 @@ export interface Target {
   info: TargetInfo;
 }
 
-export const targets = {
+type supportedTargets =
+  | 'c'
+  | 'clojure'
+  | 'csharp'
+  | 'go'
+  | 'http'
+  | 'java'
+  | 'javascript'
+  | 'json'
+  | 'kotlin'
+  | 'node'
+  | 'objc'
+  | 'ocaml'
+  | 'php'
+  | 'powershell'
+  | 'python'
+  | 'r'
+  | 'ruby'
+  | 'shell'
+  | 'swift';
+
+export const targets: Record<supportedTargets, Target> = {
   c,
   clojure,
   csharp,
@@ -145,7 +202,7 @@ export const isTarget = (target: Target): target is Target => {
   return true;
 };
 
-export const addTarget = (target: Target) => {
+export const addTarget = (target: Target): void => {
   if (!isTarget(target)) {
     return;
   }
@@ -192,11 +249,11 @@ export const isClient = (client: Client): client is Client => {
   return true;
 };
 
-export const addClientPlugin = (plugin: ClientPlugin) => {
+export const addClientPlugin = (plugin: ClientPlugin): void => {
   addTargetClient(plugin.target, plugin.client);
 };
 
-export const addTargetClient = (targetId: TargetId, client: Client) => {
+export const addTargetClient = (targetId: TargetId, client: Client): void => {
   if (!isClient(client)) {
     return;
   }

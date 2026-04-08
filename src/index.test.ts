@@ -1,12 +1,11 @@
 import type { Request } from './index.js';
 
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { mimetypes } from './fixtures/mimetypes.js';
 import headers from './fixtures/requests/headers.cjs';
 import query from './fixtures/requests/query.cjs';
 import short from './fixtures/requests/short.cjs';
-
 import { HTTPSnippet } from './index.js';
 
 describe('HTTPSnippet', () => {
@@ -16,7 +15,7 @@ describe('HTTPSnippet', () => {
     // @ts-expect-error intentionally incorrect
     const result = snippet.convert(null);
 
-    expect(result).toBe(false);
+    expect(result).toStrictEqual([false]);
   });
 
   describe('repair malformed `postData`', () => {
@@ -99,7 +98,7 @@ describe('HTTPSnippet', () => {
     snippet.convert('node');
 
     expect(snippet).toHaveProperty('requests');
-    expect(Array.isArray(snippet.requests)).toBeTruthy();
+    expect(Array.isArray(snippet.requests)).toBe(true);
     expect(snippet.requests).toHaveLength(2);
   });
 

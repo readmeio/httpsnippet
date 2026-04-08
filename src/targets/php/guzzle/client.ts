@@ -28,7 +28,7 @@ export const guzzle: Client<GuzzleOptions> = {
     link: 'http://docs.guzzlephp.org/en/stable/',
     description: 'PHP with Guzzle',
     extname: '.php',
-    installation: 'composer require guzzlehttp/guzzle',
+    installation: () => 'composer require guzzlehttp/guzzle',
   },
   convert: ({ postData, fullUrl, method, cookies, headersObj }, options) => {
     const opts = {
@@ -112,9 +112,7 @@ export const guzzle: Client<GuzzleOptions> = {
     // construct headers
     const headers = Object.keys(headersObj)
       .sort()
-      .map(function (key) {
-        return `${opts.indent}${opts.indent}'${key}' => '${escapeForSingleQuotes(headersObj[key])}',`;
-      });
+      .map(key => `${opts.indent}${opts.indent}'${key}' => '${escapeForSingleQuotes(headersObj[key])}',`);
 
     // construct cookies
     const cookieString = cookies

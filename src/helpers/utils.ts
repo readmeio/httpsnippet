@@ -6,7 +6,7 @@ export interface AvailableTarget extends TargetInfo {
   clients: ClientInfo[];
 }
 
-export const availableTargets = () =>
+export const availableTargets = (): AvailableTarget[] =>
   Object.keys(targets).map<AvailableTarget>(targetId => ({
     ...targets[targetId as TargetId].info,
     clients: Object.keys(targets[targetId as TargetId].clientsById).map(
@@ -14,7 +14,7 @@ export const availableTargets = () =>
     ),
   }));
 
-export const extname = (targetId: TargetId, clientId: ClientId) => {
+export const extname = (targetId: TargetId, clientId: ClientId): '' | `.${string}` => {
   const target = targets[targetId];
   if (!target) {
     return '';

@@ -1,6 +1,6 @@
 {
   "name": "@zuplo/httpsnippet",
-  "version": "10.0.5",
+  "version": "11.1.0",
   "description": "HTTP Request snippet generator for *most* languages",
   "homepage": "https://github.com/zuplo/httpsnippet",
   "license": "MIT",
@@ -9,27 +9,27 @@
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+      "import": "./dist/index.mjs"
     },
     "./helpers/code-builder": {
       "require": "./dist/helpers/code-builder.cjs",
-      "import": "./dist/helpers/code-builder.js"
+      "import": "./dist/helpers/code-builder.mjs"
     },
     "./helpers/reducer": {
       "require": "./dist/helpers/reducer.cjs",
-      "import": "./dist/helpers/reducer.js"
+      "import": "./dist/helpers/reducer.mjs"
     },
     "./targets": {
       "require": "./dist/targets/index.cjs",
-      "import": "./dist/targets/index.js"
+      "import": "./dist/targets/index.mjs"
     },
     "./package.json": "./package.json"
   },
   "main": "dist/index.cjs",
-  "module": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.cts",
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "files": [
     "dist"
@@ -53,14 +53,12 @@
     "ocaml",
     "php",
     "python",
-    "request",
     "requests",
     "ruby",
     "shell",
     "snippet",
     "swift",
     "swift",
-    "unirest",
     "xhr",
     "xmlhttprequest"
   ],
@@ -70,36 +68,36 @@
   },
   "scripts": {
     "attw": "attw --pack --format table-flipped",
-    "build": "tsup",
+    "build": "tsdown",
     "clean": "rm -rf dist/",
-    "lint": "eslint . --ext .js,.cjs,.ts",
+    "format": "npm run prettier:write && npx biome check --write",
+    "lint": "npm run lint:js && npm run prettier && tsc",
+    "lint:js": "biome check",
     "prebuild": "npm run clean",
     "prepack": "npm run build",
-    "pretest": "npm run lint && npm run prettier",
-    "prettier": "prettier --list-different --write .",
+    "prettier": "prettier --check .",
+    "prettier:write": "prettier --check --write .",
     "test": "vitest run --coverage"
   },
   "dependencies": {
     "@zuplo/formdata-to-string": "^1.1.0",
-    "qs": "^6.11.2",
+    "qs": "^6.15.0",
     "stringify-object": "^3.3.0",
-    "url": "^0.11.3"
+    "type-fest": "^5.5.0"
   },
   "devDependencies": {
-    "@readme/eslint-config": "^14.0.0",
-    "@types/eslint": "^8.44.7",
+    "@biomejs/biome": "^2.4.10",
+    "@readme/standards": "^2.4.1",
     "@types/har-format": "^1.2.15",
-    "@types/node": "^20.12.5",
-    "@types/qs": "^6.9.10",
+    "@types/node": "^25.5.0",
+    "@types/qs": "^6.15.0",
     "@types/stringify-object": "^4.0.5",
-    "@vitest/coverage-v8": "^1.1.1",
-    "eslint": "^8.57.0",
+    "@vitest/coverage-v8": "^4.1.2",
     "prettier": "^3.0.3",
     "require-directory": "^2.1.1",
-    "tsup": "^8.0.1",
-    "type-fest": "^4.15.0",
-    "typescript": "^5.4.4",
-    "vitest": "^1.1.1"
+    "tsdown": "^0.21.7",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.2"
   },
-  "prettier": "@readme/eslint-config/prettier"
+  "prettier": "@readme/standards/prettier"
 }

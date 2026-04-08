@@ -37,12 +37,11 @@ export const native: Client = {
         }
         break;
 
-      case 'multipart/form-data':
+      case 'multipart/form-data': {
         if (!postData.params) {
           break;
         }
 
-        // eslint-disable-next-line no-case-declarations
         const multipartPayload: Record<string, any> = {};
         postData.params.forEach(param => {
           multipartPayload[param.name] = param.value;
@@ -50,6 +49,7 @@ export const native: Client = {
 
         payload = multipartPayload;
         break;
+      }
 
       default:
         if (postData.text) {

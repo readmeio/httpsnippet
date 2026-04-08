@@ -60,7 +60,6 @@ export const literalRepresentation = <T, U>(value: T, opts: U, indentLevel?: num
 
     case '[object Object]': {
       const keyValuePairs = [];
-      // eslint-disable-next-line guard-for-in, no-restricted-syntax
       for (const key in value) {
         keyValuePairs.push(`"${key}": ${literalRepresentation(value[key], opts, indentLevel)}`);
       }

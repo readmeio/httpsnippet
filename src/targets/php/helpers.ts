@@ -1,6 +1,6 @@
 import { escapeString } from '../../helpers/escape.js';
 
-export const convertType = (obj: any[] | any, indent?: string, lastIndent?: string) => {
+export const convertType = (obj: any[] | any, indent?: string, lastIndent?: string): string | 'null' => {
   lastIndent = lastIndent || '';
   indent = indent || '';
 
@@ -27,7 +27,6 @@ export const convertType = (obj: any[] | any, indent?: string, lastIndent?: stri
 
     case '[object Object]': {
       const result: string[] = [];
-      // eslint-disable-next-line no-restricted-syntax
       for (const i in obj) {
         if (Object.prototype.hasOwnProperty.call(obj, i)) {
           result.push(`${convertType(i, indent)} => ${convertType(obj[i], `${indent}${indent}`, indent)}`);
@@ -69,4 +68,4 @@ export const supportedMethods = [
   'UNLOCK',
   'UPDATE',
   'VERSION_CONTROL',
-];
+] as const;

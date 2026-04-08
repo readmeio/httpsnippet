@@ -60,13 +60,12 @@ export const fetch: Client<FetchOptions> = {
         }
         break;
 
-      case 'multipart/form-data':
+      case 'multipart/form-data': {
         if (!postData.params) {
           break;
         }
 
         // The FormData API automatically adds a `Content-Type` header for `multipart/form-data` content and if we add our own here data won't be correctly transmitted.
-        // eslint-disable-next-line no-case-declarations -- We're only using `contentTypeHeader` within this block.
         const contentTypeHeader = getHeaderName(allHeaders, 'content-type');
         if (contentTypeHeader) {
           delete allHeaders[contentTypeHeader];
@@ -80,6 +79,7 @@ export const fetch: Client<FetchOptions> = {
 
         blank();
         break;
+      }
 
       default:
         if (postData.text) {
@@ -121,8 +121,8 @@ export const fetch: Client<FetchOptions> = {
     }
 
     push(`fetch('${fullUrl}', options)`);
-    push('.then(response => response.json())', 1);
-    push('.then(response => console.log(response))', 1);
+    push('.then(res => res.json())', 1);
+    push('.then(res => console.log(res))', 1);
     push('.catch(err => console.error(err));', 1);
 
     return join();

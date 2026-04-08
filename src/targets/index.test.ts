@@ -1,16 +1,15 @@
-import type { Client, ClientId, ClientPlugin, Target, TargetId } from './index.js';
 import type { HTTPSnippetOptions, Request } from '../index.js';
+import type { Client, ClientId, ClientPlugin, Target, TargetId } from './index.js';
 
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
-import { describe, afterEach, it, expect } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 
 import short from '../fixtures/requests/short.cjs';
 import { availableTargets, extname } from '../helpers/utils.js';
 import { HTTPSnippet } from '../index.js';
-
-import { isClient, isTarget, addTarget, addTargetClient, targets, addClientPlugin } from './index.js';
+import { addClientPlugin, addTarget, addTargetClient, isClient, isTarget, targets } from './index.js';
 
 const expectedBasePath = ['src', 'fixtures', 'requests'];
 
@@ -18,7 +17,7 @@ const inputFileNames = readdirSync(path.join(...expectedBasePath), 'utf-8');
 
 const fixtures: [string, Request][] = inputFileNames.map(inputFileName => [
   inputFileName.replace(path.extname(inputFileName), ''),
-  // eslint-disable-next-line import/no-dynamic-require, global-require
+  // biome-ignore lint/style/noCommonJs: Because we're dynamically loading fixtures we need to use `require`.
   require(path.resolve(...expectedBasePath, inputFileName)),
 ]);
 
@@ -31,7 +30,7 @@ const targetFilter: TargetId[] = [
 /** useful for debuggin, only run a particular set of targets */
 const clientFilter: ClientId[] = [
   // put your clientId here:
-  // 'unirest',
+  // 'axios',
 ];
 
 /** useful for debuggin, only run a particular set of fixtures */
@@ -74,7 +73,7 @@ describe('request validation', () => {
               `${fixture}${extname(targetId, clientId)}`,
             );
 
-            let result: string[] | false;
+            let result: string | string[] | false;
             let expected: string;
 
             try {
@@ -200,7 +199,7 @@ describe('isTarget', () => {
           },
         },
       }),
-    ).toBeTruthy();
+    ).toBe(true);
   });
 });
 
@@ -255,7 +254,7 @@ describe('isClient', () => {
         info: { key: 'a', title: '', link: '', description: '', extname: null },
         convert: () => '',
       }),
-    ).toBeTruthy();
+    ).toBe(true);
   });
 });
 
@@ -266,7 +265,7 @@ describe('addTarget', () => {
   });
 
   it('should add a new custom target', async () => {
-    const { fetch: fetchClient } = await import('./node/fetch/client');
+    const { fetch: fetchClient } = await import('./node/fetch/client.ts');
 
     const deno: Target = {
       info: {
@@ -303,6 +302,9 @@ describe('addTargetClient', () => {
         link: 'https://example.com',
         description: 'A custom HTTP library',
         extname: '.custom',
+        installation: (request, opts) => {
+          return `brew install ${request.fullUrl}/${opts?.clientId}`;
+        },
       },
       convert: () => {
         return 'This was generated from a custom client.';
@@ -314,8 +316,10 @@ describe('addTargetClient', () => {
     const snippet = new HTTPSnippet(short.log.entries[0].request as Request, {});
 
     const result = snippet.convert('node', 'custom')[0];
-
     expect(result).toBe('This was generated from a custom client.');
+
+    const install = snippet.installation('node', 'custom')[0];
+    expect(install).toBe('brew install https://httpbin.org/anything/custom');
   });
 });
 
