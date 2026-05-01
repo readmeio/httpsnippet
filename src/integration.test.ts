@@ -1,7 +1,7 @@
-import type { Response } from 'har-format';
 import type { AvailableTarget } from './helpers/utils.js';
 import type { Request } from './index.js';
 import type { TargetId } from './targets/index.js';
+import type { Response } from 'har-format';
 
 import shell from 'node:child_process';
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -74,7 +74,7 @@ const inputFileNames = readdirSync(path.join(...expectedBasePath), 'utf-8');
 
 const fixtures: [string, Request][] = inputFileNames.map(inputFileName => [
   inputFileName.replace(path.extname(inputFileName), ''),
-  // biome-ignore lint/style/noCommonJs: Because we're dynamically loading fixtures we need to use `require`.
+  // oxlint-disable-next-line import/no-dynamic-require, node/global-require, typescript/no-require-imports
   require(path.resolve(...expectedBasePath, inputFileName)),
 ]);
 
@@ -126,6 +126,7 @@ const testFilter =
  * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!
  */
 function looseJSONParse(obj: any) {
+  // oxlint-disable-next-line no-new-func
   return new Function(`"use strict";return ${obj}`)();
 }
 
@@ -171,6 +172,7 @@ function integrationTest(
     // we're deleting the header, and if we don't clone the fixture to another object, that
     // deleted header will cause other tests to fail because it's missing where other tests
     // are expecting it.
+    // oxlint-disable-next-line readme/json-parse-try-catch
     const har = JSON.parse(JSON.stringify(request));
     const url = har.log.entries[0].request.url;
     const harResponse = har.log.entries[0].response as Response;
@@ -214,6 +216,7 @@ function integrationTest(
       return;
     }
 
+    // oxlint-disable-next-line readme/json-parse-try-catch
     const expected = JSON.parse(String(harResponse.content.text));
     let response: any;
     try {
@@ -303,6 +306,7 @@ function integrationTest(
       if (fixture === 'postdata-malformed' && response.data === '') {
         expect(expected.data).toBe('');
       } else {
+        // oxlint-disable-next-line readme/json-parse-try-catch
         expect(JSON.stringify(JSON.parse(response.data))).toStrictEqual(JSON.stringify(JSON.parse(expected.data)));
       }
       // httpbin-go includes multipart/form-data in the `data` response

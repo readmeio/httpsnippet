@@ -65,7 +65,7 @@ export const fetch: Client = {
         push('const formData = new FormData();');
 
         postData.params.forEach(param => {
-          if (!param.fileName && !param.fileName && !param.contentType) {
+          if (!param.fileName && !param.contentType) {
             push(`formData.append('${param.name}', '${param.value}');`);
             return;
           }

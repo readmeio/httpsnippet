@@ -6,6 +6,7 @@ import { mimetypes } from './fixtures/mimetypes.js';
 import headers from './fixtures/requests/headers.cjs';
 import query from './fixtures/requests/query.cjs';
 import short from './fixtures/requests/short.cjs';
+
 import { HTTPSnippet } from './index.js';
 
 describe('HTTPSnippet', () => {

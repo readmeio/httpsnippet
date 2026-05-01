@@ -1,6 +1,5 @@
 import { defineConfig } from 'tsdown';
 
-// biome-ignore lint/style/noDefaultExport: `tsdown` uses default exports.
 export default defineConfig(options => ({
   ...options,
 

@@ -9,6 +9,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import short from '../fixtures/requests/short.cjs';
 import { availableTargets, extname } from '../helpers/utils.js';
 import { HTTPSnippet } from '../index.js';
+
 import { addClientPlugin, addTarget, addTargetClient, isClient, isTarget, targets } from './index.js';
 
 const expectedBasePath = ['src', 'fixtures', 'requests'];
@@ -17,7 +18,7 @@ const inputFileNames = readdirSync(path.join(...expectedBasePath), 'utf-8');
 
 const fixtures: [string, Request][] = inputFileNames.map(inputFileName => [
   inputFileName.replace(path.extname(inputFileName), ''),
-  // biome-ignore lint/style/noCommonJs: Because we're dynamically loading fixtures we need to use `require`.
+  // oxlint-disable-next-line import/no-dynamic-require, node/global-require, typescript/no-require-imports
   require(path.resolve(...expectedBasePath, inputFileName)),
 ]);
 
@@ -102,6 +103,7 @@ describe('request validation', () => {
                 `Missing a test file for ${targetId}:${clientId} for the ${fixture} fixture.\nExpected to find the output fixture: \`/src/targets/${targetId}/${clientId}/fixtures/${fixture}${
                   fixtureExtension ?? ''
                 }\``,
+                { cause: err },
               );
             }
 
@@ -118,9 +120,7 @@ describe('isTarget', () => {
     // @ts-expect-error intentionally incorrect
     expect(() => isTarget(null)).toThrow('you tried to add a target which is not an object, got type: "null"');
     // @ts-expect-error intentionally incorrect
-    expect(() => isTarget(undefined)).toThrow(
-      'you tried to add a target which is not an object, got type: "undefined"',
-    );
+    expect(() => isTarget()).toThrow('you tried to add a target which is not an object, got type: "undefined"');
     // @ts-expect-error intentionally incorrect
     expect(() => isTarget([])).toThrow('you tried to add a target which is not an object, got type: "array"');
   });
@@ -208,7 +208,7 @@ describe('isClient', () => {
     // @ts-expect-error intentionally incorrect
     expect(() => isClient(null)).toThrow('clients must be objects');
     // @ts-expect-error intentionally incorrect
-    expect(() => isClient(undefined)).toThrow('clients must be objects');
+    expect(() => isClient()).toThrow('clients must be objects');
     // @ts-expect-error intentionally incorrect
     expect(() => isClient({})).toThrow('targets client must contain an `info` object');
     // @ts-expect-error intentionally incorrect

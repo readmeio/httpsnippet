@@ -60,6 +60,7 @@ export const literalRepresentation = <T, U>(value: T, opts: U, indentLevel?: num
 
     case '[object Object]': {
       const keyValuePairs = [];
+      // oxlint-disable-next-line guard-for-in
       for (const key in value) {
         keyValuePairs.push(`"${key}": ${literalRepresentation(value[key], opts, indentLevel)}`);
       }
