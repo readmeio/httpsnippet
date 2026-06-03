@@ -14,8 +14,9 @@ RUN apk --no-cache add ca-certificates && \
 # https://github.com/pyodide/pyodide/blob/1691d347d15a2c211cd49aebe6f15d42dfdf2369/Dockerfile#L105
 COPY --from=node /usr/local/bin/node /usr/local/bin/
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
-    && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
+RUN apk add --no-cache libstdc++ && \
+  ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
+  ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 WORKDIR /src
 
@@ -23,7 +24,7 @@ WORKDIR /src
 #   folder with our test fixtures to run them
 # - install RestSharp into that project
 # - make a folder with the appropriate structure to hold the test fixtures
-RUN dotnet new console -o IntTestCsharp -f net7.0 && \
+RUN dotnet new console -o IntTestCsharp -f net8.0 && \
   cd IntTestCsharp && \
   dotnet add package RestSharp && \
   mkdir -p /src/IntTestCsharp/src/fixtures/files
