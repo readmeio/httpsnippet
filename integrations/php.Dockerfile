@@ -4,7 +4,7 @@ WORKDIR /composer/
 # https://packagist.org/packages/guzzlehttp/guzzle
 RUN composer require guzzlehttp/guzzle
 
-FROM alpine:3.18
+FROM alpine:3.22
 
 COPY integrations/https-cert/rootCA.pem /root/integration-test.pem
 COPY --from=builder /composer/vendor /src/vendor

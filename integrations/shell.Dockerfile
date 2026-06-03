@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM alpine:3.22
 
 COPY integrations/https-cert/rootCA.pem /root/integration-test.pem
 
