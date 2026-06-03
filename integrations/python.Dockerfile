@@ -9,8 +9,7 @@ RUN apk --no-cache add ca-certificates && \
   update-ca-certificates
 
 RUN apk update && \
-  apk add nodejs npm python3 py3-pip && \
-  pip install requests
+  apk add nodejs npm python3 py3-requests
 
 WORKDIR /src
 

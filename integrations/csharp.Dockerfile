@@ -1,5 +1,5 @@
-FROM node:20-alpine3.18 AS node
-FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine3.18
+FROM node:22-alpine AS node
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine3.22
 
 COPY integrations/https-cert/rootCA.pem /root/integration-test.pem
 

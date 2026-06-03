@@ -16,7 +16,8 @@ RUN apk --no-cache add ca-certificates && \
   update-ca-certificates
 
 RUN apk update && \
-  apk add nodejs npm php81 php81-fpm php81-opcache php81-curl
+  apk add nodejs npm php83 php83-fpm php83-opcache php83-curl && \
+  ln -sf /usr/bin/php83 /usr/bin/php
 
 WORKDIR /src
 
