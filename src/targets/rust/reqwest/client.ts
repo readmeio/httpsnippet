@@ -150,13 +150,12 @@ export const reqwest: Client = {
       for (const [key, value] of Object.entries(allHeaders)) {
         // Skip setting content-type if there is a file, as this header will
         // cause the request to hang, and reqwest will set it for us.
-        if (key.toLowerCase() === 'content-type' && isMultipart) {
-          continue;
+        if (key.toLowerCase() !== 'content-type' || !isMultipart) {
+          push(
+            `headers.insert("${key}", ${literalRepresentation(value, opts)}.parse().unwrap());`,
+            indentLevel,
+          );
         }
-        push(
-          `headers.insert("${key}", ${literalRepresentation(value, opts)}.parse().unwrap());`,
-          indentLevel,
-        );
       }
       blank();
     }

@@ -57,8 +57,8 @@ export const literalRepresentation = (
 
     case '[object Object]': {
       const keyValuePairs = [];
-      for (const key in value) {
-        keyValuePairs.push(`"${key}": ${literalRepresentation(value[key], opts, indentLevel)}`);
+      for (const [key, val] of Object.entries(value)) {
+        keyValuePairs.push(`"${key}": ${literalRepresentation(val, opts, indentLevel)}`);
       }
       return concatValues(
         'object',
