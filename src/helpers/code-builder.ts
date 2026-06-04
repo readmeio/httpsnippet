@@ -59,15 +59,6 @@ export class CodeBuilder {
     this.code.push(newLine);
   };
 
-  pushToLast = (line: string): void => {
-    if (!this.code.length) {
-      this.push(line);
-    }
-    const updatedLine = `${this.code[this.code.length - 1]}${line}`;
-    this.code[this.code.length - 1] = updatedLine;
-  };
-
-
   /**
    * Add an empty line at the end of current lines
    */

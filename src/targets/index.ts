@@ -19,7 +19,6 @@ import { powershell } from './powershell/target.js';
 import { python } from './python/target.js';
 import { r } from './r/target.js';
 import { ruby } from './ruby/target.js';
-import { rust } from './rust/target.js';
 import { shell } from './shell/target.js';
 import { swift } from './swift/target.js';
 
@@ -119,7 +118,6 @@ type supportedTargets =
   | 'python'
   | 'r'
   | 'ruby'
-  | 'rust'
   | 'shell'
   | 'swift';
 
@@ -141,7 +139,6 @@ export const targets: Record<supportedTargets, Target> = {
   python,
   r,
   ruby,
-  rust,
   shell,
   swift,
 };
