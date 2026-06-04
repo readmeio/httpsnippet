@@ -2,13 +2,13 @@ use reqwest;
 
 #[tokio::main]
 pub async fn main() {
-    let url = "http://mockbin.com/har";
+    let url = "https://httpbin.org/cookies";
 
     let mut headers = reqwest::header::HeaderMap::new();
     headers.insert("cookie", "foo=bar; bar=baz".parse().unwrap());
 
     let client = reqwest::Client::new();
-    let response = client.post(url)
+    let response = client.get(url)
         .headers(headers)
         .send()
         .await;

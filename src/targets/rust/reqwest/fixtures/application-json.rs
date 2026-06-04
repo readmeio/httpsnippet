@@ -3,14 +3,14 @@ use reqwest;
 
 #[tokio::main]
 pub async fn main() {
-    let url = "http://mockbin.com/har";
+    let url = "https://httpbin.org/anything";
 
     let payload = json!({
         "number": 1,
         "string": "f\"oo",
         "arr": (1, 2, 3),
         "nested": json!({"a": "b"}),
-        "arr_mix": (1, "a", json!({"arr_mix_nested": json!({})})),
+        "arr_mix": (1, "a", json!({"arr_mix_nested": ()})),
         "boolean": false
     });
 

@@ -3,7 +3,7 @@ use reqwest;
 
 #[tokio::main]
 pub async fn main() {
-    let url = "http://mockbin.com/har";
+    let url = "https://httpbin.org/anything";
 
     let client = reqwest::Client::new();
     let response = client.request(reqwest::Method::from_str("PROPFIND").unwrap(), url)

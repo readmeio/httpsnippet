@@ -2,7 +2,7 @@ use reqwest;
 
 #[tokio::main]
 pub async fn main() {
-    let url = "http://mockbin.com/har";
+    let url = "https://httpbin.org/anything";
 
     async fn file_to_part(file_name: &'static str) -> reqwest::multipart::Part {
         let file = tokio::fs::File::open(file_name).await.unwrap();
@@ -14,7 +14,7 @@ pub async fn main() {
     }
 
     let form = reqwest::multipart::Form::new()
-        .part("foo", file_to_part("hello.txt").await)
+        .part("foo", file_to_part("src/fixtures/files/hello.txt").await)
         .text("bar", "Bonjour le monde");
     let mut headers = reqwest::header::HeaderMap::new();
 

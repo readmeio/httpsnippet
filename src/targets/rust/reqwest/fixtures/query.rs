@@ -2,7 +2,7 @@ use reqwest;
 
 #[tokio::main]
 pub async fn main() {
-    let url = "http://mockbin.com/har";
+    let url = "https://httpbin.org/anything";
 
     let querystring = [
         ("foo", "bar,baz"),

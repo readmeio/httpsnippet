@@ -344,6 +344,20 @@ exports[`availableTargets > returns all available targets 1`] = `
     "title": "Ruby",
   },
   {
+    "clients": [
+      {
+        "description": "reqwest HTTP library",
+        "extname": ".rs",
+        "key": "reqwest",
+        "link": "https://docs.rs/reqwest/latest/reqwest/",
+        "title": "reqwest",
+      },
+    ],
+    "default": "reqwest",
+    "key": "rust",
+    "title": "Rust",
+  },
+  {
     "cli": "%s",
     "clients": [
       {
