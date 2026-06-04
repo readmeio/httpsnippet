@@ -8,8 +8,9 @@
  * for any questions or issues regarding the generated code snippet, please open an issue mentioning the author.
  */
 
-import { CodeBuilder } from '../../../helpers/code-builder';
 import type { Client } from '../../index.js';
+
+import { CodeBuilder } from '../../../helpers/code-builder';
 import { literalRepresentation } from '../helpers';
 
 export const reqwest: Client = {
@@ -71,10 +72,7 @@ export const reqwest: Client = {
     switch (postData.mimeType) {
       case 'application/json':
         if (postData.jsonObj) {
-          push(
-            `let payload = ${literalRepresentation(postData.jsonObj, opts, indentLevel)};`,
-            indentLevel,
-          );
+          push(`let payload = ${literalRepresentation(postData.jsonObj, opts, indentLevel)};`, indentLevel);
         }
         jsonPayload = true;
         break;
@@ -118,19 +116,13 @@ export const reqwest: Client = {
 
       default: {
         if (postData.mimeType === 'application/x-www-form-urlencoded' && postData.paramsObj) {
-          push(
-            `let payload = ${literalRepresentation(postData.paramsObj, opts, indentLevel)};`,
-            indentLevel,
-          );
+          push(`let payload = ${literalRepresentation(postData.paramsObj, opts, indentLevel)};`, indentLevel);
           hasForm = true;
           break;
         }
 
         if (postData.text) {
-          push(
-            `let payload = ${literalRepresentation(postData.text, opts, indentLevel)};`,
-            indentLevel,
-          );
+          push(`let payload = ${literalRepresentation(postData.text, opts, indentLevel)};`, indentLevel);
           hasBody = true;
           break;
         }
@@ -151,10 +143,7 @@ export const reqwest: Client = {
         // Skip setting content-type if there is a file, as this header will
         // cause the request to hang, and reqwest will set it for us.
         if (key.toLowerCase() !== 'content-type' || !isMultipart) {
-          push(
-            `headers.insert("${key}", ${literalRepresentation(value, opts)}.parse().unwrap());`,
-            indentLevel,
-          );
+          push(`headers.insert("${key}", ${literalRepresentation(value, opts)}.parse().unwrap());`, indentLevel);
         }
       }
       blank();
@@ -174,10 +163,7 @@ export const reqwest: Client = {
         break;
 
       default: {
-        push(
-          `let response = client.request(reqwest::Method::from_str("${method}").unwrap(), url)`,
-          indentLevel,
-        );
+        push(`let response = client.request(reqwest::Method::from_str("${method}").unwrap(), url)`, indentLevel);
         unshift(`use std::str::FromStr;`);
         break;
       }

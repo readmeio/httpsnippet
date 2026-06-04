@@ -67,7 +67,6 @@ export class CodeBuilder {
     this.code[this.code.length - 1] = updatedLine;
   };
 
-
   /**
    * Add an empty line at the end of current lines
    */

@@ -12,9 +12,7 @@ function concatValues(
   const closingBrace = concatType === 'object' ? '})' : ')';
 
   if (pretty) {
-    return `${openingBrace}\n${currentIndent}${values.join(
-      join,
-    )}\n${closingBraceIndent}${closingBrace}`;
+    return `${openingBrace}\n${currentIndent}${values.join(join)}\n${closingBraceIndent}${closingBrace}`;
   }
 
   return `${openingBrace}${values.join(join)}${closingBrace}`;
@@ -27,11 +25,7 @@ function concatValues(
  * @param {Object} opts Target options
  * @return {string}
  */
-export const literalRepresentation = (
-  value: any,
-  opts: Record<string, any>,
-  indentLevel?: number,
-): any => {
+export const literalRepresentation = (value: any, opts: Record<string, any>, indentLevel?: number): any => {
   /*
    * Note: this version is almost entirely borrowed from the Python client helper. The
    * only real modification involves the braces and the types. The helper
@@ -60,13 +54,7 @@ export const literalRepresentation = (
       for (const [key, val] of Object.entries(value)) {
         keyValuePairs.push(`"${key}": ${literalRepresentation(val, opts, indentLevel)}`);
       }
-      return concatValues(
-        'object',
-        keyValuePairs,
-        opts.pretty && keyValuePairs.length > 1,
-        opts.indent,
-        indentLevel,
-      );
+      return concatValues('object', keyValuePairs, opts.pretty && keyValuePairs.length > 1, opts.indent, indentLevel);
     }
 
     case '[object Null]':
