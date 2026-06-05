@@ -1,3 +1,4 @@
+FROM node:22-alpine AS node
 FROM golang:1.20.5-alpine3.18
 
 COPY integrations/https-cert/rootCA.pem /root/integration-test.pem
