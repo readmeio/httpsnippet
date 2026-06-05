@@ -67,6 +67,6 @@ export const literalRepresentation = (value: any, opts: Record<string, any>, ind
       if (value === null || value === undefined) {
         return '';
       }
-      return `"${value.toString().replace(/"/g, '\\"')}"`;
+      return `"${value.toString().replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
   }
 };
