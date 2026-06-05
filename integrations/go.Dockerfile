@@ -17,6 +17,12 @@ RUN apk add --no-cache libstdc++ && \
 
 WORKDIR /src
 
+# Pre-warm the Go build cache so the first integration test doesn't cold-compile
+# the entire stdlib (net/http, io, strings, time, etc.) and hit vitest's 5s timeout.
+RUN printf 'package main\nimport ("fmt";"io";"net/http";"strings";"time")\nfunc main(){_=fmt.Sprint;_=io.Discard;_=http.DefaultClient;_=strings.NewReader;_=time.Second}\n' > /tmp/warmup.go && \
+  go run /tmp/warmup.go && \
+  rm /tmp/warmup.go
+
 # add pacakge.json first so we don't have to `npm install` unless it changes
 ADD package.json /src/
 RUN npm install
