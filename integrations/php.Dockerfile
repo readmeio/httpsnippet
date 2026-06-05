@@ -4,7 +4,7 @@ WORKDIR /composer/
 # https://packagist.org/packages/guzzlehttp/guzzle
 RUN composer require guzzlehttp/guzzle
 
-FROM alpine:3.18
+FROM alpine:3.22
 
 COPY integrations/https-cert/rootCA.pem /root/integration-test.pem
 COPY --from=builder /composer/vendor /src/vendor
@@ -16,7 +16,8 @@ RUN apk --no-cache add ca-certificates && \
   update-ca-certificates
 
 RUN apk update && \
-  apk add nodejs npm php81 php81-fpm php81-opcache php81-curl
+  apk add nodejs npm php83 php83-fpm php83-opcache php83-curl && \
+  ln -sf /usr/bin/php83 /usr/bin/php
 
 WORKDIR /src
 
