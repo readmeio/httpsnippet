@@ -2,7 +2,9 @@ import axios from 'axios';
 
 const options = {method: 'GET', url: 'http://httpbin.org/anything'};
 
-axios
-  .request(options)
-  .then(res => console.log(res.data))
-  .catch(err => console.error(err));
+try {
+  const { data } = await axios.request(options);
+  console.log(data);
+} catch (error) {
+  console.error(error);
+}

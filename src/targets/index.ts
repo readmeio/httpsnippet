@@ -4,6 +4,7 @@ import type { Merge } from 'type-fest';
 
 import { c } from './c/target.js';
 import { clojure } from './clojure/target.js';
+import { crystal } from './crystal/target.js';
 import { csharp } from './csharp/target.js';
 import { go } from './go/target.js';
 import { http } from './http/target.js';
@@ -19,6 +20,7 @@ import { powershell } from './powershell/target.js';
 import { python } from './python/target.js';
 import { r } from './r/target.js';
 import { ruby } from './ruby/target.js';
+import { rust } from './rust/target.js';
 import { shell } from './shell/target.js';
 import { swift } from './swift/target.js';
 
@@ -40,6 +42,7 @@ export interface ClientInfo<T extends Record<string, any> = Record<string, any>>
    * @example `.js`
    */
   extname: Extension;
+
   /**
    * Retrieve or generate a command to install the client.
    *
@@ -103,6 +106,7 @@ export interface Target {
 type supportedTargets =
   | 'c'
   | 'clojure'
+  | 'crystal'
   | 'csharp'
   | 'go'
   | 'http'
@@ -118,12 +122,14 @@ type supportedTargets =
   | 'python'
   | 'r'
   | 'ruby'
+  | 'rust'
   | 'shell'
   | 'swift';
 
 export const targets: Record<supportedTargets, Target> = {
   c,
   clojure,
+  crystal,
   csharp,
   go,
   http,
@@ -139,6 +145,7 @@ export const targets: Record<supportedTargets, Target> = {
   python,
   r,
   ruby,
+  rust,
   shell,
   swift,
 };
