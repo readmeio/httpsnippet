@@ -4,3 +4,4 @@ dist/
 node_modules/
 vendor/
 composer.*
+config.bat

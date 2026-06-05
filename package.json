@@ -75,6 +75,8 @@
     "test": "vitest run --coverage"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-fetch": "^3.3.2",
     "qs": "^6.15.0",
     "stringify-object": "^3.3.0",
     "type-fest": "^5.5.0"
