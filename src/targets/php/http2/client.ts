@@ -99,7 +99,6 @@ export const http2: Client<Http2Options> = {
         hasBody = true;
         break;
       }
-
       case 'application/json':
         push('$body = new http\\Message\\Body;');
         push(`$body->append(json_encode(${convertType(postData.jsonObj, indent)}));`);

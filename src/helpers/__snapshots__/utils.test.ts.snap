@@ -32,6 +32,20 @@ exports[`availableTargets > returns all available targets 1`] = `
     "title": "Clojure",
   },
   {
+    "clients": [
+      {
+        "description": "Crystal HTTP client",
+        "extname": ".cr",
+        "key": "native",
+        "link": "https://crystal-lang.org/api/master/HTTP/Client.html",
+        "title": "http::client",
+      },
+    ],
+    "default": "native",
+    "key": "crystal",
+    "title": "Crystal",
+  },
+  {
     "cli": "dotnet",
     "clients": [
       {
@@ -338,10 +352,31 @@ exports[`availableTargets > returns all available targets 1`] = `
         "link": "http://ruby-doc.org/stdlib-2.2.1/libdoc/net/http/rdoc/Net/HTTP.html",
         "title": "net::http",
       },
+      {
+        "description": "Faraday HTTP client",
+        "extname": ".rb",
+        "key": "faraday",
+        "link": "https://github.com/lostisland/faraday",
+        "title": "faraday",
+      },
     ],
     "default": "native",
     "key": "ruby",
     "title": "Ruby",
+  },
+  {
+    "clients": [
+      {
+        "description": "reqwest HTTP library",
+        "extname": ".rs",
+        "key": "reqwest",
+        "link": "https://docs.rs/reqwest/latest/reqwest/",
+        "title": "reqwest",
+      },
+    ],
+    "default": "reqwest",
+    "key": "rust",
+    "title": "Rust",
   },
   {
     "cli": "%s",

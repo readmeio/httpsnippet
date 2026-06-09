@@ -5,6 +5,7 @@
   "keywords": [
     "api",
     "clojure",
+    "crystal",
     "csharp",
     "curl",
     "go",
@@ -23,6 +24,7 @@
     "python",
     "requests",
     "ruby",
+    "rust",
     "shell",
     "snippet",
     "swift",
