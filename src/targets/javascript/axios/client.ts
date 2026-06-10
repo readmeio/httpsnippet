@@ -97,10 +97,12 @@ export const axios: Client = {
     push(`const options = ${optionString};`);
     blank();
 
-    push('axios');
-    push('.request(options)', 1);
-    push('.then(res => console.log(res.data))', 1);
-    push('.catch(err => console.error(err));', 1);
+    push('try {');
+    push('const { data } = await axios.request(options);', 1);
+    push('console.log(data);', 1);
+    push('} catch (error) {');
+    push('console.error(error);', 1);
+    push('}');
 
     return join();
   },

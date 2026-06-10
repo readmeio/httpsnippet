@@ -2,6 +2,7 @@ import type { Request } from '../../../index.js';
 
 import applicationFormEncoded from '../../../fixtures/requests/application-form-encoded.cjs';
 import full from '../../../fixtures/requests/full.cjs';
+import httpInsecure from '../../../fixtures/requests/http-insecure.cjs';
 import nested from '../../../fixtures/requests/nested.cjs';
 import { runCustomFixtures } from '../../../fixtures/runCustomFixtures.js';
 
@@ -87,6 +88,14 @@ runCustomFixtures({
       } as Request,
       options: {},
       expected: 'urlencode.sh',
+    },
+    {
+      it: 'should support insecureSkipVerify',
+      input: httpInsecure.log.entries[0].request as Request,
+      options: {
+        insecureSkipVerify: true,
+      },
+      expected: 'insecure-skip-verify.sh',
     },
     {
       it: 'should use --data-urlencode for form-urlencoded params with special characters in values',
