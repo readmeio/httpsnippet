@@ -18,7 +18,7 @@ RUN apk add --no-cache libstdc++ && \
 # Pre-warm the Cargo dependency cache at the same path EXEC_FUNCTION.rust uses
 # so that each integration test only recompiles src/main.rs, not all dependencies.
 RUN mkdir -p /tmp/rust_integration_test/src && \
-  printf '[package]\nname = "integration_test"\nversion = "0.1.0"\nedition = "2021"\n\n[dependencies]\nreqwest = { version = "0.12", features = ["json", "multipart", "rustls-tls-native-roots"], default-features = false }\ntokio = { version = "1", features = ["full"] }\nserde_json = "1"\ntokio-util = { version = "0.7", features = ["codec"] }\n' > /tmp/rust_integration_test/Cargo.toml && \
+  printf '[package]\nname = "integration_test"\nversion = "0.1.0"\nedition = "2021"\n\n[dependencies]\nreqwest = { version = "0.12", features = ["json", "multipart", "rustls-tls-native-roots"], default-features = false }\ntokio = { version = "1", features = ["full"] }\nserde_json = { version = "1", features = ["preserve_order"] }\n' > /tmp/rust_integration_test/Cargo.toml && \
   printf 'use reqwest;\nuse serde_json;\n#[tokio::main]\nasync fn main() {}\n' > /tmp/rust_integration_test/src/main.rs && \
   cargo build --manifest-path /tmp/rust_integration_test/Cargo.toml
 
