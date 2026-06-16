@@ -52,7 +52,13 @@ export const reqwest: Client = {
       push('let querystring = [', indentLevel);
       indentLevel += 1;
       for (const [key, value] of Object.entries(queryObj)) {
-        push(`("${key}", "${value}"),`, indentLevel);
+        if (Array.isArray(value)) {
+          for (const v of value) {
+            push(`("${key}", "${decodeURIComponent(v)}"),`, indentLevel);
+          }
+        } else {
+          push(`("${key}", "${decodeURIComponent(String(value))}"),`, indentLevel);
+        }
       }
       indentLevel -= 1;
       push('];', indentLevel);

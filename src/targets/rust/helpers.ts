@@ -38,6 +38,9 @@ export const literalRepresentation = (value: any, opts: Record<string, any>, ind
       return value;
 
     case '[object Array]': {
+      if ((value as any[]).length === 0) {
+        return 'json!([])';
+      }
       let pretty = false;
       const valuesRep: any = (value as any[]).map(v => {
         // Switch to prettify if the value is a dict with more than one key.
