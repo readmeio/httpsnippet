@@ -218,7 +218,7 @@ const fileToPartString = [
   `async fn file_to_part(file_name: &'static str) -> reqwest::multipart::Part {`,
   `    let file = tokio::fs::File::open(file_name).await.unwrap();`,
   `    let stream = tokio_util::codec::FramedRead::new(file, tokio_util::codec::BytesCodec::new());`,
-  `    let body = reqwest::Body::wrap_stream(stream);`,
+  `    let body = reqwest::Body::wrap(stream);`,
   `    reqwest::multipart::Part::stream(body)`,
   `        .file_name(file_name)`,
   `        .mime_str("text/plain").unwrap()`,
