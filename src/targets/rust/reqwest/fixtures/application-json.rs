@@ -10,16 +10,13 @@ pub async fn main() {
         "string": "f\"oo",
         "arr": (1, 2, 3),
         "nested": json!({"a": "b"}),
-        "arr_mix": (1, "a", json!({"arr_mix_nested": ()})),
+        "arr_mix": (1, "a", json!({"arr_mix_nested": json!([])})),
         "boolean": false
     });
 
-    let mut headers = reqwest::header::HeaderMap::new();
-    headers.insert("content-type", "application/json".parse().unwrap());
-
     let client = reqwest::Client::new();
     let response = client.post(url)
-        .headers(headers)
+        .header("content-type", "application/json")
         .json(&payload)
         .send()
         .await;
@@ -29,5 +26,5 @@ pub async fn main() {
         .await
         .unwrap();
 
-    dbg!(results);
+    println!("{}", results);
 }

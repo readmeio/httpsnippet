@@ -4,12 +4,9 @@ use reqwest;
 pub async fn main() {
     let url = "https://httpbin.org/cookies";
 
-    let mut headers = reqwest::header::HeaderMap::new();
-    headers.insert("cookie", "foo=bar; bar=baz".parse().unwrap());
-
     let client = reqwest::Client::new();
     let response = client.get(url)
-        .headers(headers)
+        .header("cookie", "foo=bar; bar=baz")
         .send()
         .await;
 
@@ -18,5 +15,5 @@ pub async fn main() {
         .await
         .unwrap();
 
-    dbg!(results);
+    println!("{}", results);
 }

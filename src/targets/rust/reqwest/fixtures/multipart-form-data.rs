@@ -6,12 +6,10 @@ pub async fn main() {
 
     let form = reqwest::multipart::Form::new()
         .text("foo", "bar");
-    let mut headers = reqwest::header::HeaderMap::new();
 
     let client = reqwest::Client::new();
     let response = client.post(url)
         .multipart(form)
-        .headers(headers)
         .send()
         .await;
 
@@ -20,5 +18,5 @@ pub async fn main() {
         .await
         .unwrap();
 
-    dbg!(results);
+    println!("{}", results);
 }

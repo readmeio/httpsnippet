@@ -1,0 +1,14 @@
+name: Integrations (Rust)
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run tests
+        run: docker compose run integration_rust
+
+      - name: Cleanup
+        if: always()
+        run: docker compose down

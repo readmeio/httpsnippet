@@ -5,7 +5,8 @@ pub async fn main() {
     let url = "https://httpbin.org/anything";
 
     let querystring = [
-        ("foo", "bar,baz"),
+        ("foo", "bar"),
+        ("foo", "baz"),
         ("baz", "abc"),
         ("key", "value"),
     ];
@@ -21,5 +22,5 @@ pub async fn main() {
         .await
         .unwrap();
 
-    dbg!(results);
+    println!("{}", results);
 }

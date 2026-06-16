@@ -24,6 +24,7 @@ const ENVIRONMENT_CONFIG = {
     php: ['curl', 'guzzle'],
     python: ['requests'],
     shell: ['curl'],
+    rust: ['reqwest'],
   },
   local: {
     // When running tests locally, or within a CI environment, we shold limit the targets that
@@ -67,6 +68,10 @@ int main(void) {
   },
   go: (fixturePath: string) => {
     return shell.execSync(`go run ${fixturePath}`);
+  },
+  rust: (fixturePath: string) => {
+    shell.execSync(`cp ${fixturePath} /tmp/rust_integration_test/src/main.rs`);
+    return shell.execSync('cargo run --manifest-path /tmp/rust_integration_test/Cargo.toml');
   },
 };
 

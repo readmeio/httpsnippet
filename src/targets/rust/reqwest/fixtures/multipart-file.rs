@@ -5,22 +5,18 @@ pub async fn main() {
     let url = "https://httpbin.org/anything";
 
     async fn file_to_part(file_name: &'static str) -> reqwest::multipart::Part {
-        let file = tokio::fs::File::open(file_name).await.unwrap();
-        let stream = tokio_util::codec::FramedRead::new(file, tokio_util::codec::BytesCodec::new());
-        let body = reqwest::Body::wrap_stream(stream);
-        reqwest::multipart::Part::stream(body)
+        let bytes = tokio::fs::read(file_name).await.unwrap();
+        reqwest::multipart::Part::bytes(bytes)
             .file_name(file_name)
             .mime_str("text/plain").unwrap()
     }
 
     let form = reqwest::multipart::Form::new()
         .part("foo", file_to_part("src/fixtures/files/hello.txt").await);
-    let mut headers = reqwest::header::HeaderMap::new();
 
     let client = reqwest::Client::new();
     let response = client.post(url)
         .multipart(form)
-        .headers(headers)
         .send()
         .await;
 
@@ -29,5 +25,5 @@ pub async fn main() {
         .await
         .unwrap();
 
-    dbg!(results);
+    println!("{}", results);
 }

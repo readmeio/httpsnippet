@@ -10,12 +10,9 @@ pub async fn main() {
         "hello": "world"
     });
 
-    let mut headers = reqwest::header::HeaderMap::new();
-    headers.insert("content-type", "application/x-www-form-urlencoded".parse().unwrap());
-
     let client = reqwest::Client::new();
     let response = client.post(url)
-        .headers(headers)
+        .header("content-type", "application/x-www-form-urlencoded")
         .form(&payload)
         .send()
         .await;
@@ -25,5 +22,5 @@ pub async fn main() {
         .await
         .unwrap();
 
-    dbg!(results);
+    println!("{}", results);
 }

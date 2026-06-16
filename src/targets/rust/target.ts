@@ -7,6 +7,7 @@ export const rust: Target = {
     key: 'rust',
     title: 'Rust',
     default: 'reqwest',
+    cli: 'rust',
   },
   clientsById: {
     reqwest,

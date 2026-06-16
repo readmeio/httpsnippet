@@ -52,7 +52,13 @@ export const reqwest: Client = {
       push('let querystring = [', indentLevel);
       indentLevel += 1;
       for (const [key, value] of Object.entries(queryObj)) {
-        push(`("${key}", "${value}"),`, indentLevel);
+        if (Array.isArray(value)) {
+          for (const v of value) {
+            push(`("${key}", "${decodeURIComponent(v)}"),`, indentLevel);
+          }
+        } else {
+          push(`("${key}", "${decodeURIComponent(String(value))}"),`, indentLevel);
+        }
       }
       indentLevel -= 1;
       push('];', indentLevel);
@@ -128,27 +134,19 @@ export const reqwest: Client = {
       }
     }
 
-    if (hasForm || jsonPayload || hasBody) {
+    if (hasForm || jsonPayload) {
       unshift(`use serde_json::json;`);
+    }
+
+    if (hasForm || jsonPayload || hasBody || isMultipart) {
       blank();
     }
 
-    let hasHeaders = false;
-    // construct headers
-    if (Object.keys(allHeaders).length) {
-      hasHeaders = true;
-      push('let mut headers = reqwest::header::HeaderMap::new();', indentLevel);
-      for (const [key, value] of Object.entries(allHeaders)) {
-        // Skip setting content-type if there is a file, as this header will
-        // cause the request to hang, and reqwest will set it for us.
-        if (key.toLowerCase() === 'content-type' && isMultipart) {
-          // oxlint-disable-next-line no-continue
-          continue;
-        }
-        push(`headers.insert("${key}", ${literalRepresentation(value, opts)}.parse().unwrap());`, indentLevel);
-      }
-      blank();
-    }
+    // Skip setting content-type for multipart — it would cause the request to
+    // hang, and reqwest sets it automatically.
+    const headersToEmit = Object.entries(allHeaders).filter(
+      ([key]) => !(key.toLowerCase() === 'content-type' && isMultipart),
+    );
 
     // construct client
     push('let client = reqwest::Client::new();', indentLevel);
@@ -178,8 +176,8 @@ export const reqwest: Client = {
       push(`.multipart(form)`, indentLevel + 1);
     }
 
-    if (hasHeaders) {
-      push(`.headers(headers)`, indentLevel + 1);
+    for (const [key, value] of headersToEmit) {
+      push(`.header("${key}", ${literalRepresentation(value, opts)})`, indentLevel + 1);
     }
 
     if (jsonPayload) {
@@ -206,7 +204,7 @@ export const reqwest: Client = {
     push('.unwrap();', indentLevel + 1);
     blank();
 
-    push('dbg!(results);', indentLevel);
+    push('println!("{}", results);', indentLevel);
 
     push('}\n');
 
@@ -216,10 +214,8 @@ export const reqwest: Client = {
 
 const fileToPartString = [
   `async fn file_to_part(file_name: &'static str) -> reqwest::multipart::Part {`,
-  `    let file = tokio::fs::File::open(file_name).await.unwrap();`,
-  `    let stream = tokio_util::codec::FramedRead::new(file, tokio_util::codec::BytesCodec::new());`,
-  `    let body = reqwest::Body::wrap_stream(stream);`,
-  `    reqwest::multipart::Part::stream(body)`,
+  `    let bytes = tokio::fs::read(file_name).await.unwrap();`,
+  `    reqwest::multipart::Part::bytes(bytes)`,
   `        .file_name(file_name)`,
   `        .mime_str("text/plain").unwrap()`,
   `}`,

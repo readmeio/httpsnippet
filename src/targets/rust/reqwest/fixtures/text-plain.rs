@@ -1,4 +1,3 @@
-use serde_json::json;
 use reqwest;
 
 #[tokio::main]
@@ -7,12 +6,9 @@ pub async fn main() {
 
     let payload = "Hello World";
 
-    let mut headers = reqwest::header::HeaderMap::new();
-    headers.insert("content-type", "text/plain".parse().unwrap());
-
     let client = reqwest::Client::new();
     let response = client.post(url)
-        .headers(headers)
+        .header("content-type", "text/plain")
         .body(payload)
         .send()
         .await;
@@ -22,5 +18,5 @@ pub async fn main() {
         .await
         .unwrap();
 
-    dbg!(results);
+    println!("{}", results);
 }

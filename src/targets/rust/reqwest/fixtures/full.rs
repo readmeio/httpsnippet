@@ -6,22 +6,20 @@ pub async fn main() {
     let url = "https://httpbin.org/anything";
 
     let querystring = [
-        ("foo", "bar,baz"),
+        ("foo", "bar"),
+        ("foo", "baz"),
         ("baz", "abc"),
         ("key", "value"),
     ];
 
     let payload = json!({"foo": "bar"});
 
-    let mut headers = reqwest::header::HeaderMap::new();
-    headers.insert("cookie", "foo=bar; bar=baz".parse().unwrap());
-    headers.insert("accept", "application/json".parse().unwrap());
-    headers.insert("content-type", "application/x-www-form-urlencoded".parse().unwrap());
-
     let client = reqwest::Client::new();
     let response = client.post(url)
         .query(&querystring)
-        .headers(headers)
+        .header("cookie", "foo=bar; bar=baz")
+        .header("accept", "application/json")
+        .header("content-type", "application/x-www-form-urlencoded")
         .form(&payload)
         .send()
         .await;
@@ -31,5 +29,5 @@ pub async fn main() {
         .await
         .unwrap();
 
-    dbg!(results);
+    println!("{}", results);
 }
