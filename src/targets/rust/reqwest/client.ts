@@ -136,6 +136,9 @@ export const reqwest: Client = {
 
     if (hasForm || jsonPayload) {
       unshift(`use serde_json::json;`);
+    }
+
+    if (hasForm || jsonPayload || hasBody || isMultipart) {
       blank();
     }
 
