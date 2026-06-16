@@ -6,8 +6,7 @@ pub async fn main() {
     let url = "https://httpbin.org/anything";
 
     let querystring = [
-        ("foo", "bar"),
-        ("foo", "baz"),
+        ("foo", "bar,baz"),
         ("baz", "abc"),
         ("key", "value"),
     ];
