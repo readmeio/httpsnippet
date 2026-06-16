@@ -114,3 +114,15 @@ services:
       - HTTPBIN=true
       - INTEGRATION_CLIENT=go
       - NODE_ENV=integration
+
+  integration_rust:
+    depends_on:
+      - reverse_proxy
+    build:
+      context: .
+      dockerfile: integrations/rust.Dockerfile
+    command: 'npx vitest run src/integration.test.ts'
+    environment:
+      - HTTPBIN=true
+      - INTEGRATION_CLIENT=rust
+      - NODE_ENV=integration

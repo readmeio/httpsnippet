@@ -206,7 +206,7 @@ export const reqwest: Client = {
     push('.unwrap();', indentLevel + 1);
     blank();
 
-    push('dbg!(results);', indentLevel);
+    push('println!("{}", results);', indentLevel);
 
     push('}\n');
 
