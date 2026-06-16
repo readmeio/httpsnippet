@@ -20,5 +20,5 @@ pub async fn main() {
         .await
         .unwrap();
 
-    dbg!(results);
+    println!("{}", results);
 }
