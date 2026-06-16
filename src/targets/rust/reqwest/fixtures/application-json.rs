@@ -10,7 +10,7 @@ pub async fn main() {
         "string": "f\"oo",
         "arr": (1, 2, 3),
         "nested": json!({"a": "b"}),
-        "arr_mix": (1, "a", json!({"arr_mix_nested": ()})),
+        "arr_mix": (1, "a", json!({"arr_mix_nested": json!([])})),
         "boolean": false
     });
 
