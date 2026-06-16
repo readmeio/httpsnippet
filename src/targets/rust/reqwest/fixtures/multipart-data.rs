@@ -14,12 +14,10 @@ pub async fn main() {
     let form = reqwest::multipart::Form::new()
         .part("foo", file_to_part("src/fixtures/files/hello.txt").await)
         .text("bar", "Bonjour le monde");
-    let mut headers = reqwest::header::HeaderMap::new();
 
     let client = reqwest::Client::new();
     let response = client.post(url)
         .multipart(form)
-        .headers(headers)
         .send()
         .await;
 

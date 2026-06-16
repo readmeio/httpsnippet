@@ -4,15 +4,12 @@ use reqwest;
 pub async fn main() {
     let url = "https://httpbin.org/headers";
 
-    let mut headers = reqwest::header::HeaderMap::new();
-    headers.insert("accept", "application/json".parse().unwrap());
-    headers.insert("x-foo", "Bar".parse().unwrap());
-    headers.insert("x-bar", "Foo".parse().unwrap());
-    headers.insert("quoted-value", "\"quoted\" 'string'".parse().unwrap());
-
     let client = reqwest::Client::new();
     let response = client.get(url)
-        .headers(headers)
+        .header("accept", "application/json")
+        .header("x-foo", "Bar")
+        .header("x-bar", "Foo")
+        .header("quoted-value", "\"quoted\" 'string'")
         .send()
         .await;
 

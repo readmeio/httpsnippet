@@ -14,15 +14,12 @@ pub async fn main() {
 
     let payload = json!({"foo": "bar"});
 
-    let mut headers = reqwest::header::HeaderMap::new();
-    headers.insert("cookie", "foo=bar; bar=baz".parse().unwrap());
-    headers.insert("accept", "application/json".parse().unwrap());
-    headers.insert("content-type", "application/x-www-form-urlencoded".parse().unwrap());
-
     let client = reqwest::Client::new();
     let response = client.post(url)
         .query(&querystring)
-        .headers(headers)
+        .header("cookie", "foo=bar; bar=baz")
+        .header("accept", "application/json")
+        .header("content-type", "application/x-www-form-urlencoded")
         .form(&payload)
         .send()
         .await;

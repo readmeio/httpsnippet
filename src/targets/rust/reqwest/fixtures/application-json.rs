@@ -14,12 +14,9 @@ pub async fn main() {
         "boolean": false
     });
 
-    let mut headers = reqwest::header::HeaderMap::new();
-    headers.insert("content-type", "application/json".parse().unwrap());
-
     let client = reqwest::Client::new();
     let response = client.post(url)
-        .headers(headers)
+        .header("content-type", "application/json")
         .json(&payload)
         .send()
         .await;
