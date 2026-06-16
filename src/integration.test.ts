@@ -69,6 +69,10 @@ int main(void) {
   go: (fixturePath: string) => {
     return shell.execSync(`go run ${fixturePath}`);
   },
+  rust: (fixturePath: string) => {
+    shell.execSync(`cp ${fixturePath} /tmp/rust_integration_test/src/main.rs`);
+    return shell.execSync('cargo run --manifest-path /tmp/rust_integration_test/Cargo.toml');
+  },
 };
 
 const inputFileNames = readdirSync(path.join(...expectedBasePath), 'utf-8');
