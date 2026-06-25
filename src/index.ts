@@ -2,10 +2,10 @@ import type { CodeBuilderOptions } from './helpers/code-builder.js';
 import type { ReducedHelperObject } from './helpers/reducer.js';
 import type { ClientId, TargetId } from './targets/index.js';
 import type { Request as NpmHarRequest, Param, PostDataCommon } from 'har-format';
-import type { UrlWithParsedQuery } from 'node:url';
 import type { Merge } from 'type-fest';
+import type { UrlWithParsedQuery } from 'url';
 
-import { format as urlFormat, parse as urlParse } from 'node:url';
+import { format as urlFormat, parse as urlParse } from 'url';
 
 import { stringify as queryStringify } from 'qs';
 
