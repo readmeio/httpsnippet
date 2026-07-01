@@ -86,7 +86,7 @@
     "@types/qs": "^6.15.0",
     "@types/stringify-object": "^4.0.5",
     "@vitest/coverage-v8": "^4.1.2",
-    "oxfmt": "^0.53.0",
+    "oxfmt": "^0.57.0",
     "oxlint": "^1.62.0",
     "require-directory": "^2.1.1",
     "tsdown": "^0.22.1",
