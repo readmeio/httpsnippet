@@ -1,0 +1,9 @@
+Write code that makes the HTTP request described below. Use my preferred programming language and HTTP client library — if I haven't told you what those are, ask me before writing any code.
+
+Method: POST
+URL: https://httpbin.org/anything
+
+Headers:
+  Content-Type: multipart/form-data
+
+The request the code makes must match the method, URL, headers, and body exactly as described above.
