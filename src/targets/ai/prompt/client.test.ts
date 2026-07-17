@@ -8,12 +8,12 @@ runCustomFixtures({
   clientId: 'prompt',
   tests: [
     {
-      it: 'should support the infoUrl option',
+      it: 'should support the markdownURL option',
       input: short.log.entries[0].request as Request,
       options: {
-        infoUrl: 'https://docs.example.com/reference/anything',
+        markdownURL: 'https://docs.example.com/reference/anything.md',
       },
-      expected: 'info-url.txt',
+      expected: 'markdown-url.txt',
     },
   ],
 });

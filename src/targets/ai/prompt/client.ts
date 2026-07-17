@@ -14,10 +14,10 @@ import { CodeBuilder } from '../../../helpers/code-builder.js';
 
 interface PromptOptions {
   /**
-   * A URL, referenced at the end of the prompt, where the AI (or the user) can find more
-   * information about the request.
+   * A URL, referenced at the end of the prompt, to a Markdown document where the AI (or the user)
+   * can find more information about the request.
    */
-  infoUrl?: string;
+  markdownURL?: string;
 }
 
 export const prompt: Client<PromptOptions> = {
@@ -63,9 +63,9 @@ export const prompt: Client<PromptOptions> = {
     blank();
     push('The request the code makes must match the method, URL, headers, and body exactly as described above.');
 
-    if (opts.infoUrl) {
+    if (opts.markdownURL) {
       blank();
-      push(`Check ${opts.infoUrl} for more info.`);
+      push(`Check ${opts.markdownURL} for more info.`);
     }
 
     return join();

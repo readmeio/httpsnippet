@@ -5,4 +5,4 @@ URL: https://httpbin.org/anything
 
 The request the code makes must match the method, URL, headers, and body exactly as described above.
 
-Check https://docs.example.com/reference/anything for more info.
+Check https://docs.example.com/reference/anything.md for more info.
