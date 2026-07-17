@@ -12,7 +12,15 @@ import type { Client } from '../../index.js';
 
 import { CodeBuilder } from '../../../helpers/code-builder.js';
 
-export const prompt: Client = {
+interface PromptOptions {
+  /**
+   * A URL, referenced at the end of the prompt, where the AI (or the user) can find more
+   * information about the request.
+   */
+  infoUrl?: string;
+}
+
+export const prompt: Client<PromptOptions> = {
   info: {
     key: 'prompt',
     title: 'AI Prompt',
@@ -21,7 +29,13 @@ export const prompt: Client = {
     extname: '.txt',
   },
   convert: ({ method, fullUrl, allHeaders, postData }, options) => {
-    const { blank, push, join } = new CodeBuilder({ indent: '  ', join: '\n', ...options });
+    const opts = {
+      indent: '  ',
+      join: '\n',
+      ...options,
+    };
+
+    const { blank, push, join } = new CodeBuilder(opts);
 
     push(
       "Write code that makes the HTTP request described below. Use my preferred programming language and HTTP client library — if I haven't told you what those are, ask me before writing any code.",
@@ -48,6 +62,11 @@ export const prompt: Client = {
 
     blank();
     push('The request the code makes must match the method, URL, headers, and body exactly as described above.');
+
+    if (opts.infoUrl) {
+      blank();
+      push(`Check ${opts.infoUrl} for more info.`);
+    }
 
     return join();
   },
