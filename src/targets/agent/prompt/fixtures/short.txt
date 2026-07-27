@@ -1,0 +1,6 @@
+Write code that makes the HTTP request described below. Use my preferred programming language and HTTP client library — if I haven't told you what those are, ask me before writing any code.
+
+Method: GET
+URL: https://httpbin.org/anything
+
+The request the code makes must match the method, URL, headers, and body exactly as described above.
