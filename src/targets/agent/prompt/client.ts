@@ -23,9 +23,9 @@ interface PromptOptions {
 export const prompt: Client<PromptOptions> = {
   info: {
     key: 'prompt',
-    title: 'AI Prompt',
+    title: 'Agent Prompt',
     link: 'https://github.com/readmeio/httpsnippet',
-    description: 'A copy-and-pastable prompt, for any AI model, describing how to make the request.',
+    description: 'A copy-and-pastable prompt, for any AI agent, describing how to make the request.',
     extname: '.txt',
   },
   convert: ({ method, fullUrl, allHeaders, postData }, options) => {

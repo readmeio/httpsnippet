@@ -2,7 +2,7 @@ import type { CodeBuilderOptions } from '../helpers/code-builder.js';
 import type { Request } from '../index.js';
 import type { Merge } from 'type-fest';
 
-import { ai } from './ai/target.js';
+import { agent } from './agent/target.js';
 import { c } from './c/target.js';
 import { clojure } from './clojure/target.js';
 import { crystal } from './crystal/target.js';
@@ -105,7 +105,7 @@ export interface Target {
 }
 
 type supportedTargets =
-  | 'ai'
+  | 'agent'
   | 'c'
   | 'clojure'
   | 'crystal'
@@ -129,7 +129,7 @@ type supportedTargets =
   | 'swift';
 
 export const targets: Record<supportedTargets, Target> = {
-  ai,
+  agent,
   c,
   clojure,
   crystal,

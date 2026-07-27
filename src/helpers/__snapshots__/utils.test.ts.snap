@@ -5,16 +5,16 @@ exports[`availableTargets > returns all available targets 1`] = `
   {
     "clients": [
       {
-        "description": "A copy-and-pastable prompt, for any AI model, describing how to make the request.",
+        "description": "A copy-and-pastable prompt, for any AI agent, describing how to make the request.",
         "extname": ".txt",
         "key": "prompt",
         "link": "https://github.com/readmeio/httpsnippet",
-        "title": "AI Prompt",
+        "title": "Agent Prompt",
       },
     ],
     "default": "prompt",
-    "key": "ai",
-    "title": "AI",
+    "key": "agent",
+    "title": "Agent",
   },
   {
     "cli": "c",
