@@ -1,6 +1,6 @@
 {
   "name": "@readme/httpsnippet",
-  "version": "11.3.2",
+  "version": "11.4.0",
   "description": "HTTP Request snippet generator for *most* languages",
   "keywords": [
     "api",
