@@ -16,6 +16,7 @@ export const native: Client = {
 
     push("require 'uri'");
     push("require 'net/http'");
+    push("require 'json'");
     blank();
 
     // To support custom methods we check for the supported methods
@@ -64,7 +65,7 @@ export const native: Client = {
     }
 
     if (postData.text) {
-      push(`request.body = ${JSON.stringify(postData.text)}`);
+      push(`request.body = ${postData.text}.to_json`);
     }
 
     blank();
