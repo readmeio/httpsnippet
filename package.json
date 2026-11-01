@@ -80,7 +80,7 @@
     "type-fest": "^5.5.0"
   },
   "devDependencies": {
-    "@readme/oxlint-config": "^1.9.0",
+    "@readme/oxlint-config": "^15.0.9",
     "@types/har-format": "^1.2.15",
     "@types/node": "^26.6.4",
     "@types/qs": "^6.15.0",
